@@ -1,6 +1,6 @@
 {
   "name": "vue-slim-tables",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "main": "dist/index.js",
   "scripts": {
     "build": "rm -rf ./dist && webpack --config ./webpack.config.js"
