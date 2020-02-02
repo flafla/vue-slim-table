@@ -44,34 +44,16 @@
 
   export default {
     props: {
-      columns: {
-        type: Array,
-        required: true
-      },
+      columns: { type: Array, required: true },
       remoteUrl: String,
-      perPage: {
-        type: Number,
-        default: 25
-      },
-      customFilters: {
-        type: Object,
-        default() { return {} }
-      },
+      perPage: { type: Number, default: 25 },
+      customFilters: { type: Object, default() { return {} } },
       onFetchedCallback: Function,
       wrapperClass: String,
-      tableClass: {
-        type: String,
-        default: 'table'
-      },
-      emptyRows: {
-        type: Object,
-        default() {
-          return {
-            class: 'text-danger',
-            text: 'No records found'
-          }
-        }
-      }
+      tableClass: String,
+      emptyRowsClass: String,
+      emptyRowsText: { type: String, default: 'No records found' },
+      totalRowsCountKey: { type: String, default: 'totalCount' }
     },
     data() {
       return {
@@ -92,7 +74,7 @@
           .then(res => res.json())
           .then(res => {
             this.rows = res.rows
-            this.rowsTotalCount = Math.ceil(res.total_count / this.perPage)
+            this.rowsTotalCount = Math.ceil(res[this.totalRowsCountKey] / this.perPage)
             this.onFetchedCallback && this.onFetchedCallback(res)
           })
       }
