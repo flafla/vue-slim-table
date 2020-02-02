@@ -15,8 +15,8 @@
         </tr>
 
         <tr v-if="rows.length === 0">
-          <td :colspan="columns.length" class="text-center " :class="emptyRows.class">
-            {{ emptyRows.text }}
+          <td :colspan="columns.length" class="text-center " :class="emptyRowsClass">
+            {{ emptyRowsText }}
           </td>
         </tr>
       </tbody>
