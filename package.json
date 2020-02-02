@@ -1,0 +1,31 @@
+{
+  "name": "vue-slim-tables",
+  "version": "0.0.1",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "rm -rf ./dist && webpack --config ./webpack.config.js"
+  },
+  "keywords": ["vue", "table"],
+  "homepage": "https://github.com/flafla/vue-slim-table",
+  "repository": {
+    "url": "https://github.com/flafla/vue-slim-table",
+    "type": "git"
+  },
+  "author": "fLa <flatra66@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "devDependencies": {
+    "@babel/core": "^7.8.4",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.0.6",
+    "vue": "^2.6.11",
+    "vue-loader": "^15.8.3",
+    "vue-template-compiler": "^2.6.11",
+    "webpack": "^5.0.0-beta.13",
+    "webpack-cli": "^4.0.0-beta.1",
+    "webpack-dev-server": "^3.0.0-alpha6"
+  },
+  "dependencies": {
+    "vuejs-paginate": "^2.1.0"
+  }
+}
