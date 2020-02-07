@@ -1,13 +1,15 @@
 const path = require('path');
 const { VueLoaderPlugin } = require('vue-loader');
 const TerserPlugin = require('terser-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   mode: 'production',
-  entry: './src/index.js',
+  entry: {
+    bundle: './src/js/index.js'
+  },
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'index.js',
+    filename: '[name].js',
     library: 'VueSlimTable',
     libraryTarget: 'umd'
   },
@@ -22,14 +24,25 @@ module.exports = {
         loader: 'babel-loader',
         include: __dirname,
         exclude: /node_modules/
+      },
+      {
+        test: /\.scss$/,
+        use: [
+          process.env.NODE_ENV === 'production' ? MiniCssExtractPlugin.loader : 'style-loader',
+          'css-loader',
+          'sass-loader'
+        ],
       }
     ]
   },
   plugins: [
     new VueLoaderPlugin(),
+    new MiniCssExtractPlugin({
+      filename: '[name].css'
+    })
   ],
   optimization: {
     minimize: true,
-    minimizer: [new TerserPlugin()],
-  },
+    minimizer: [new TerserPlugin()]
+  }
 };

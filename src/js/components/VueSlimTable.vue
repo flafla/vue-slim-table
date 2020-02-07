@@ -14,11 +14,19 @@
           </td>
         </tr>
 
-        <tr v-if="rows.length === 0">
+        <tr v-if="syncState == 'fetched' && rows.length === 0">
           <td :colspan="columns.length" class="text-center " :class="emptyRowsClass">
             {{ emptyRowsText }}
           </td>
         </tr>
+
+        <template v-if="syncState == 'syncing'">
+          <tr v-for="row in perPage">
+            <td :colspan="columns.length" class="vue-slim-tables-loading-row">
+              <div></div>
+            </td>
+          </tr>
+        </template>
       </tbody>
     </table>
     <paginate
@@ -59,7 +67,8 @@
       return {
         page: 1,
         rows: [],
-        rowsTotalCount: 0
+        rowsTotalCount: 0,
+        syncState: 'initial'
       }
     },
     methods: {
@@ -70,12 +79,16 @@
           ...this.customFilters
         }, { arrayFormat: 'brackets' })
 
+        this.syncState = 'syncing'
+        this.rows = []
+
         fetch(`${this.remoteUrl}?${params}`)
           .then(res => res.json())
           .then(res => {
             this.rows = res.rows
             this.rowsTotalCount = Math.ceil(res[this.totalRowsCountKey] / this.perPage)
             this.onFetchedCallback && this.onFetchedCallback(res)
+            this.syncState = 'fetched'
           })
       }
     },
