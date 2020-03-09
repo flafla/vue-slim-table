@@ -90,6 +90,9 @@
             this.onFetchedCallback && this.onFetchedCallback(res)
             this.syncState = 'fetched'
           })
+      },
+      reload() {
+        this.fetchData(this.page)
       }
     },
     watch: {
