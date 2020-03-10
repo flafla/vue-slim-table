@@ -19,3 +19,34 @@
     animation-delay: #{($i - 11)*100}ms;
   }
 }
+
+.slim-table {
+  &-th {
+    line-height: 20px;
+  }
+
+  &-orderable {
+    font-size: 20px;
+    float: right;
+    color: #ccc !important;
+
+    &:after {
+      content: " \21C5";
+    }
+
+    &.desc:after {
+      content: " \2191";
+    }
+
+    &.asc:after {
+      content: " \2193";
+    }
+
+    &:hover,
+    &.asc:after,
+    &.desc:after {
+      cursor: pointer;
+      color: #555 !important;
+    }
+  }
+}

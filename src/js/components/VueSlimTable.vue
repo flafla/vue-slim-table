@@ -1,9 +1,12 @@
 <template>
   <div :class="wrapperClass">
-    <table :class="tableClass">
+    <table :class="tableClass" class="slim-table">
       <thead>
         <tr>
-          <th v-for="col in columns">{{ col.title }}</th>
+          <th v-for="col in columns" class="slim-table-th" @click="order(col.key)">
+            <span>{{ col.title }}</span>
+            <a v-if="col.orderable" :class="`slim-table-orderable ${orders[col.key] || ''}`"></a>
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -68,21 +71,34 @@
         page: 1,
         rows: [],
         rowsTotalCount: 0,
-        syncState: 'initial'
+        syncState: 'initial',
+        orders: {}
       }
     },
     methods: {
+      reload() {
+        this.fetchData(this.page)
+      },
       fetchData(page) {
-        const params = qs.stringify({
+        const params = {
           per_page: this.perPage,
           page: page,
           ...this.customFilters
-        }, { arrayFormat: 'brackets' })
+        }
+
+        const orderKeys = Object.keys(this.orders)
+        if (orderKeys.length) {
+          params.order = orderKeys.map(key => {
+            return { field: key, direction: this.orders[key] }
+          })
+        }
+
+        const strParams = qs.stringify(params, { arrayFormat: 'brackets' })
 
         this.syncState = 'syncing'
         this.rows = []
 
-        fetch(`${this.remoteUrl}?${params}`)
+        fetch(`${this.remoteUrl}?${strParams}`)
           .then(res => res.json())
           .then(res => {
             this.rows = res.rows
@@ -91,8 +107,17 @@
             this.syncState = 'fetched'
           })
       },
-      reload() {
-        this.fetchData(this.page)
+      order(key) {
+        if (!this.columns.find(col => col.key === key).orderable) return
+
+        if (this.orders[key] === 'asc') {
+          this.orders = { [key]: 'desc' }
+        } else if (this.orders[key] === 'desc') {
+          this.orders = {}
+        } else {
+          this.orders = { [key]: 'asc' }
+        }
+        console.log('order', this.orders)
       }
     },
     watch: {
@@ -100,6 +125,13 @@
         this.fetchData(val)
       },
       customFilters() {
+        if (this.page === 1) {
+          this.fetchData(1)
+        } else {
+          this.page = 1
+        }
+      },
+      orders() {
         if (this.page === 1) {
           this.fetchData(1)
         } else {
