@@ -5,7 +5,7 @@
 
 .vue-slim-tables-loading-row div {
   height: 20px;
-  background: linear-gradient(to right, #eee 20%, #ddd 50%, #eee 80%);
+  background: linear-gradient(to right, rgba(0, 0, 0, 0) 10%, rgba(0, 0, 0, .6) 50%, rgba(0, 0, 0, 0) 90%);
   background-size: 500px 20px;
   animation-name: moving-gradient;
   animation-duration: 1s;
@@ -14,8 +14,46 @@
   animation-fill-mode: forwards;
 }
 
-@for $i from 2 through 10 {
-  tr:nth-child(#{$i}n) .vue-slim-tables-loading-row div {
-    animation-delay: #{($i - 11)*100}ms;
+tr td.vue-slim-tables-loading-row {
+  @for $i from 1 through 10 {
+    &-#{$i} div {
+      animation-delay: #{($i - 11)*100}ms;
+    }
+  }
+}
+
+.slim-table {
+  &-th {
+    line-height: 20px;
+
+    &:hover {
+      cursor: pointer;
+
+      .slim-table-orderable {
+        color: #ccc !important;
+      }
+    }
+  }
+
+  &-orderable {
+    font-size: 20px;
+    float: right;
+    color: #555 !important;
+
+    &:after {
+      content: " \2194";
+      display: inline-block;
+      transform: rotate(-90deg);
+    }
+
+    &.desc:after {
+      content: " \2191";
+      transform: rotate(0);
+    }
+
+    &.asc:after {
+      content: " \2193";
+      transform: rotate(0);
+    }
   }
 }
