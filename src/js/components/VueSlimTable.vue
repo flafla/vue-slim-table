@@ -33,9 +33,9 @@
       </tbody>
     </table>
     <paginate
-      v-if="rowsTotalCount > 1"
+      v-if="pagesCount > 1"
       v-model="page"
-      :page-count="rowsTotalCount"
+      :page-count="pagesCount"
       container-class="pagination mt-3"
       page-class="page-item"
       page-link-class="page-link"
@@ -75,6 +75,11 @@
         orders: {}
       }
     },
+    computed: {
+      pagesCount() {
+        return Math.ceil(this.rowsTotalCount / this.perPage)
+      }
+    },
     methods: {
       reload() {
         this.fetchData(this.page)
@@ -102,7 +107,7 @@
           .then(res => res.json())
           .then(res => {
             this.rows = res.rows
-            this.rowsTotalCount = Math.ceil(res[this.totalRowsCountKey] / this.perPage)
+            this.rowsTotalCount = res[this.totalRowsCountKey]
             this.onFetchedCallback && this.onFetchedCallback(res)
             this.syncState = 'fetched'
           })
