@@ -13,7 +13,11 @@
         <tr v-for="row in rows">
           <td v-for="col in columns">
             <component v-if="col.component" :is="col.component" :params="row" :value="row[col.key]" />
-            <template v-else>{{row[col.key]}}</template>
+            <template v-else>
+              <slot v-bind:name="'col-'+ col.key" v-bind:row="row" v-bind:col="col">
+                {{row[col.key]}}
+              </slot>
+            </template>
           </td>
         </tr>
 
@@ -50,103 +54,96 @@
 </template>
 
 <script>
-  import qs from 'qs'
-  import VuejsPaginate from 'vuejs-paginate'
+import qs from 'qs'
+import VuejsPaginate from 'vuejs-paginate'
 
-  export default {
-    props: {
-      columns: { type: Array, required: true },
-      remoteUrl: String,
-      perPage: { type: Number, default: 25 },
-      customFilters: { type: Object, default() { return {} } },
-      onFetchedCallback: Function,
-      wrapperClass: String,
-      tableClass: String,
-      emptyRowsClass: String,
-      emptyRowsText: { type: String, default: 'No records found' },
-      totalRowsCountKey: { type: String, default: 'totalCount' }
-    },
-    data() {
-      return {
-        page: 1,
-        rows: [],
-        rowsTotalCount: 0,
-        syncState: 'initial',
-        orders: {}
-      }
-    },
-    computed: {
-      pagesCount() {
-        return Math.ceil(this.rowsTotalCount / this.perPage)
-      }
-    },
-    methods: {
-      reload() {
-        this.fetchData(this.page)
-      },
-      fetchData(page) {
-        const params = {
-          per_page: this.perPage,
-          page: page,
-          ...this.customFilters
-        }
-
-        const orderKeys = Object.keys(this.orders)
-        if (orderKeys.length) {
-          params.order = orderKeys.map(key => {
-            return { field: key, direction: this.orders[key] }
-          })
-        }
-
-        const strParams = qs.stringify(params, { arrayFormat: 'brackets' })
-
-        this.syncState = 'syncing'
-        this.rows = []
-
-        fetch(`${this.remoteUrl}?${strParams}`)
-          .then(res => res.json())
-          .then(res => {
-            this.rows = res.rows
-            this.rowsTotalCount = res[this.totalRowsCountKey]
-            this.onFetchedCallback && this.onFetchedCallback(res)
-            this.syncState = 'fetched'
-          })
-      },
-      order(key) {
-        if (!this.columns.find(col => col.key === key).orderable) return
-
-        if (this.orders[key] === 'asc') {
-          this.orders = { [key]: 'desc' }
-        } else if (this.orders[key] === 'desc') {
-          this.orders = {}
-        } else {
-          this.orders = { [key]: 'asc' }
-        }
-        console.log('order', this.orders)
-      }
-    },
-    watch: {
-      page(val) {
-        this.fetchData(val)
-      },
-      customFilters() {
-        if (this.page === 1) {
-          this.fetchData(1)
-        } else {
-          this.page = 1
-        }
-      },
-      orders() {
-        if (this.page === 1) {
-          this.fetchData(1)
-        } else {
-          this.page = 1
-        }
-      }
-    },
-    components: { paginate: VuejsPaginate },
-    mounted() {
-      this.fetchData(this.page)
+export default {
+  props: {
+    columns: { type: Array, required: true },
+    remoteUrl: String,
+    perPage: { type: Number, default: 25 },
+    customFilters: { type: Object, default() { return {} } },
+    onFetchedCallback: Function,
+    wrapperClass: String,
+    tableClass: String,
+    emptyRowsClass: String,
+    emptyRowsText: { type: String, default: 'No records found' },
+    totalRowsCountKey: { type: String, default: 'totalCount' }
+  },
+  data() {
+    return {
+      page: 1,
+      rows: [],
+      rowsTotalCount: 0,
+      syncState: 'initial',
+      orders: {}
     }
+  },
+  computed: {
+    pagesCount() {
+      return Math.ceil(this.rowsTotalCount / this.perPage)
+    }
+  },
+  methods: {
+    reload() {
+      this.fetchData(this.page)
+    },
+    fetchData(page) {
+      const params = {
+        per_page: this.perPage,
+        page: page,
+        ...this.customFilters
+      }
+      const orderKeys = Object.keys(this.orders)
+      if (orderKeys.length) {
+        params.order = orderKeys.map((key) => ({ field: key, direction: this.orders[key] }))
+      }
+      const strParams = qs.stringify(params, { arrayFormat: 'brackets' })
+      this.syncState = 'syncing'
+      this.rows = []
+      fetch(`${this.remoteUrl}?${strParams}`)
+        .then((res) => res.json())
+        .then((res) => {
+          this.rows = res.rows
+          this.rowsTotalCount = res[this.totalRowsCountKey]
+          this.onFetchedCallback && this.onFetchedCallback(res)
+          this.syncState = 'fetched'
+        })
+    },
+    order(key) {
+      if (!this.columns.find((col) => col.key === key).orderable) return
+      if (this.orders[key] === 'asc') {
+        this.orders = { [key]: 'desc' }
+      } else if (this.orders[key] === 'desc') {
+        this.orders = {}
+      } else {
+        this.orders = { [key]: 'asc' }
+      }
+      console.log('order', this.orders)
+    }
+  },
+  watch: {
+    page(val) {
+      this.fetchData(val)
+    },
+    customFilters() {
+      if (this.page === 1) {
+        this.fetchData(1)
+      } else {
+        this.page = 1
+      }
+    },
+    orders() {
+      if (this.page === 1) {
+        this.fetchData(1)
+      } else {
+        this.page = 1
+      }
+    }
+  },
+  components: { paginate: VuejsPaginate },
+  mounted() {
+    this.fetchData(this.page)
   }
+}
 </script>
