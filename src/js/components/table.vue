@@ -131,6 +131,9 @@
       },
       orders() {
         this.refetch()
+      },
+      perPage() {
+        this.refetch()
       }
     },
     components: { LoadingRow, DataRow, Paginate },
