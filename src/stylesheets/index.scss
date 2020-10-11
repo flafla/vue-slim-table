@@ -5,7 +5,7 @@
 
 .vue-slim-tables-loading-row div {
   height: 20px;
-  background: linear-gradient(to right, rgba(0, 0, 0, 0) 10%, rgba(0, 0, 0, .6) 50%, rgba(0, 0, 0, 0) 90%);
+  background: linear-gradient(to right, #eee 20%, #ddd 50%, #eee 80%);
   background-size: 500px 20px;
   animation-name: moving-gradient;
   animation-duration: 1s;
@@ -30,7 +30,7 @@ tr td.vue-slim-tables-loading-row {
       cursor: pointer;
 
       .slim-table-orderable {
-        color: #ccc !important;
+        color: #555 !important;
       }
     }
   }
@@ -38,7 +38,7 @@ tr td.vue-slim-tables-loading-row {
   &-orderable {
     font-size: 20px;
     float: right;
-    color: #555 !important;
+    color: #ccc !important;
 
     &:after {
       content: " \2194";
