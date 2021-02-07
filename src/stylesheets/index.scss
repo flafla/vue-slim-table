@@ -25,17 +25,17 @@ tr td.vue-slim-tables-loading-row {
 .slim-table {
   &-th {
     line-height: 20px;
+  }
 
-    &:hover {
-      cursor: pointer;
+  &-orderable:hover {
+    cursor: pointer;
 
-      .slim-table-orderable {
-        color: #555 !important;
-      }
+    .slim-table-orderable-toggle {
+      color: #555 !important;
     }
   }
 
-  &-orderable {
+  &-orderable-toggle {
     font-size: 20px;
     float: right;
     color: #ccc !important;

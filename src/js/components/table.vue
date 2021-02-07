@@ -6,7 +6,7 @@
           <th
             v-for="column in columns"
             :key="column.key"
-            class="slim-table-th"
+            :class="['slim-table-th', { 'slim-table-orderable': column.orderable }]"
             @click.prevent="column.orderable ? onOrderClick(column.key) : null">
             <slot
               :name="`head:${column.key}`"
@@ -16,7 +16,7 @@
             <a
               v-if="column.orderable"
               href="#"
-              :class="`slim-table-orderable ${orders[column.key] || ''}`" />
+              :class="`slim-table-orderable-toggle ${orders[column.key] || ''}`" />
           </th>
         </tr>
       </thead>
