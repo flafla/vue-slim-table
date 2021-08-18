@@ -2,7 +2,7 @@
   <tr>
     <td
       :colspan="columnsLength"
-      :class="['vue-slim-tables-loading-row', `vue-slim-tables-loading-row-${randNum}`]">
+      :class="['vst-loading-row', `vst-loading-row-${randNum}`]">
       <div />
     </td>
   </tr>
