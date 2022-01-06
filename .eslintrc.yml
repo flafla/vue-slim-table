@@ -22,4 +22,7 @@ rules:
     - { alignAttributesVertically: false }
   vue/max-attributes-per-line:
     - error
-    - { singleline: 3, multiline: { max: 3, allowFirstLine: false } }
+    - { singleline: 3, multiline: { max: 3 } }
+  vue/multi-word-component-names:
+    - error
+    - ignores: ['table']

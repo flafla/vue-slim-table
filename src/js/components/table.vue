@@ -61,7 +61,7 @@
       <tr>
         <td :colspan="columns.length">
           <slot name="pagination" :page="page" :rows="rows">
-            <ul class="vst-pagination mt-3">
+            <ul v-if="page > 1 || rows.length === perPage" class="vst-pagination mt-3">
               <li :class="['vst-page-item', { disabled: page === 1 }]">
                 <a class="vst-page-link" @click.prevent="page -= 1">←</a>
               </li>
