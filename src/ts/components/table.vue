@@ -77,75 +77,76 @@
   </table>
 </template>
 
-<script>
+<script setup lang="ts">
+import { ref, watch } from 'vue'
 import qs from 'qs'
 import LoadingRow from './loading_row.vue'
 
-export default {
-  components: { LoadingRow },
-  props: {
-    columns: { type: Array, required: true },
-    source: { type: [String, Function], required: true },
-    perPage: { type: Number, default: 25 },
-  },
-  data() {
-    return {
-      page: 1,
-      rows: [],
-      syncState: 'initial',
-      orders: {},
-    }
-  },
-  watch: {
-    page: 'fetchData',
-    orders: 'refetch',
-    perPage: 'refetch',
-  },
-  created() {
-    this.fetchData()
-  },
-  methods: {
-    reload() {
-      this.fetchData(this.page)
-    },
-    async fetchData(page = 1) {
-      const params = { per_page: this.perPage, page }
+const props = defineProps({
+  columns: { type: Array, required: true },
+  source: { type: [String, Function], required: true },
+  perPage: { type: Number, default: 25 },
+})
 
-      const orderKeys = Object.keys(this.orders)
-      if (orderKeys.length) {
-        params.order = orderKeys.map((key) => ({ field: key, direction: this.orders[key] }))
-      }
+let page = ref(1)
+let rows = ref([])
+let syncState = ref('initial')
+let orders = ref({})
 
-      this.syncState = 'syncing'
-      this.rows = []
+const fetchData = async function(pg = 1) {
+  const params = { per_page: props.perPage, page: pg }
 
-      let data
-      if (typeof this.source === 'string') {
-        const response = await fetch(`${this.source}?${qs.stringify(params, { arrayFormat: 'brackets' })}`)
-        data = await response.json()
-      } else {
-        data = await this.source(params)
-      }
+  const orderKeys = Object.keys(orders.value)
+  if (orderKeys.length) {
+    params.order = orderKeys.map((key) => ({ field: key, direction: orders.value[key] }))
+  }
 
-      this.rows = data
-      this.syncState = 'fetched'
-    },
-    onOrderClick(key) {
-      if (this.orders[key] === 'asc') {
-        this.orders = { [key]: 'desc' }
-      } else if (this.orders[key] === 'desc') {
-        this.orders = {}
-      } else {
-        this.orders = { [key]: 'asc' }
-      }
-    },
-    refetch() {
-      if (this.page === 1) {
-        this.fetchData(1)
-      } else {
-        this.page = 1
-      }
-    },
-  },
+  syncState.value = 'syncing'
+  rows.value = []
+
+  let data
+  if (typeof props.source === 'string') {
+    const response = await fetch(`${props.source}?${qs.stringify(params, { arrayFormat: 'brackets' })}`)
+    data = await response.json()
+  } else {
+    data = await props.source(params)
+  }
+
+  rows.value = data
+  syncState.value = 'fetched'
 }
+
+const onOrderClick = (key) => {
+  if (orders.value[key] === 'asc') {
+    orders.value = { [key]: 'desc' }
+  } else if (orders.value[key] === 'desc') {
+    orders.value = {}
+  } else {
+    orders.value = { [key]: 'asc' }
+  }
+}
+
+const refetch = () => {
+  if (page.value === 1) {
+    fetchData(1)
+  } else {
+    page.value = 1
+  }
+}
+
+const reload = () => {
+  fetchData(page.value)
+}
+
+watch(page, fetchData)
+watch(orders, refetch)
+watch(() => props.perPage, refetch)
+
+fetchData()
+
+defineExpose({
+  refetch,
+  reload,
+  rows
+})
 </script>
