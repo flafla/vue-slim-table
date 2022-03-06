@@ -61,12 +61,17 @@
       <tr>
         <td :colspan="columns.length">
           <slot name="pagination" :page="page" :rows="rows">
-            <ul v-if="page > 1 || rows.length === perPage" class="vst-pagination mt-3">
-              <li :class="['vst-page-item', { disabled: page === 1 }]">
+            <ul
+              v-if="page > 1 || rows.length === perPage || syncState === 'syncing'"
+              class="vst-pagination mt-3">
+              <li :class="['vst-page-item', { disabled: page === 1 || syncState === 'syncing' }]">
                 <a class="vst-page-link" @click.prevent="page -= 1">←</a>
               </li>
 
-              <li :class="['vst-page-item', { disabled: rows.length < perPage }]">
+              <li
+                :class="['vst-page-item', {
+                  disabled: rows.length < perPage || syncState === 'syncing'
+                }]">
                 <a class="vst-page-link" @click.prevent="page += 1">→</a>
               </li>
             </ul>
@@ -88,12 +93,12 @@ const props = defineProps({
   perPage: { type: Number, default: 25 },
 })
 
-let page = ref(1)
-let rows = ref([])
-let syncState = ref('initial')
-let orders = ref({})
+const page = ref(1)
+const rows = ref([])
+const syncState = ref('initial')
+const orders = ref({})
 
-const fetchData = async function(pg = 1) {
+const fetchData = async function fetchData1(pg = 1) {
   const params = { per_page: props.perPage, page: pg }
 
   const orderKeys = Object.keys(orders.value)
@@ -147,6 +152,6 @@ fetchData()
 defineExpose({
   refetch,
   reload,
-  rows
+  rows,
 })
 </script>
