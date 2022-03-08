@@ -26,7 +26,7 @@
         :row="row"
         :index="i"
         :columns="columns">
-        <tr :key="row.id || i">
+        <tr :key="row['id'] || i">
           <td
             v-for="column in columns"
             :key="column.key">
@@ -52,7 +52,7 @@
 
       <slot v-if="syncState === 'syncing'" name="row:loading">
         <LoadingRow
-          v-for="(row, i) in perPage"
+          v-for="i in perPage"
           :key="`loadingRow${i}`"
           :columns-length="columns.length" />
       </slot>
@@ -87,19 +87,42 @@ import { ref, watch } from 'vue'
 import qs from 'qs'
 import LoadingRow from './loading_row.vue'
 
-const props = defineProps({
-  columns: { type: Array, required: true },
-  source: { type: [String, Function], required: true },
-  perPage: { type: Number, default: 25 },
+interface TableColumn {
+  key: string
+  title: string
+  orderable?: boolean
+}
+
+interface TableOrders {
+  [key: string]: 'asc' | 'desc'
+}
+
+interface TableFetchParams {
+  per_page: number
+  page: number
+  order?: Array<{
+    field: string
+    direction: 'asc' | 'desc'
+  }>
+}
+
+interface TableProps {
+  columns: Array<TableColumn>
+  source: string | ((_: TableFetchParams) => Promise<Array<unknown>> | Array<unknown>)
+  perPage?: number
+}
+
+const props = withDefaults(defineProps<TableProps>(), {
+  perPage: 25,
 })
 
 const page = ref(1)
 const rows = ref([])
 const syncState = ref('initial')
-const orders = ref({})
+const orders = ref({} as TableOrders)
 
 const fetchData = async function fetchData1(pg = 1) {
-  const params = { per_page: props.perPage, page: pg }
+  const params: TableFetchParams = { per_page: props.perPage, page: pg }
 
   const orderKeys = Object.keys(orders.value)
   if (orderKeys.length) {
@@ -121,7 +144,7 @@ const fetchData = async function fetchData1(pg = 1) {
   syncState.value = 'fetched'
 }
 
-const onOrderClick = (key) => {
+const onOrderClick = (key: string) => {
   if (orders.value[key] === 'asc') {
     orders.value = { [key]: 'desc' }
   } else if (orders.value[key] === 'desc') {

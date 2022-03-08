@@ -2,6 +2,7 @@ import { nextTick, defineComponent } from 'vue'
 import { mount } from '@vue/test-utils'
 import Table from '../../src/ts/components/table.vue'
 
+const perPage = 5
 const columns = [
   { key: 'one', title: 'One' },
   { key: 'two', title: 'Two' },
@@ -22,7 +23,7 @@ const asyncSource = (params) => {
 describe('empty async data', () => {
   test('shows default no records text', async() => {
     const wrapper = mount(Table, {
-      props: { columns: columns, source: () => [], perPage: 5 }
+      props: { columns, source: () => [], perPage }
     })
 
     await nextTick()
@@ -37,7 +38,7 @@ describe('empty async data', () => {
       template: `<tr><td colspan="5">${noData}</td></tr>`
     })
     const wrapper = mount(Table, {
-      props: { columns: columns, source: () => [], perPage: 5 },
+      props: { columns, source: () => [], perPage },
       slots: { 'row:empty': noDataComponent }
     })
 
@@ -51,8 +52,10 @@ describe('empty async data', () => {
 describe('rendering data', () => {
   test('render first page', async () => {
     const wrapper = mount(Table, {
-      props: { columns: columns, source: asyncSource, perPage: 5 }
+      props: { columns, source: asyncSource, perPage }
     })
+
+    expect(wrapper.findAll('.vst-loading-row').length).toBe(perPage)
 
     await nextTick()
 
@@ -64,7 +67,7 @@ describe('pagination', () => {
   describe('first page', () => {
     test('has more than one page', async () => {
       const wrapper = mount(Table, {
-        props: { columns: columns, source: asyncSource, perPage: 5 }
+        props: { columns, source: asyncSource, perPage }
       })
 
       const prevLink = wrapper.get('.vst-pagination li:first-child')
@@ -83,7 +86,7 @@ describe('pagination', () => {
 
     test('has only one page', async () => {
       const wrapper = mount(Table, {
-        props: { columns: columns, source: asyncSource, perPage: source.length + 1 }
+        props: { columns, source: asyncSource, perPage: source.length + 1 }
       })
 
       const prevLink = wrapper.get('.vst-pagination li:first-child')
@@ -101,7 +104,7 @@ describe('pagination', () => {
   describe('next page', () => {
     test('click', async () => {
       const wrapper = mount(Table, {
-        props: { columns: columns, source: asyncSource, perPage: 5 }
+        props: { columns, source: asyncSource, perPage }
       })
 
       await nextTick()
@@ -116,7 +119,7 @@ describe('pagination', () => {
 
     test('click to last page', async () => {
       const wrapper = mount(Table, {
-        props: { columns: columns, source: asyncSource, perPage: 10 }
+        props: { columns, source: asyncSource, perPage: 10 }
       })
 
       await nextTick()

@@ -1680,9 +1680,9 @@ const _hoisted_6 = {
 };
 const _sfc_main = /* @__PURE__ */ defineComponent({
   props: {
-    columns: { type: Array, required: true },
-    source: { type: [String, Function], required: true },
-    perPage: { type: Number, default: 25 }
+    columns: null,
+    source: null,
+    perPage: { default: 25 }
   },
   setup(__props, { expose }) {
     const props = __props;
@@ -1766,7 +1766,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
               columns: __props.columns
             }, () => [
               (openBlock(), createElementBlock("tr", {
-                key: row.id || i
+                key: row["id"] || i
               }, [
                 (openBlock(true), createElementBlock(Fragment, null, renderList(__props.columns, (column) => {
                   return openBlock(), createElementBlock("td", {
@@ -1793,7 +1793,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
             ])
           ]) : createCommentVNode("", true),
           syncState.value === "syncing" ? renderSlot(_ctx.$slots, "row:loading", { key: 1 }, () => [
-            (openBlock(true), createElementBlock(Fragment, null, renderList(__props.perPage, (row, i) => {
+            (openBlock(true), createElementBlock(Fragment, null, renderList(__props.perPage, (i) => {
               return openBlock(), createBlock(_sfc_main$1, {
                 key: `loadingRow${i}`,
                 "columns-length": __props.columns.length

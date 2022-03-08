@@ -33,6 +33,7 @@
     "vue/max-attributes-per-line": [
       "error",
       { "singleline": 3, "multiline": { "max": 3 } }
-    ]
+    ],
+    "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }]
   },
 }
