@@ -1,0 +1,224 @@
+// Vitest Snapshot v1
+
+exports[`empty async data > shows default no records text 1`] = `
+"<table class=\\"vst\\">
+  <thead>
+    <tr>
+      <th class=\\"vst-th\\">One
+        <!--v-if-->
+      </th>
+      <th class=\\"vst-th\\">Two
+        <!--v-if-->
+      </th>
+      <th class=\\"vst-th\\">Three
+        <!--v-if-->
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan=\\"3\\"> No records found </td>
+    </tr>
+    <!--v-if-->
+  </tbody>
+  <tfoot>
+    <tr>
+      <td colspan=\\"3\\">
+        <!--v-if-->
+      </td>
+    </tr>
+  </tfoot>
+</table>"
+`;
+
+exports[`empty async data > shows replaced row:empty slot 1`] = `
+"<table class=\\"vst\\">
+  <thead>
+    <tr>
+      <th class=\\"vst-th\\">One
+        <!--v-if-->
+      </th>
+      <th class=\\"vst-th\\">Two
+        <!--v-if-->
+      </th>
+      <th class=\\"vst-th\\">Three
+        <!--v-if-->
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan=\\"5\\">no data found</td>
+    </tr>
+    <!--v-if-->
+  </tbody>
+  <tfoot>
+    <tr>
+      <td colspan=\\"3\\">
+        <!--v-if-->
+      </td>
+    </tr>
+  </tfoot>
+</table>"
+`;
+
+exports[`pagination > next page > click 1`] = `
+"<table class=\\"vst\\">
+  <thead>
+    <tr>
+      <th class=\\"vst-th\\">One
+        <!--v-if-->
+      </th>
+      <th class=\\"vst-th\\">Two
+        <!--v-if-->
+      </th>
+      <th class=\\"vst-th\\">Three
+        <!--v-if-->
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>One 6</td>
+      <td>Two 6</td>
+      <td>Three 6</td>
+    </tr>
+    <tr>
+      <td>One 7</td>
+      <td>Two 7</td>
+      <td>Three 7</td>
+    </tr>
+    <tr>
+      <td>One 8</td>
+      <td>Two 8</td>
+      <td>Three 8</td>
+    </tr>
+    <tr>
+      <td>One 9</td>
+      <td>Two 9</td>
+      <td>Three 9</td>
+    </tr>
+    <tr>
+      <td>One 10</td>
+      <td>Two 10</td>
+      <td>Three 10</td>
+    </tr>
+    <!--v-if-->
+    <!--v-if-->
+  </tbody>
+  <tfoot>
+    <tr>
+      <td colspan=\\"3\\">
+        <ul class=\\"vst-pagination mt-3\\">
+          <li class=\\"vst-page-item\\"><a class=\\"vst-page-link\\">←</a></li>
+          <li class=\\"vst-page-item\\"><a class=\\"vst-page-link\\">→</a></li>
+        </ul>
+      </td>
+    </tr>
+  </tfoot>
+</table>"
+`;
+
+exports[`pagination > next page > click to last page 1`] = `
+"<table class=\\"vst\\">
+  <thead>
+    <tr>
+      <th class=\\"vst-th\\">One
+        <!--v-if-->
+      </th>
+      <th class=\\"vst-th\\">Two
+        <!--v-if-->
+      </th>
+      <th class=\\"vst-th\\">Three
+        <!--v-if-->
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>One 11</td>
+      <td>Two 11</td>
+      <td>Three 11</td>
+    </tr>
+    <tr>
+      <td>One 12</td>
+      <td>Two 12</td>
+      <td>Three 12</td>
+    </tr>
+    <tr>
+      <td>One 13</td>
+      <td>Two 13</td>
+      <td>Three 13</td>
+    </tr>
+    <!--v-if-->
+    <!--v-if-->
+  </tbody>
+  <tfoot>
+    <tr>
+      <td colspan=\\"3\\">
+        <ul class=\\"vst-pagination mt-3\\">
+          <li class=\\"vst-page-item\\"><a class=\\"vst-page-link\\">←</a></li>
+          <li class=\\"vst-page-item disabled\\"><a class=\\"vst-page-link\\">→</a></li>
+        </ul>
+      </td>
+    </tr>
+  </tfoot>
+</table>"
+`;
+
+exports[`rendering data > render first page 1`] = `
+"<table class=\\"vst\\">
+  <thead>
+    <tr>
+      <th class=\\"vst-th\\">One
+        <!--v-if-->
+      </th>
+      <th class=\\"vst-th\\">Two
+        <!--v-if-->
+      </th>
+      <th class=\\"vst-th\\">Three
+        <!--v-if-->
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>One 1</td>
+      <td>Two 1</td>
+      <td>Three 1</td>
+    </tr>
+    <tr>
+      <td>One 2</td>
+      <td>Two 2</td>
+      <td>Three 2</td>
+    </tr>
+    <tr>
+      <td>One 3</td>
+      <td>Two 3</td>
+      <td>Three 3</td>
+    </tr>
+    <tr>
+      <td>One 4</td>
+      <td>Two 4</td>
+      <td>Three 4</td>
+    </tr>
+    <tr>
+      <td>One 5</td>
+      <td>Two 5</td>
+      <td>Three 5</td>
+    </tr>
+    <!--v-if-->
+    <!--v-if-->
+  </tbody>
+  <tfoot>
+    <tr>
+      <td colspan=\\"3\\">
+        <ul class=\\"vst-pagination mt-3\\">
+          <li class=\\"vst-page-item disabled\\"><a class=\\"vst-page-link\\">←</a></li>
+          <li class=\\"vst-page-item\\"><a class=\\"vst-page-link\\">→</a></li>
+        </ul>
+      </td>
+    </tr>
+  </tfoot>
+</table>"
+`;

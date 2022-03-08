@@ -1,0 +1,9 @@
+// Vitest Snapshot v1
+
+exports[`mount component 1`] = `
+"<tr>
+  <td colspan=\\"7\\" class=\\"vst-loading-row vst-loading-row-11\\">
+    <div></div>
+  </td>
+</tr>"
+`;
