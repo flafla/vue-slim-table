@@ -19,7 +19,6 @@ exports[`empty async data > shows default no records text 1`] = `
     <tr>
       <td colspan=\\"3\\"> No records found </td>
     </tr>
-    <!--v-if-->
   </tbody>
   <tfoot>
     <tr>
@@ -50,7 +49,6 @@ exports[`empty async data > shows replaced row:empty slot 1`] = `
     <tr>
       <td colspan=\\"5\\">no data found</td>
     </tr>
-    <!--v-if-->
   </tbody>
   <tfoot>
     <tr>
@@ -103,8 +101,6 @@ exports[`pagination > next page > click 1`] = `
       <td>Two 10</td>
       <td>Three 10</td>
     </tr>
-    <!--v-if-->
-    <!--v-if-->
   </tbody>
   <tfoot>
     <tr>
@@ -150,8 +146,6 @@ exports[`pagination > next page > click to last page 1`] = `
       <td>Two 13</td>
       <td>Three 13</td>
     </tr>
-    <!--v-if-->
-    <!--v-if-->
   </tbody>
   <tfoot>
     <tr>
@@ -207,8 +201,6 @@ exports[`rendering data > render first page 1`] = `
       <td>Two 5</td>
       <td>Three 5</td>
     </tr>
-    <!--v-if-->
-    <!--v-if-->
   </tbody>
   <tfoot>
     <tr>

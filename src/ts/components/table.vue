@@ -6,7 +6,7 @@
           v-for="column in columns"
           :key="column.key"
           :class="['vst-th', { 'vst-orderable': column.orderable }]"
-          @click.prevent="column.orderable ? onOrderClick(column.key) : null">
+          @click.self.self="column.orderable ? onOrderClick(column.key) : null">
           <slot
             :name="`head:${column.key}`"
             :column="column">
@@ -20,29 +20,14 @@
       </tr>
     </thead>
     <tbody>
-      <slot
-        v-for="(row, i) in rows"
-        name="row"
-        :row="row"
-        :index="i"
-        :columns="columns">
-        <tr :key="row['id'] || i">
-          <td
-            v-for="column in columns"
-            :key="column.key">
-            <slot
-              :name="`cell:${column.key}`"
-              :row="row"
-              :value="row[column.key]"
-              :column="column"
-              :index="i">
-              {{ row[column.key] }}
-            </slot>
-          </td>
-        </tr>
+      <slot v-if="isSyncing" name="row:loading">
+        <LoadingRow
+          v-for="i in perPage"
+          :key="`loadingRow${i}`"
+          :columns-length="columns.length" />
       </slot>
 
-      <slot v-if="syncState === 'fetched' && rows.length === 0" name="row:empty">
+      <slot v-else-if="isSynced && rows.value.length === 0" name="row:empty">
         <tr>
           <td :colspan="columns.length">
             No records found
@@ -50,29 +35,46 @@
         </tr>
       </slot>
 
-      <slot v-if="syncState === 'syncing'" name="row:loading">
-        <LoadingRow
-          v-for="i in perPage"
-          :key="`loadingRow${i}`"
-          :columns-length="columns.length" />
-      </slot>
+      <template v-else-if="isSynced && rows.value.length">
+        <slot
+          v-for="(row, i) in rows.value"
+          name="row"
+          :row="row"
+          :index="i"
+          :columns="columns">
+          <tr :key="row['id'] || i">
+            <td
+              v-for="column in columns"
+              :key="column.key">
+              <slot
+                :name="`cell:${column.key}`"
+                :row="row"
+                :value="row[column.key]"
+                :column="column"
+                :index="i">
+                {{ row[column.key] }}
+              </slot>
+            </td>
+          </tr>
+        </slot>
+      </template>
     </tbody>
     <tfoot>
       <tr>
         <td :colspan="columns.length">
-          <slot name="pagination" :page="page" :rows="rows">
+          <slot name="pagination" :page="page" :rows="rows.value">
             <ul
-              v-if="page > 1 || rows.length === perPage || syncState === 'syncing'"
+              v-if="page > 1 || rows.value.length === perPage || isSyncing"
               class="vst-pagination mt-3">
-              <li :class="['vst-page-item', { disabled: page === 1 || syncState === 'syncing' }]">
-                <a class="vst-page-link" @click.prevent="page -= 1">←</a>
+              <li :class="['vst-page-item', { disabled: page === 1 || isSyncing }]">
+                <a class="vst-page-link" @click.prevent="prevPage">←</a>
               </li>
 
               <li
                 :class="['vst-page-item', {
-                  disabled: rows.length < perPage || syncState === 'syncing'
+                  disabled: rows.value.length < perPage || isSyncing
                 }]">
-                <a class="vst-page-link" @click.prevent="page += 1">→</a>
+                <a class="vst-page-link" @click.prevent="nextPage">→</a>
               </li>
             </ul>
           </slot>
@@ -83,9 +85,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { shallowRef, ShallowRef } from 'vue'
 import qs from 'qs'
 import LoadingRow from './loading_row.vue'
+
+import useFilterable from '../use/filterable.ts'
 
 interface TableColumn {
   key: string
@@ -116,22 +120,9 @@ const props = withDefaults(defineProps<TableProps>(), {
   perPage: 25,
 })
 
-const page = ref(1)
-const rows = ref([])
-const syncState = ref('initial')
-const orders = ref({} as TableOrders)
+const orders: ShallowRef<TableOrders> = shallowRef({})
 
-const fetchData = async function fetchData1(pg = 1) {
-  const params: TableFetchParams = { per_page: props.perPage, page: pg }
-
-  const orderKeys = Object.keys(orders.value)
-  if (orderKeys.length) {
-    params.order = orderKeys.map((key) => ({ field: key, direction: orders.value[key] }))
-  }
-
-  syncState.value = 'syncing'
-  rows.value = []
-
+const fetchData = async function fetchData1(params: TableFetchParams) {
   let data
   if (typeof props.source === 'string') {
     const response = await fetch(`${props.source}?${qs.stringify(params, { arrayFormat: 'brackets' })}`)
@@ -140,8 +131,7 @@ const fetchData = async function fetchData1(pg = 1) {
     data = await props.source(params)
   }
 
-  rows.value = data
-  syncState.value = 'fetched'
+  return data
 }
 
 const onOrderClick = (key: string) => {
@@ -154,23 +144,12 @@ const onOrderClick = (key: string) => {
   }
 }
 
-const refetch = () => {
-  if (page.value === 1) {
-    fetchData(1)
-  } else {
-    page.value = 1
-  }
-}
-
-const reload = () => {
-  fetchData(page.value)
-}
-
-watch(page, fetchData)
-watch(orders, refetch)
-watch(() => props.perPage, refetch)
-
-fetchData()
+const {
+  page, isSyncing, isSynced, prevPage, nextPage, reload, refetch, items: rows,
+} = useFilterable({
+  initialFilters: { per_page: props.perPage, orders },
+  loadItems: fetchData,
+})
 
 defineExpose({
   refetch,

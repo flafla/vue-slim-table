@@ -27,6 +27,7 @@ describe('empty async data', () => {
     })
 
     await nextTick()
+    await nextTick()
 
     expect(wrapper.get('table tbody').text()).toContain('No records found')
     expect(wrapper.html()).toMatchSnapshot()
@@ -43,6 +44,7 @@ describe('empty async data', () => {
     })
 
     await nextTick()
+    await nextTick()
 
     expect(wrapper.get('table tbody').text()).toContain(noData)
     expect(wrapper.html()).toMatchSnapshot()
@@ -57,6 +59,7 @@ describe('rendering data', () => {
 
     expect(wrapper.findAll('.vst-loading-row').length).toBe(perPage)
 
+    await nextTick()
     await nextTick()
 
     expect(wrapper.html()).toMatchSnapshot()
@@ -77,6 +80,7 @@ describe('pagination', () => {
       expect(nextLink.element.classList.contains('disabled')).toBe(true)
 
       await nextTick()
+      await nextTick()
 
       expect(prevLink.element.classList.contains('disabled')).toBe(true)
       expect(nextLink.element.classList.contains('disabled')).toBe(false)
@@ -95,6 +99,7 @@ describe('pagination', () => {
       expect(prevLink.element.classList.contains('disabled')).toBe(true)
       expect(nextLink.element.classList.contains('disabled')).toBe(true)
 
+      await nextTick()
       await nextTick()
 
       expect(wrapper.findAll('.vst-page-item').length).toBe(0)
