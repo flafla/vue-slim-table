@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils'
-import LoadingRow from '../../src/ts/components/loading_row.vue'
+import LoadingRow from '@/ts/components/loading_row.vue'
 
 test('mount component', async() => {
   const origRandom = Math.random

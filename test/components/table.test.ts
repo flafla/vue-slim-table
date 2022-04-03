@@ -1,6 +1,6 @@
 import { nextTick, defineComponent } from 'vue'
 import { mount } from '@vue/test-utils'
-import Table from '../../src/ts/components/table.vue'
+import Table from '@/ts/components/table.vue'
 
 const perPage = 5
 const columns = [

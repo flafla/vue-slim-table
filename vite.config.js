@@ -1,22 +1,31 @@
 import vue from '@vitejs/plugin-vue'
-const path = require('path')
-const { defineConfig } = require('vite')
+import path from 'path'
+import dts from 'vite-plugin-dts'
+import { defineConfig } from 'vite'
 
 module.exports = defineConfig({
-  plugins: [vue()],
+  plugins: [
+    vue(),
+    dts({
+      outputDir: 'dist/types'
+    })
+  ],
+  resolve: {
+    dedupe: ['vue'],
+    alias: {
+      '@': path.resolve(__dirname, 'src')
+    }
+  },
   build: {
     lib: {
       entry: path.resolve(__dirname, 'src/ts/index.ts'),
       name: 'VueSlimTable',
+      formats: ['es', 'umd'],
       fileName: (format) => `vst.${format}.js`
     },
     rollupOptions: {
-      // make sure to externalize deps that shouldn't be bundled
-      // into your library
       external: ['vue'],
       output: {
-        // Provide global variables to use in the UMD build
-        // for externalized deps
         globals: {
           vue: 'Vue'
         }

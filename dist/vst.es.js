@@ -1,4 +1,20 @@
-import { defineComponent, openBlock, createElementBlock, createElementVNode, normalizeClass, ref, watch, Fragment, renderList, withModifiers, renderSlot, createTextVNode, toDisplayString, createCommentVNode, createBlock } from "vue";
+var __defProp = Object.defineProperty;
+var __getOwnPropSymbols = Object.getOwnPropertySymbols;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __propIsEnum = Object.prototype.propertyIsEnumerable;
+var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __spreadValues = (a, b) => {
+  for (var prop in b || (b = {}))
+    if (__hasOwnProp.call(b, prop))
+      __defNormalProp(a, prop, b[prop]);
+  if (__getOwnPropSymbols)
+    for (var prop of __getOwnPropSymbols(b)) {
+      if (__propIsEnum.call(b, prop))
+        __defNormalProp(a, prop, b[prop]);
+    }
+  return a;
+};
+import { defineComponent, openBlock, createElementBlock, createElementVNode, normalizeClass, computed, ref, reactive, isReactive, watch, shallowRef, Fragment, renderList, withModifiers, renderSlot, createTextVNode, toDisplayString, unref, createCommentVNode, createBlock } from "vue";
 var index = "";
 function getAugmentedNamespace(n) {
   if (n.__esModule)
@@ -1669,6 +1685,52 @@ const _sfc_main$1 = /* @__PURE__ */ defineComponent({
     };
   }
 });
+const useFilterable = ({ initialFilters, loadItems }) => {
+  const page = ref(1);
+  const items = reactive({ value: [] });
+  const syncState = ref("initial");
+  const reactiveInitialFilters = isReactive(initialFilters) ? initialFilters : reactive({ value: initialFilters });
+  const filters = computed(() => __spreadValues({
+    page: page.value
+  }, reactiveInitialFilters.value));
+  const load = () => {
+    syncState.value = "syncing";
+    loadItems(filters.value).then((res) => {
+      items.value = res;
+      syncState.value = "synced";
+    }).catch(() => {
+      items.value = [];
+      syncState.value = "failed";
+    });
+  };
+  watch(filters, () => {
+    load();
+  });
+  load();
+  return {
+    page,
+    items,
+    syncState,
+    nextPage: () => {
+      page.value += 1;
+    },
+    prevPage: () => {
+      page.value -= 1;
+    },
+    isSyncing: computed(() => syncState.value === "syncing"),
+    isSynced: computed(() => syncState.value === "synced"),
+    reload: () => {
+      load();
+    },
+    refetch: () => {
+      if (page.value === 1) {
+        load();
+      } else {
+        page.value = 1;
+      }
+    }
+  };
+};
 const _hoisted_1 = { class: "vst" };
 const _hoisted_2 = { key: 0 };
 const _hoisted_3 = ["onClick"];
@@ -1686,18 +1748,8 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
   },
   setup(__props, { expose }) {
     const props = __props;
-    const page = ref(1);
-    const rows = ref([]);
-    const syncState = ref("initial");
-    const orders = ref({});
-    const fetchData = async function fetchData1(pg = 1) {
-      const params = { per_page: props.perPage, page: pg };
-      const orderKeys = Object.keys(orders.value);
-      if (orderKeys.length) {
-        params.order = orderKeys.map((key) => ({ field: key, direction: orders.value[key] }));
-      }
-      syncState.value = "syncing";
-      rows.value = [];
+    const orders = shallowRef({});
+    const fetchData = async function fetchData1(params) {
       let data;
       if (typeof props.source === "string") {
         const response = await fetch(`${props.source}?${lib.stringify(params, { arrayFormat: "brackets" })}`);
@@ -1705,8 +1757,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
       } else {
         data = await props.source(params);
       }
-      rows.value = data;
-      syncState.value = "fetched";
+      return data;
     };
     const onOrderClick = (key) => {
       if (orders.value[key] === "asc") {
@@ -1717,20 +1768,19 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
         orders.value = { [key]: "asc" };
       }
     };
-    const refetch = () => {
-      if (page.value === 1) {
-        fetchData(1);
-      } else {
-        page.value = 1;
-      }
-    };
-    const reload = () => {
-      fetchData(page.value);
-    };
-    watch(page, fetchData);
-    watch(orders, refetch);
-    watch(() => props.perPage, refetch);
-    fetchData();
+    const {
+      page,
+      isSyncing,
+      isSynced,
+      prevPage,
+      nextPage,
+      reload,
+      refetch,
+      items: rows
+    } = useFilterable({
+      initialFilters: { per_page: props.perPage, orders },
+      loadItems: fetchData
+    });
     expose({
       refetch,
       reload,
@@ -1744,7 +1794,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
               return openBlock(), createElementBlock("th", {
                 key: column.key,
                 class: normalizeClass(["vst-th", { "vst-orderable": column.orderable }]),
-                onClick: withModifiers(($event) => column.orderable ? onOrderClick(column.key) : null, ["prevent"])
+                onClick: withModifiers(($event) => column.orderable ? onOrderClick(column.key) : null, ["self", "self"])
               }, [
                 renderSlot(_ctx.$slots, `head:${column.key}`, { column }, () => [
                   createTextVNode(toDisplayString(column.title), 1)
@@ -1752,14 +1802,27 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                 column.orderable ? (openBlock(), createElementBlock("a", {
                   key: 0,
                   href: "#",
-                  class: normalizeClass(`vst-orderable-toggle ${orders.value[column.key] || ""}`)
+                  class: normalizeClass(`vst-orderable-toggle ${unref(orders)[column.key] || ""}`)
                 }, null, 2)) : createCommentVNode("", true)
               ], 10, _hoisted_3);
             }), 128))
           ])
         ])) : createCommentVNode("", true),
         createElementVNode("tbody", null, [
-          (openBlock(true), createElementBlock(Fragment, null, renderList(rows.value, (row, i) => {
+          unref(isSyncing) ? renderSlot(_ctx.$slots, "row:loading", { key: 0 }, () => [
+            (openBlock(true), createElementBlock(Fragment, null, renderList(__props.perPage, (i) => {
+              return openBlock(), createBlock(_sfc_main$1, {
+                key: `loadingRow${i}`,
+                "columns-length": __props.columns.length
+              }, null, 8, ["columns-length"]);
+            }), 128))
+          ]) : unref(isSynced) && unref(rows).value.length === 0 ? renderSlot(_ctx.$slots, "row:empty", { key: 1 }, () => [
+            createElementVNode("tr", null, [
+              createElementVNode("td", {
+                colspan: __props.columns.length
+              }, " No records found ", 8, _hoisted_4)
+            ])
+          ]) : unref(isSynced) && unref(rows).value.length ? (openBlock(true), createElementBlock(Fragment, { key: 2 }, renderList(unref(rows).value, (row, i) => {
             return renderSlot(_ctx.$slots, "row", {
               row,
               index: i,
@@ -1784,22 +1847,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                 }), 128))
               ]))
             ]);
-          }), 256)),
-          syncState.value === "fetched" && rows.value.length === 0 ? renderSlot(_ctx.$slots, "row:empty", { key: 0 }, () => [
-            createElementVNode("tr", null, [
-              createElementVNode("td", {
-                colspan: __props.columns.length
-              }, " No records found ", 8, _hoisted_4)
-            ])
-          ]) : createCommentVNode("", true),
-          syncState.value === "syncing" ? renderSlot(_ctx.$slots, "row:loading", { key: 1 }, () => [
-            (openBlock(true), createElementBlock(Fragment, null, renderList(__props.perPage, (i) => {
-              return openBlock(), createBlock(_sfc_main$1, {
-                key: `loadingRow${i}`,
-                "columns-length": __props.columns.length
-              }, null, 8, ["columns-length"]);
-            }), 128))
-          ]) : createCommentVNode("", true)
+          }), 256)) : createCommentVNode("", true)
         ]),
         createElementVNode("tfoot", null, [
           createElementVNode("tr", null, [
@@ -1807,26 +1855,26 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
               colspan: __props.columns.length
             }, [
               renderSlot(_ctx.$slots, "pagination", {
-                page: page.value,
-                rows: rows.value
+                page: unref(page),
+                rows: unref(rows).value
               }, () => [
-                page.value > 1 || rows.value.length === __props.perPage || syncState.value === "syncing" ? (openBlock(), createElementBlock("ul", _hoisted_6, [
+                unref(page) > 1 || unref(rows).value.length === __props.perPage || unref(isSyncing) ? (openBlock(), createElementBlock("ul", _hoisted_6, [
                   createElementVNode("li", {
-                    class: normalizeClass(["vst-page-item", { disabled: page.value === 1 || syncState.value === "syncing" }])
+                    class: normalizeClass(["vst-page-item", { disabled: unref(page) === 1 || unref(isSyncing) }])
                   }, [
                     createElementVNode("a", {
                       class: "vst-page-link",
-                      onClick: _cache[0] || (_cache[0] = withModifiers(($event) => page.value -= 1, ["prevent"]))
+                      onClick: _cache[0] || (_cache[0] = withModifiers((...args) => unref(prevPage) && unref(prevPage)(...args), ["prevent"]))
                     }, "\u2190")
                   ], 2),
                   createElementVNode("li", {
                     class: normalizeClass(["vst-page-item", {
-                      disabled: rows.value.length < __props.perPage || syncState.value === "syncing"
+                      disabled: unref(rows).value.length < __props.perPage || unref(isSyncing)
                     }])
                   }, [
                     createElementVNode("a", {
                       class: "vst-page-link",
-                      onClick: _cache[1] || (_cache[1] = withModifiers(($event) => page.value += 1, ["prevent"]))
+                      onClick: _cache[1] || (_cache[1] = withModifiers((...args) => unref(nextPage) && unref(nextPage)(...args), ["prevent"]))
                     }, "\u2192")
                   ], 2)
                 ])) : createCommentVNode("", true)

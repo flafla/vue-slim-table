@@ -89,7 +89,7 @@ import { shallowRef, ShallowRef } from 'vue'
 import qs from 'qs'
 import LoadingRow from './loading_row.vue'
 
-import useFilterable from '../use/filterable.ts'
+import useFilterable from '../use/filterable'
 
 interface TableColumn {
   key: string
