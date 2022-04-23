@@ -1,6 +1,7 @@
 <template>
   <table class="vst">
     <thead v-if="columns.length">
+      <slot name="thead:before" :columns="columns" />
       <tr>
         <th
           v-for="column in columns"
@@ -28,6 +29,7 @@
           </slot>
         </th>
       </tr>
+      <slot name="thead:after" :columns="columns" />
     </thead>
     <tbody>
       <slot v-if="isSyncing" name="row:loading">

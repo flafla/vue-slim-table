@@ -14,7 +14,7 @@ var __spreadValues = (a, b) => {
     }
   return a;
 };
-import { defineComponent, openBlock, createElementBlock, createElementVNode, normalizeClass, computed, ref, reactive, isReactive, watch, shallowRef, Fragment, renderList, renderSlot, createTextVNode, toDisplayString, unref, createCommentVNode, createBlock, withModifiers } from "vue";
+import { defineComponent, openBlock, createElementBlock, createElementVNode, normalizeClass, computed, ref, reactive, isReactive, watch, shallowRef, renderSlot, Fragment, renderList, createTextVNode, toDisplayString, unref, createCommentVNode, createBlock, withModifiers } from "vue";
 var index = "";
 function getAugmentedNamespace(n) {
   if (n.__esModule)
@@ -1790,6 +1790,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
     return (_ctx, _cache) => {
       return openBlock(), createElementBlock("table", _hoisted_1, [
         __props.columns.length ? (openBlock(), createElementBlock("thead", _hoisted_2, [
+          renderSlot(_ctx.$slots, "thead:before", { columns: __props.columns }),
           createElementVNode("tr", null, [
             (openBlock(true), createElementBlock(Fragment, null, renderList(__props.columns, (column) => {
               return openBlock(), createElementBlock("th", {
@@ -1814,7 +1815,8 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                 ])
               ], 10, _hoisted_3);
             }), 128))
-          ])
+          ]),
+          renderSlot(_ctx.$slots, "thead:after", { columns: __props.columns })
         ])) : createCommentVNode("", true),
         createElementVNode("tbody", null, [
           unref(isSyncing) ? renderSlot(_ctx.$slots, "row:loading", { key: 0 }, () => [
