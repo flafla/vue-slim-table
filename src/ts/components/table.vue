@@ -98,10 +98,10 @@
 
 <script setup lang="ts">
 import { shallowRef, ShallowRef } from 'vue'
-import qs from 'qs'
 import LoadingRow from './loading_row.vue'
 
 import useFilterable from '../use/filterable'
+import toQueryString from '../helpers/to_query_string'
 
 interface TableColumn {
   key: string
@@ -137,7 +137,7 @@ const orders: ShallowRef<TableOrders> = shallowRef({})
 const fetchData = async (params: TableFetchParams) => {
   let data
   if (typeof props.source === 'string') {
-    const response = await fetch(`${props.source}?${qs.stringify(params, { arrayFormat: 'brackets' })}`)
+    const response = await fetch(`${props.source}?${toQueryString(params)}`)
     data = await response.json()
   } else {
     data = await props.source(params)

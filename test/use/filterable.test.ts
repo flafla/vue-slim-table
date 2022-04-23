@@ -1,6 +1,6 @@
 import { expect, test, vi } from 'vitest'
 
-import useFilterable, { SYNC_STATES } from '@/ts/use/filterable'
+import useFilterable from '@/ts/use/filterable'
 
 const columns = [
   { key: 'one', title: 'One' },

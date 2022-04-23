@@ -1,6 +1,6 @@
 {
   "name": "vue-slim-tables",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "files": [
     "dist"
   ],
@@ -12,7 +12,7 @@
       "require": "./dist/vst.umd.js"
     },
     "./stylesheets": "dist/style.css",
-    "./src/ts": "./src/ts/index.ts",
+    "./src/ts/index": "./src/ts/index.ts",
     "./filterable": "./src/ts/use/filterable"
   },
   "scripts": {
@@ -52,7 +52,6 @@
     "vue-eslint-parser": "^8.3.0"
   },
   "dependencies": {
-    "qs": "^6.10.2",
     "vue": "^3.2.31"
   },
   "types": "dist/types/index.d.ts"
