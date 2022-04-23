@@ -4,15 +4,9 @@ exports[`empty async data > shows default no records text 1`] = `
 "<table class=\\"vst\\">
   <thead>
     <tr>
-      <th class=\\"vst-th\\">One
-        <!--v-if-->
-      </th>
-      <th class=\\"vst-th\\">Two
-        <!--v-if-->
-      </th>
-      <th class=\\"vst-th\\">Three
-        <!--v-if-->
-      </th>
+      <th class=\\"vst-th\\">One</th>
+      <th class=\\"vst-th\\">Two</th>
+      <th class=\\"vst-th\\">Three</th>
     </tr>
   </thead>
   <tbody>
@@ -34,15 +28,9 @@ exports[`empty async data > shows replaced row:empty slot 1`] = `
 "<table class=\\"vst\\">
   <thead>
     <tr>
-      <th class=\\"vst-th\\">One
-        <!--v-if-->
-      </th>
-      <th class=\\"vst-th\\">Two
-        <!--v-if-->
-      </th>
-      <th class=\\"vst-th\\">Three
-        <!--v-if-->
-      </th>
+      <th class=\\"vst-th\\">One</th>
+      <th class=\\"vst-th\\">Two</th>
+      <th class=\\"vst-th\\">Three</th>
     </tr>
   </thead>
   <tbody>
@@ -64,15 +52,9 @@ exports[`pagination > next page > click 1`] = `
 "<table class=\\"vst\\">
   <thead>
     <tr>
-      <th class=\\"vst-th\\">One
-        <!--v-if-->
-      </th>
-      <th class=\\"vst-th\\">Two
-        <!--v-if-->
-      </th>
-      <th class=\\"vst-th\\">Three
-        <!--v-if-->
-      </th>
+      <th class=\\"vst-th\\">One</th>
+      <th class=\\"vst-th\\">Two</th>
+      <th class=\\"vst-th\\">Three</th>
     </tr>
   </thead>
   <tbody>
@@ -119,15 +101,9 @@ exports[`pagination > next page > click to last page 1`] = `
 "<table class=\\"vst\\">
   <thead>
     <tr>
-      <th class=\\"vst-th\\">One
-        <!--v-if-->
-      </th>
-      <th class=\\"vst-th\\">Two
-        <!--v-if-->
-      </th>
-      <th class=\\"vst-th\\">Three
-        <!--v-if-->
-      </th>
+      <th class=\\"vst-th\\">One</th>
+      <th class=\\"vst-th\\">Two</th>
+      <th class=\\"vst-th\\">Three</th>
     </tr>
   </thead>
   <tbody>
@@ -164,15 +140,9 @@ exports[`rendering data > render first page 1`] = `
 "<table class=\\"vst\\">
   <thead>
     <tr>
-      <th class=\\"vst-th\\">One
-        <!--v-if-->
-      </th>
-      <th class=\\"vst-th\\">Two
-        <!--v-if-->
-      </th>
-      <th class=\\"vst-th\\">Three
-        <!--v-if-->
-      </th>
+      <th class=\\"vst-th\\">One</th>
+      <th class=\\"vst-th\\">Two</th>
+      <th class=\\"vst-th\\">Three</th>
     </tr>
   </thead>
   <tbody>

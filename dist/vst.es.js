@@ -14,7 +14,7 @@ var __spreadValues = (a, b) => {
     }
   return a;
 };
-import { defineComponent, openBlock, createElementBlock, createElementVNode, normalizeClass, computed, ref, reactive, isReactive, watch, shallowRef, Fragment, renderList, withModifiers, renderSlot, createTextVNode, toDisplayString, unref, createCommentVNode, createBlock } from "vue";
+import { defineComponent, openBlock, createElementBlock, createElementVNode, normalizeClass, computed, ref, reactive, isReactive, watch, shallowRef, Fragment, renderList, renderSlot, createTextVNode, toDisplayString, unref, createCommentVNode, createBlock, withModifiers } from "vue";
 var index = "";
 function getAugmentedNamespace(n) {
   if (n.__esModule)
@@ -1734,9 +1734,10 @@ const useFilterable = ({ initialFilters, loadItems }) => {
 const _hoisted_1 = { class: "vst" };
 const _hoisted_2 = { key: 0 };
 const _hoisted_3 = ["onClick"];
-const _hoisted_4 = ["colspan"];
+const _hoisted_4 = { key: 0 };
 const _hoisted_5 = ["colspan"];
-const _hoisted_6 = {
+const _hoisted_6 = ["colspan"];
+const _hoisted_7 = {
   key: 0,
   class: "vst-pagination mt-3"
 };
@@ -1794,16 +1795,23 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
               return openBlock(), createElementBlock("th", {
                 key: column.key,
                 class: normalizeClass(["vst-th", { "vst-orderable": column.orderable }]),
-                onClick: withModifiers(($event) => column.orderable ? onOrderClick(column.key) : null, ["self", "self"])
+                onClick: ($event) => column.orderable ? onOrderClick(column.key) : null
               }, [
-                renderSlot(_ctx.$slots, `head:${column.key}`, { column }, () => [
+                column.orderable ? (openBlock(), createElementBlock("div", _hoisted_4, [
+                  renderSlot(_ctx.$slots, `head:${column.key}`, { column }, () => [
+                    createTextVNode(toDisplayString(column.title), 1)
+                  ]),
+                  column.orderable ? (openBlock(), createElementBlock("a", {
+                    key: 0,
+                    href: "#",
+                    class: normalizeClass(`vst-orderable-toggle ${unref(orders)[column.key] || ""}`)
+                  }, null, 2)) : createCommentVNode("", true)
+                ])) : renderSlot(_ctx.$slots, `head:${column.key}`, {
+                  key: 1,
+                  column
+                }, () => [
                   createTextVNode(toDisplayString(column.title), 1)
-                ]),
-                column.orderable ? (openBlock(), createElementBlock("a", {
-                  key: 0,
-                  href: "#",
-                  class: normalizeClass(`vst-orderable-toggle ${unref(orders)[column.key] || ""}`)
-                }, null, 2)) : createCommentVNode("", true)
+                ])
               ], 10, _hoisted_3);
             }), 128))
           ])
@@ -1820,7 +1828,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
             createElementVNode("tr", null, [
               createElementVNode("td", {
                 colspan: __props.columns.length
-              }, " No records found ", 8, _hoisted_4)
+              }, " No records found ", 8, _hoisted_5)
             ])
           ]) : unref(isSynced) && unref(rows).value.length ? (openBlock(true), createElementBlock(Fragment, { key: 2 }, renderList(unref(rows).value, (row, i) => {
             return renderSlot(_ctx.$slots, "row", {
@@ -1858,7 +1866,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                 page: unref(page),
                 rows: unref(rows).value
               }, () => [
-                unref(page) > 1 || unref(rows).value.length === __props.perPage || unref(isSyncing) ? (openBlock(), createElementBlock("ul", _hoisted_6, [
+                unref(page) > 1 || unref(rows).value.length === __props.perPage || unref(isSyncing) ? (openBlock(), createElementBlock("ul", _hoisted_7, [
                   createElementVNode("li", {
                     class: normalizeClass(["vst-page-item", { disabled: unref(page) === 1 || unref(isSyncing) }])
                   }, [
@@ -1879,7 +1887,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                   ], 2)
                 ])) : createCommentVNode("", true)
               ])
-            ], 8, _hoisted_5)
+            ], 8, _hoisted_6)
           ])
         ])
       ]);

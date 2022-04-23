@@ -6,16 +6,26 @@
           v-for="column in columns"
           :key="column.key"
           :class="['vst-th', { 'vst-orderable': column.orderable }]"
-          @click.self.self="column.orderable ? onOrderClick(column.key) : null">
+          @click="column.orderable ? onOrderClick(column.key) : null">
+          <div v-if="column.orderable">
+            <slot
+              :name="`head:${column.key}`"
+              :column="column">
+              {{ column.title }}
+            </slot>
+
+            <a
+              v-if="column.orderable"
+              href="#"
+              :class="`vst-orderable-toggle ${orders[column.key] || ''}`" />
+          </div>
+
           <slot
+            v-else
             :name="`head:${column.key}`"
             :column="column">
             {{ column.title }}
           </slot>
-          <a
-            v-if="column.orderable"
-            href="#"
-            :class="`vst-orderable-toggle ${orders[column.key] || ''}`" />
         </th>
       </tr>
     </thead>

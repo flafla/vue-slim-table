@@ -10,7 +10,7 @@
       "require": "./dist/vst.umd.js"
     },
     "./stylesheets": "dist/style.css",
-    "./src/ts": "./src/ts",
+    "./src/ts": "./src/ts/index.ts",
     "./filterable": "./src/ts/use/filterable"
   },
   "scripts": {

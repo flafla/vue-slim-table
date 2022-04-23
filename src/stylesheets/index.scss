@@ -8,33 +8,38 @@
     line-height: 20px;
   }
 
-  &-orderable:hover {
-    cursor: pointer;
+  &-orderable div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &:hover {
+      cursor: pointer;
+
+      .vst-orderable-toggle {
+        color: #555 !important;
+      }
+    }
 
     .vst-orderable-toggle {
-      color: #555 !important;
-    }
-  }
+      font-size: 20px;
+      color: #ccc !important;
 
-  &-orderable-toggle {
-    font-size: 20px;
-    float: right;
-    color: #ccc !important;
+      &:after {
+        content: " \2194";
+        display: inline-block;
+        transform: rotate(-90deg);
+      }
 
-    &:after {
-      content: " \2194";
-      display: inline-block;
-      transform: rotate(-90deg);
-    }
+      &.desc:after {
+        content: " \2191";
+        transform: rotate(0);
+      }
 
-    &.desc:after {
-      content: " \2191";
-      transform: rotate(0);
-    }
-
-    &.asc:after {
-      content: " \2193";
-      transform: rotate(0);
+      &.asc:after {
+        content: " \2193";
+        transform: rotate(0);
+      }
     }
   }
 
