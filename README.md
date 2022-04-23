@@ -9,7 +9,7 @@ npm install vue-slim-tables
 
 ```html
 <template>
-    <VueSlimTables :columns="columns" remote="/users" />
+    <VueSlimTables :columns="columns" source="/users" />
 </template>
 
 <script>
@@ -48,5 +48,5 @@ npm install vue-slim-tables
 | #row:loading | - | Rewrite loading table rows markup |
 | #cell:${column.key} | { row, index, column, value } | Rewrite cell with custom html |
 | #pagination | { page, rows } | Rewrite pagination with your own implementation |
-| #thead:before | { columns } | Ability to render content before base header |
-| #thead:after | { columns } | Ability to render content after base header |
+| #thead:before | { columns } | Render row before base header |
+| #thead:after | { columns } | Render row after base header |
