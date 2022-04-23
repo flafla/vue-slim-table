@@ -1685,27 +1685,31 @@ const _sfc_main$1 = /* @__PURE__ */ defineComponent({
     };
   }
 });
+const SYNC_STATES = {
+  INITIAL: "initial",
+  SYNCING: "syncing",
+  SYNCED: "synced",
+  FAILED: "failed"
+};
 const useFilterable = ({ initialFilters, loadItems }) => {
   const page = ref(1);
   const items = reactive({ value: [] });
-  const syncState = ref("initial");
+  const syncState = ref(SYNC_STATES.INITIAL);
   const reactiveInitialFilters = isReactive(initialFilters) ? initialFilters : reactive({ value: initialFilters });
   const filters = computed(() => __spreadValues({
     page: page.value
   }, reactiveInitialFilters.value));
   const load = () => {
-    syncState.value = "syncing";
-    loadItems(filters.value).then((res) => {
+    syncState.value = SYNC_STATES.SYNCING;
+    return loadItems(filters.value).then((res) => {
       items.value = res;
-      syncState.value = "synced";
+      syncState.value = SYNC_STATES.SYNCED;
     }).catch(() => {
       items.value = [];
-      syncState.value = "failed";
+      syncState.value = SYNC_STATES.FAILED;
     });
   };
-  watch(filters, () => {
-    load();
-  });
+  watch(filters, load);
   load();
   return {
     page,
@@ -1717,8 +1721,9 @@ const useFilterable = ({ initialFilters, loadItems }) => {
     prevPage: () => {
       page.value -= 1;
     },
-    isSyncing: computed(() => syncState.value === "syncing"),
-    isSynced: computed(() => syncState.value === "synced"),
+    isSyncing: computed(() => syncState.value === SYNC_STATES.SYNCING),
+    isSynced: computed(() => syncState.value === SYNC_STATES.SYNCED),
+    isFailed: computed(() => syncState.value === SYNC_STATES.FAILED),
     reload: () => {
       load();
     },
@@ -1750,7 +1755,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
   setup(__props, { expose }) {
     const props = __props;
     const orders = shallowRef({});
-    const fetchData = async function fetchData1(params) {
+    const fetchData = async (params) => {
       let data;
       if (typeof props.source === "string") {
         const response = await fetch(`${props.source}?${lib.stringify(params, { arrayFormat: "brackets" })}`);
@@ -1805,7 +1810,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
                   column.orderable ? (openBlock(), createElementBlock("a", {
                     key: 0,
                     href: "#",
-                    class: normalizeClass(`vst-orderable-toggle ${unref(orders)[column.key] || ""}`)
+                    class: normalizeClass(["vst-orderable-toggle", unref(orders)[column.key]])
                   }, null, 2)) : createCommentVNode("", true)
                 ])) : renderSlot(_ctx.$slots, `head:${column.key}`, {
                   key: 1,
@@ -1897,3 +1902,4 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
   }
 });
 export { _sfc_main as default };
+//# sourceMappingURL=vst.es.js.map

@@ -20,6 +20,28 @@ const asyncSource = (params) => {
   return source.slice((params.page - 1) * params.per_page, params.page * params.per_page)
 }
 
+test('string source', async () => {
+  const unmockedFetch = global.fetch
+  global.fetch = () => {
+    return Promise.resolve({
+      json: () => Promise.resolve(asyncSource({ page: 1, per_page: 5 })),
+    })
+  }
+
+  const wrapper = mount(Table, {
+    props: { columns, source: 'https://example.com', perPage }
+  })
+
+  await nextTick()
+  await nextTick()
+  await nextTick()
+
+  expect(wrapper.html()).toMatchSnapshot()
+
+  global.fetch = unmockedFetch
+})
+
+
 describe('empty async data', () => {
   test('shows default no records text', async() => {
     const wrapper = mount(Table, {
@@ -139,5 +161,53 @@ describe('pagination', () => {
       const nextLink = wrapper.get('.vst-pagination li:last-child')
       expect(nextLink.element.classList.contains('disabled')).toBe(true)
     })
+  })
+})
+
+describe('ordering', () => {
+  beforeAll(() => {
+    columns[0].orderable = true
+  })
+
+  test('renders arrow', async () => {
+    const wrapper = mount(Table, {
+      props: { columns, source: asyncSource, perPage }
+    })
+
+    expect(wrapper.findAll('.vst-loading-row').length).toBe(perPage)
+
+    await nextTick()
+    await nextTick()
+
+    expect(wrapper.html()).toMatchSnapshot()
+  })
+
+  test('click arrow', async () => {
+    const wrapper = mount(Table, {
+      props: { columns, source: asyncSource, perPage }
+    })
+
+    expect(wrapper.findAll('.vst-loading-row').length).toBe(perPage)
+
+    await nextTick()
+    await nextTick()
+
+    await wrapper.get('.vst-orderable').trigger('click')
+    await nextTick()
+    await nextTick()
+
+    expect(wrapper.html()).toMatchSnapshot()
+
+    await wrapper.get('.vst-orderable').trigger('click')
+    await nextTick()
+    await nextTick()
+
+    expect(wrapper.html()).toMatchSnapshot()
+
+    await wrapper.get('.vst-orderable').trigger('click')
+    await nextTick()
+    await nextTick()
+
+    expect(wrapper.html()).toMatchSnapshot()
   })
 })

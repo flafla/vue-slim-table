@@ -30,6 +30,7 @@ module.exports = defineConfig({
           vue: 'Vue'
         }
       }
-    }
+    },
+    sourcemap: true
   }
 })

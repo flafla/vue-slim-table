@@ -5,11 +5,24 @@ import {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 interface Item { [key: string]: any }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const useFilterable = ({ initialFilters, loadItems }: { initialFilters: any, loadItems: any }) => {
+interface UseFiltetableArgs {
+  initialFilters: {
+    [key: string]: any // eslint-disable-line @typescript-eslint/no-explicit-any
+  },
+  loadItems: any // eslint-disable-line @typescript-eslint/no-explicit-any
+}
+
+const SYNC_STATES = {
+  INITIAL: 'initial',
+  SYNCING: 'syncing',
+  SYNCED: 'synced',
+  FAILED: 'failed',
+}
+
+const useFilterable = ({ initialFilters, loadItems }: UseFiltetableArgs) => {
   const page = ref(1)
   const items = reactive({ value: [] as Item[] })
-  const syncState = ref('initial')
+  const syncState = ref(SYNC_STATES.INITIAL)
   const reactiveInitialFilters = isReactive(initialFilters) ? initialFilters : reactive({ value: initialFilters })
 
   const filters = computed(() => ({
@@ -18,22 +31,20 @@ const useFilterable = ({ initialFilters, loadItems }: { initialFilters: any, loa
   }))
 
   const load = () => {
-    syncState.value = 'syncing'
+    syncState.value = SYNC_STATES.SYNCING
 
-    loadItems(filters.value)
+    return loadItems(filters.value)
       .then((res: Item[]) => {
         items.value = res
-        syncState.value = 'synced'
+        syncState.value = SYNC_STATES.SYNCED
       })
       .catch(() => {
         items.value = []
-        syncState.value = 'failed'
+        syncState.value = SYNC_STATES.FAILED
       })
   }
 
-  watch(filters, () => {
-    load()
-  })
+  watch(filters, load)
 
   load()
 
@@ -47,8 +58,9 @@ const useFilterable = ({ initialFilters, loadItems }: { initialFilters: any, loa
     prevPage: () => {
       page.value -= 1
     },
-    isSyncing: computed(() => syncState.value === 'syncing'),
-    isSynced: computed(() => syncState.value === 'synced'),
+    isSyncing: computed(() => syncState.value === SYNC_STATES.SYNCING),
+    isSynced: computed(() => syncState.value === SYNC_STATES.SYNCED),
+    isFailed: computed(() => syncState.value === SYNC_STATES.FAILED),
     reload: () => {
       load()
     },

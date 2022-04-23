@@ -18,7 +18,7 @@
             <a
               v-if="column.orderable"
               href="#"
-              :class="`vst-orderable-toggle ${orders[column.key] || ''}`" />
+              :class="['vst-orderable-toggle', orders[column.key]]" />
           </div>
 
           <slot
@@ -134,7 +134,7 @@ const props = withDefaults(defineProps<TableProps>(), {
 
 const orders: ShallowRef<TableOrders> = shallowRef({})
 
-const fetchData = async function fetchData1(params: TableFetchParams) {
+const fetchData = async (params: TableFetchParams) => {
   let data
   if (typeof props.source === 'string') {
     const response = await fetch(`${props.source}?${qs.stringify(params, { arrayFormat: 'brackets' })}`)
