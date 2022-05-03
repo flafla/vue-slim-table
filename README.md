@@ -42,11 +42,10 @@ npm install vue-slim-tables
 ### Slots
 | Slot | Props | Description |
 | - | - | - |
-| #head:${column.key} | { column } | Rewrite column thead with custom html |
+| #thead | { columns, orders } | Rewrite whole thead row |
+| #thead:${column.key} | { column } | Rewrite column thead with custom html |
 | #row | { row, index, columns } | Rewrite whole row |
 | #row:empty | - | Rewrite empty table row markup |
 | #row:loading | - | Rewrite loading table rows markup |
 | #cell:${column.key} | { row, index, column, value } | Rewrite cell with custom html |
 | #pagination | { page, rows } | Rewrite pagination with your own implementation |
-| #thead:before | { columns } | Render row before base header |
-| #thead:after | { columns } | Render row after base header |

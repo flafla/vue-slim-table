@@ -41,7 +41,6 @@ test('string source', async () => {
   global.fetch = unmockedFetch
 })
 
-
 describe('empty async data', () => {
   test('shows default no records text', async() => {
     const wrapper = mount(Table, {
@@ -85,6 +84,25 @@ describe('rendering data', () => {
     await nextTick()
 
     expect(wrapper.html()).toMatchSnapshot()
+  })
+})
+
+describe('slots', () => {
+  test('render thead', async () => {
+    const text = 'rewited table head'
+
+    const wrapper = mount(Table, {
+      props: { columns, source: () => [], perPage },
+      slots: {
+        thead: `<template #thead="{ columns }"><tr><td :colspan="columns.length">${text}</td></tr></template>`
+      }
+    })
+
+    await nextTick()
+    await nextTick()
+
+    expect(wrapper.html()).toMatchSnapshot()
+    expect(wrapper.get('thead tr').text()).toBe(text)
   })
 })
 
@@ -174,11 +192,10 @@ describe('ordering', () => {
       props: { columns, source: asyncSource, perPage }
     })
 
-    expect(wrapper.findAll('.vst-loading-row').length).toBe(perPage)
-
     await nextTick()
     await nextTick()
 
+    expect(wrapper.findAll('.vst-orderable').length).toBe(1)
     expect(wrapper.html()).toMatchSnapshot()
   })
 
@@ -187,27 +204,47 @@ describe('ordering', () => {
       props: { columns, source: asyncSource, perPage }
     })
 
-    expect(wrapper.findAll('.vst-loading-row').length).toBe(perPage)
-
     await nextTick()
     await nextTick()
 
-    await wrapper.get('.vst-orderable').trigger('click')
-    await nextTick()
-    await nextTick()
+    const arrowTh = wrapper.get('.vst-orderable')
+    expect(arrowTh.element._listeners.click).not.toBe(undefined)
 
-    expect(wrapper.html()).toMatchSnapshot()
+    const aTh = wrapper.get('.vst-orderable-toggle')
 
-    await wrapper.get('.vst-orderable').trigger('click')
-    await nextTick()
-    await nextTick()
+    expect(aTh.element.classList.contains('asc')).toBe(false)
+    expect(aTh.element.classList.contains('desc')).toBe(false)
 
-    expect(wrapper.html()).toMatchSnapshot()
-
-    await wrapper.get('.vst-orderable').trigger('click')
+    await arrowTh.trigger('click')
     await nextTick()
     await nextTick()
 
     expect(wrapper.html()).toMatchSnapshot()
+    expect(aTh.element.classList.contains('asc')).toBe(true)
+
+    await arrowTh.trigger('click')
+    await nextTick()
+    await nextTick()
+
+    expect(wrapper.html()).toMatchSnapshot()
+    expect(aTh.element.classList.contains('asc')).toBe(false)
+    expect(aTh.element.classList.contains('desc')).toBe(true)
+
+    await arrowTh.trigger('click')
+    await nextTick()
+    await nextTick()
+
+    expect(wrapper.html()).toMatchSnapshot()
+    expect(aTh.element.classList.contains('asc')).toBe(false)
+    expect(aTh.element.classList.contains('desc')).toBe(false)
+  })
+
+  test('click without arrow', async () => {
+    const wrapper = mount(Table, {
+      props: { columns, source: asyncSource, perPage }
+    })
+
+    const th = wrapper.get('.vst-th:not(.vst-orderable)')
+    expect(th.element._listeners.click).toBe(undefined)
   })
 })

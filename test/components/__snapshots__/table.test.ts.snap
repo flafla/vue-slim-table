@@ -389,6 +389,28 @@ exports[`rendering data > render first page 1`] = `
 </table>"
 `;
 
+exports[`slots > render thead 1`] = `
+"<table class=\\"vst\\">
+  <thead>
+    <tr>
+      <td colspan=\\"3\\">rewited table head</td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan=\\"3\\"> No records found </td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td colspan=\\"3\\">
+        <!--v-if-->
+      </td>
+    </tr>
+  </tfoot>
+</table>"
+`;
+
 exports[`string source 1`] = `
 "<table class=\\"vst\\">
   <thead>

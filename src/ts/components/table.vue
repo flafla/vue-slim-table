@@ -1,35 +1,32 @@
 <template>
   <table class="vst">
     <thead v-if="columns.length">
-      <slot name="thead:before" :columns="columns" />
-      <tr>
-        <th
-          v-for="column in columns"
-          :key="column.key"
-          :class="['vst-th', { 'vst-orderable': column.orderable }]"
-          @click="column.orderable ? onOrderClick(column.key) : null">
-          <div v-if="column.orderable">
+      <slot name="thead" :columns="columns" :orders="orders">
+        <tr>
+          <th
+            v-for="column in columns"
+            :key="column.key"
+            :class="['vst-th', { 'vst-orderable': column.orderable }]"
+            v-on="column.orderable ? { click: () => onOrderClick(column.key) } : {}">
+            <div v-if="column.orderable">
+              <slot
+                :name="`head:${column.key}`"
+                :column="column">
+                {{ column.title }}
+              </slot>
+
+              <a href="#" :class="['vst-orderable-toggle', orders[column.key]]" />
+            </div>
+
             <slot
-              :name="`head:${column.key}`"
+              v-else
+              :name="`thead:${column.key}`"
               :column="column">
               {{ column.title }}
             </slot>
-
-            <a
-              v-if="column.orderable"
-              href="#"
-              :class="['vst-orderable-toggle', orders[column.key]]" />
-          </div>
-
-          <slot
-            v-else
-            :name="`head:${column.key}`"
-            :column="column">
-            {{ column.title }}
-          </slot>
-        </th>
-      </tr>
-      <slot name="thead:after" :columns="columns" />
+          </th>
+        </tr>
+      </slot>
     </thead>
     <tbody>
       <slot v-if="isSyncing" name="row:loading">
