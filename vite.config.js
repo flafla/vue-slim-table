@@ -7,8 +7,10 @@ module.exports = defineConfig({
   plugins: [
     vue(),
     dts({
-      outputDir: 'dist/types'
-    })
+      outputDir: 'dist/types',
+      // logDiagnostics: true,
+      // skipDiagnostics: false,
+    }),
   ],
   resolve: {
     dedupe: ['vue'],

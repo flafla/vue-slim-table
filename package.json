@@ -1,6 +1,6 @@
 {
   "name": "vue-slim-tables",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "files": [
     "dist"
   ],
@@ -34,25 +34,26 @@
   "license": "MIT",
   "private": false,
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^5.17.0",
-    "@typescript-eslint/parser": "^5.17.0",
+    "@babel/types": "^7.17.10",
+    "@typescript-eslint/eslint-plugin": "^5.22.0",
+    "@typescript-eslint/parser": "^5.22.0",
     "@vitejs/plugin-vue": "^2.3.1",
-    "@vue/test-utils": "^2.0.0-rc.17",
+    "@vue/test-utils": "^2.0.0-rc.21",
     "c8": "^7.11.2",
-    "eslint": "^8.12.0",
+    "eslint": "^8.14.0",
     "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.25.4",
-    "eslint-plugin-vue": "^8.5.0",
-    "happy-dom": "^2.55.0",
-    "sass": "^1.49.11",
-    "typescript": "4.6.3",
-    "vite": "^2.9.1",
-    "vite-plugin-dts": "^1.0.5",
-    "vitest": "^0.8.4",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-vue": "^8.7.1",
+    "happy-dom": "^3.1.0",
+    "sass": "^1.51.0",
+    "typescript": "4.6.4",
+    "vite": "^2.9.7",
+    "vite-plugin-dts": "^1.1.1",
+    "vitest": "^0.10.2",
     "vue-eslint-parser": "^8.3.0"
   },
   "dependencies": {
-    "vue": "^3.2.31"
+    "vue": "^3.2.33"
   },
   "types": "dist/types/index.d.ts"
 }

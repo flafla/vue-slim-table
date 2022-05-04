@@ -101,8 +101,8 @@ import useFilterable from '../use/filterable'
 import toQueryString from '../helpers/to_query_string'
 
 interface TableColumn {
-  key: string
-  title: string
+  key: string,
+  title: string,
   orderable?: boolean
 }
 
@@ -111,17 +111,24 @@ interface TableOrders {
 }
 
 interface TableFetchParams {
-  per_page: number
-  page: number
-  order?: Array<{
-    field: string
-    direction: 'asc' | 'desc'
-  }>
+  per_page: number,
+  page: number,
+  orders?: TableOrders
+}
+
+interface TableRow {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [key: string]: any
+}
+
+interface TableFilters {
+  per_page: number,
+  orders: TableOrders
 }
 
 interface TableProps {
   columns: Array<TableColumn>
-  source: string | ((_: TableFetchParams) => Promise<Array<unknown>> | Array<unknown>)
+  source: string | ((_: TableFetchParams) => Promise<TableRow[]> | TableRow[])
   perPage?: number
 }
 
@@ -131,13 +138,13 @@ const props = withDefaults(defineProps<TableProps>(), {
 
 const orders: ShallowRef<TableOrders> = shallowRef({})
 
-const fetchData = async (params: TableFetchParams) => {
-  let data
+const loadItems = async (params: TableFetchParams) => {
+  let data: TableRow[]
   if (typeof props.source === 'string') {
     const response = await fetch(`${props.source}?${toQueryString(params)}`)
     data = await response.json()
   } else {
-    data = await props.source(params)
+    data = await props.source(params) as TableRow[]
   }
 
   return data
@@ -155,9 +162,9 @@ const onOrderClick = (key: string) => {
 
 const {
   page, isSyncing, isSynced, prevPage, nextPage, reload, refetch, items: rows,
-} = useFilterable({
-  initialFilters: { per_page: props.perPage, orders },
-  loadItems: fetchData,
+} = useFilterable<TableFilters, TableRow>({
+  initialFilters: { per_page: props.perPage, orders: orders.value },
+  loadItems,
 })
 
 defineExpose({

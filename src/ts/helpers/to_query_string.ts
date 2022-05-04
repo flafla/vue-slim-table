@@ -1,4 +1,4 @@
-const stringify = (obj, parentPrefix) => (outputArray, [key, val]) => {
+const stringify = (obj, parentPrefix?: string) => (outputArray, [key, val]) => {
   if (val === null || val === undefined) {
     return outputArray
   }
@@ -15,4 +15,4 @@ const stringify = (obj, parentPrefix) => (outputArray, [key, val]) => {
   return outputArray
 }
 
-export default (obj) => Object.entries(obj).reduce(stringify(obj), []).join('&')
+export default (obj): string => Object.entries(obj).reduce(stringify(obj), []).join('&')

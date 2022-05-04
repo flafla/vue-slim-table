@@ -1,15 +1,14 @@
 import {
-  ref, computed, reactive, watch, isReactive,
+  ref, computed, reactive, watch,
 } from 'vue'
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-interface Item { [key: string]: any }
+type CombinedFilters<Filters> = Filters & {
+  page: number
+}
 
-interface UseFiltetableArgs {
-  initialFilters: {
-    [key: string]: any // eslint-disable-line @typescript-eslint/no-explicit-any
-  },
-  loadItems: any // eslint-disable-line @typescript-eslint/no-explicit-any
+interface UseFiltetableArgs<Filters, Item> {
+  initialFilters: Filters,
+  loadItems: (_filters: CombinedFilters<Filters>) => Promise<Item[]>
 }
 
 const SYNC_STATES = {
@@ -19,21 +18,21 @@ const SYNC_STATES = {
   FAILED: 'failed',
 }
 
-const useFilterable = ({ initialFilters, loadItems }: UseFiltetableArgs) => {
+const useFilterable = <Filters, Item>({ initialFilters, loadItems }: UseFiltetableArgs<Filters, Item>) => {
   const page = ref(1)
-  const items = reactive({ value: [] as Item[] })
+  const items = reactive({ value: [] as Item[] }) as { value: Item[] }
   const syncState = ref(SYNC_STATES.INITIAL)
-  const reactiveInitialFilters = isReactive(initialFilters) ? initialFilters : reactive({ value: initialFilters })
+  const filters = reactive({ value: initialFilters })
 
-  const filters = computed(() => ({
+  const combinedFilters = computed(() => ({
     page: page.value,
-    ...reactiveInitialFilters.value,
+    ...filters.value as Filters,
   }))
 
   const load = () => {
     syncState.value = SYNC_STATES.SYNCING
 
-    return loadItems(filters.value)
+    return loadItems(combinedFilters.value)
       .then((res: Item[]) => {
         items.value = res
         syncState.value = SYNC_STATES.SYNCED
@@ -43,10 +42,9 @@ const useFilterable = ({ initialFilters, loadItems }: UseFiltetableArgs) => {
         syncState.value = SYNC_STATES.FAILED
       })
   }
-
-  watch(filters, load)
-
   load()
+
+  watch(combinedFilters, load)
 
   return {
     page,

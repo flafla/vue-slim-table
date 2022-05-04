@@ -1,15 +1,14 @@
-interface UseFiltetableArgs {
-    initialFilters: {
-        [key: string]: any;
-    };
-    loadItems: any;
+declare type CombinedFilters<Filters> = Filters & {
+    page: number;
+};
+interface UseFiltetableArgs<Filters, Item> {
+    initialFilters: Filters;
+    loadItems: (_filters: CombinedFilters<Filters>) => Promise<Item[]>;
 }
-declare const useFilterable: ({ initialFilters, loadItems }: UseFiltetableArgs) => {
+declare const useFilterable: <Filters, Item>({ initialFilters, loadItems }: UseFiltetableArgs<Filters, Item>) => {
     page: import("vue").Ref<number>;
     items: {
-        value: {
-            [x: string]: any;
-        }[];
+        value: Item[];
     };
     syncState: import("vue").Ref<string>;
     nextPage: () => void;

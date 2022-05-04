@@ -10,10 +10,10 @@ interface TableOrders {
 interface TableFetchParams {
     per_page: number;
     page: number;
-    order?: Array<{
-        field: string;
-        direction: 'asc' | 'desc';
-    }>;
+    orders?: TableOrders;
+}
+interface TableRow {
+    [key: string]: any;
 }
 declare const _sfc_main: import("vue").DefineComponent<{
     columns: {
@@ -32,11 +32,11 @@ declare const _sfc_main: import("vue").DefineComponent<{
 }, {
     props: {
         columns: Array<TableColumn>;
-        source: string | ((_: TableFetchParams) => Promise<Array<unknown>> | Array<unknown>);
+        source: string | ((_: TableFetchParams) => Promise<TableRow[]> | TableRow[]);
         perPage: number;
     };
     orders: ShallowRef<TableOrders>;
-    fetchData: (params: TableFetchParams) => Promise<any>;
+    loadItems: (params: TableFetchParams) => Promise<TableRow[]>;
     onOrderClick: (key: string) => void;
     page: import("vue").Ref<number>;
     isSyncing: import("vue").ComputedRef<boolean>;
@@ -46,9 +46,7 @@ declare const _sfc_main: import("vue").DefineComponent<{
     reload: () => void;
     refetch: () => void;
     rows: {
-        value: {
-            [x: string]: any;
-        }[];
+        value: TableRow[];
     };
     LoadingRow: import("vue").DefineComponent<{
         columnsLength: {
