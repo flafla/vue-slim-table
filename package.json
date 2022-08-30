@@ -47,7 +47,7 @@
     "happy-dom": "^3.1.0",
     "sass": "^1.51.0",
     "typescript": "4.6.4",
-    "vite": "^2.9.7",
+    "vite": "^2.9.13",
     "vite-plugin-dts": "^1.1.1",
     "vitest": "^0.10.2",
     "vue-eslint-parser": "^8.3.0"
