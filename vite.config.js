@@ -20,7 +20,7 @@ module.exports = defineConfig({
   },
   build: {
     lib: {
-      entry: path.resolve(__dirname, 'src/ts/index.ts'),
+      entry: path.resolve(__dirname, 'src/main.ts'),
       name: 'VueSlimTable',
       formats: ['es', 'umd'],
       fileName: (format) => `vst.${format}.js`
