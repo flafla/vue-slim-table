@@ -34,25 +34,25 @@
   "license": "MIT",
   "devDependencies": {
     "@babel/types": "^7.20.7",
-    "@typescript-eslint/eslint-plugin": "^5.22.0",
-    "@typescript-eslint/parser": "^5.22.0",
-    "@vitejs/plugin-vue": "^4.0.0",
-    "@vue/test-utils": "^2.3.0",
+    "@typescript-eslint/eslint-plugin": "^5.56.0",
+    "@typescript-eslint/parser": "^5.56.0",
+    "@vitejs/plugin-vue": "^4.1.0",
+    "@vue/test-utils": "^2.3.2",
     "c8": "^7.13.0",
-    "eslint": "^8.34.0",
+    "eslint": "^8.37.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.27.5",
-    "eslint-plugin-vue": "^9.9.0",
-    "happy-dom": "^8.6.0",
-    "sass": "^1.58.3",
-    "typescript": "^4.9.5",
-    "vite": "^4.1.2",
-    "vite-plugin-dts": "^1.1.1",
-    "vitest": "^0.28.5",
-    "vue-eslint-parser": "^9.1.0"
+    "eslint-plugin-vue": "^9.10.0",
+    "happy-dom": "^8.9.0",
+    "sass": "^1.60.0",
+    "typescript": "^5.0.2",
+    "vite": "^4.2.1",
+    "vite-plugin-dts": "^2.1.0",
+    "vitest": "^0.29.8",
+    "vue-eslint-parser": "^9.1.1"
   },
   "dependencies": {
-    "vue": "^3.2.47"
+    "vue": "^3.3.0"
   },
   "types": "dist/types/index.d.ts",
   "packageManager": "yarn@3.4.1"

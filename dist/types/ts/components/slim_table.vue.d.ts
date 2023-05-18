@@ -1,81 +1,58 @@
-import { ShallowRef } from 'vue';
-interface TableColumn {
+import type { PropType as __PropType } from 'vue';
+export type TableColumn = {
     key: string;
     title: string;
     orderable?: boolean;
-}
-interface TableOrders {
+};
+export type TableOrders = {
     [key: string]: 'asc' | 'desc';
-}
-interface TableFetchParams {
+};
+export type TableFetchParams = {
     per_page: number;
     page: number;
     orders?: TableOrders;
-}
-interface TableRow {
+};
+export type TableRow = {
     [key: string]: any;
-}
+};
+export type TableFilters = {
+    per_page: number;
+    orders: TableOrders;
+};
+export type TableProps = {
+    columns: Array<TableColumn>;
+    source: ((_: TableFetchParams) => Promise<TableRow[]> | TableRow[]);
+    perPage?: number;
+};
 declare const _sfc_main: import("vue").DefineComponent<{
     columns: {
-        type: ArrayConstructor;
+        type: __PropType<TableColumn[]>;
         required: true;
     };
     source: {
-        type: (StringConstructor | FunctionConstructor)[];
+        type: __PropType<(_: TableFetchParams) => Promise<TableRow[]> | TableRow[]>;
         required: true;
     };
     perPage: {
-        type: NumberConstructor;
+        type: __PropType<number | undefined>;
         required: false;
         default: number;
     };
-}, {
-    props: {
-        columns: Array<TableColumn>;
-        source: string | ((_: TableFetchParams) => Promise<TableRow[]> | TableRow[]);
-        perPage: number;
-    };
-    orders: ShallowRef<TableOrders>;
-    loadItems: (params: TableFetchParams) => Promise<TableRow[]>;
-    onOrderClick: (key: string) => void;
-    page: import("vue").Ref<number>;
-    isSyncing: import("vue").ComputedRef<boolean>;
-    isSynced: import("vue").ComputedRef<boolean>;
-    prevPage: () => void;
-    nextPage: () => void;
-    reload: () => void;
-    refetch: () => void;
-    rows: {
-        value: TableRow[];
-    };
-    LoadingRow: import("vue").DefineComponent<{
-        columnsLength: {
-            type: NumberConstructor;
-            required: true;
-        };
-    }, {
-        randNum: number;
-    }, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {}, string, import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{
-        columnsLength: {
-            type: NumberConstructor;
-            required: true;
-        };
-    }>>, {}>;
-}, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {}, string, import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{
+}, {}, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {}, string, import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{
     columns: {
-        type: ArrayConstructor;
+        type: __PropType<TableColumn[]>;
         required: true;
     };
     source: {
-        type: (StringConstructor | FunctionConstructor)[];
+        type: __PropType<(_: TableFetchParams) => Promise<TableRow[]> | TableRow[]>;
         required: true;
     };
     perPage: {
-        type: NumberConstructor;
+        type: __PropType<number | undefined>;
         required: false;
         default: number;
     };
 }>>, {
-    perPage: number;
-}>;
+    perPage: number | undefined;
+}, {}>;
 export default _sfc_main;

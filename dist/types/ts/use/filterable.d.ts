@@ -1,4 +1,4 @@
-declare type CombinedFilters<Filters> = Filters & {
+type CombinedFilters<Filters> = Filters & {
     page: number;
 };
 interface UseFiltetableArgs<Filters, Item> {

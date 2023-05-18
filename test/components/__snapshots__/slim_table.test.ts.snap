@@ -1,4 +1,4 @@
-// Vitest Snapshot v1
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`empty async data > shows default no records text 1`] = `
 "<table class=\\"vst\\">
@@ -405,55 +405,6 @@ exports[`slots > render thead 1`] = `
     <tr>
       <td colspan=\\"3\\">
         <!--v-if-->
-      </td>
-    </tr>
-  </tfoot>
-</table>"
-`;
-
-exports[`string source 1`] = `
-"<table class=\\"vst\\">
-  <thead>
-    <tr>
-      <th class=\\"vst-th\\">One</th>
-      <th class=\\"vst-th\\">Two</th>
-      <th class=\\"vst-th\\">Three</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>One 1</td>
-      <td>Two 1</td>
-      <td>Three 1</td>
-    </tr>
-    <tr>
-      <td>One 2</td>
-      <td>Two 2</td>
-      <td>Three 2</td>
-    </tr>
-    <tr>
-      <td>One 3</td>
-      <td>Two 3</td>
-      <td>Three 3</td>
-    </tr>
-    <tr>
-      <td>One 4</td>
-      <td>Two 4</td>
-      <td>Three 4</td>
-    </tr>
-    <tr>
-      <td>One 5</td>
-      <td>Two 5</td>
-      <td>Three 5</td>
-    </tr>
-  </tbody>
-  <tfoot>
-    <tr>
-      <td colspan=\\"3\\">
-        <ul class=\\"vst-pagination mt-3\\">
-          <li class=\\"vst-page-item disabled\\"><a class=\\"vst-page-link\\">←</a></li>
-          <li class=\\"vst-page-item\\"><a class=\\"vst-page-link\\">→</a></li>
-        </ul>
       </td>
     </tr>
   </tfoot>

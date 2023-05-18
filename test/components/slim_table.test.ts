@@ -20,27 +20,6 @@ const asyncSource = (params) => {
   return source.slice((params.page - 1) * params.per_page, params.page * params.per_page)
 }
 
-test('string source', async () => {
-  const unmockedFetch = global.fetch
-  global.fetch = () => {
-    return Promise.resolve({
-      json: () => Promise.resolve(asyncSource({ page: 1, per_page: 5 })),
-    })
-  }
-
-  const wrapper = mount(Table, {
-    props: { columns, source: 'https://example.com', perPage }
-  })
-
-  await nextTick()
-  await nextTick()
-  await nextTick()
-
-  expect(wrapper.html()).toMatchSnapshot()
-
-  global.fetch = unmockedFetch
-})
-
 describe('empty async data', () => {
   test('shows default no records text', async() => {
     const wrapper = mount(Table, {

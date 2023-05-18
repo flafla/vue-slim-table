@@ -10,7 +10,7 @@
             v-on="column.orderable ? { click: () => onOrderClick(column.key) } : {}">
             <div v-if="column.orderable">
               <slot
-                :name="`head:${column.key}`"
+                :name="`thead:${column.key}`"
                 :column="column">
                 {{ column.title }}
               </slot>
@@ -94,41 +94,43 @@
 </template>
 
 <script setup lang="ts">
+
 import { shallowRef, ShallowRef } from 'vue'
 import LoadingRow from './loading_row.vue'
 
 import useFilterable from '../use/filterable'
-import toQueryString from '../helpers/to_query_string'
 
-interface TableColumn {
+// import type { TableOrders, TableFetchParams, TableRow, TableFilters, TableProps } from '../types'
+
+export type TableColumn = {
   key: string,
   title: string,
   orderable?: boolean
 }
 
-interface TableOrders {
+export type TableOrders = {
   [key: string]: 'asc' | 'desc'
 }
 
-interface TableFetchParams {
+export type TableFetchParams = {
   per_page: number,
   page: number,
   orders?: TableOrders
 }
 
-interface TableRow {
+export type TableRow = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any
 }
 
-interface TableFilters {
+export type TableFilters = {
   per_page: number,
   orders: TableOrders
 }
 
-interface TableProps {
+export type TableProps = {
   columns: Array<TableColumn>
-  source: string | ((_: TableFetchParams) => Promise<TableRow[]> | TableRow[])
+  source: ((_: TableFetchParams) => Promise<TableRow[]> | TableRow[])
   perPage?: number
 }
 
@@ -139,12 +141,12 @@ const props = withDefaults(defineProps<TableProps>(), {
 const orders: ShallowRef<TableOrders> = shallowRef({})
 
 const loadItems = async (params: TableFetchParams) => {
-  let data: TableRow[]
-  if (typeof props.source === 'string') {
-    const response = await fetch(`${props.source}?${toQueryString(params)}`)
-    data = await response.json()
-  } else {
+  let data: TableRow[] = []
+
+  try {
     data = await props.source(params) as TableRow[]
+  } catch {
+    // TODO: show errors
   }
 
   return data
