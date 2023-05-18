@@ -1,3 +1,4 @@
+import { describe, expect, test } from 'vitest'
 import { nextTick, defineComponent } from 'vue'
 import { mount } from '@vue/test-utils'
 import Table from '@/ts/components/slim_table.vue'

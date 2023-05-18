@@ -115,7 +115,7 @@ export type TableOrders = {
 export type TableFetchParams = {
   per_page: number,
   page: number,
-  orders?: TableOrders
+  orders: TableOrders
 }
 
 export type TableRow = {
@@ -125,7 +125,7 @@ export type TableRow = {
 
 export type TableFilters = {
   per_page: number,
-  orders: TableOrders
+  orders: ShallowRef<TableOrders>
 }
 
 export type TableProps = {
@@ -165,7 +165,7 @@ const onOrderClick = (key: string) => {
 const {
   page, isSyncing, isSynced, prevPage, nextPage, reload, refetch, items: rows,
 } = useFilterable<TableFilters, TableRow>({
-  initialFilters: { per_page: props.perPage, orders: orders.value },
+  initialFilters: { per_page: props.perPage, orders: orders },
   loadItems,
 })
 

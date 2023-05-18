@@ -2,13 +2,13 @@ import {
   ref, computed, reactive, watch,
 } from 'vue'
 
-type CombinedFilters<Filters> = Filters & {
+type CombinedFilters<TFilters> = TFilters & {
   page: number
 }
 
-interface UseFiltetableArgs<Filters, Item> {
-  initialFilters: Filters,
-  loadItems: (_filters: CombinedFilters<Filters>) => Promise<Item[]>
+interface UseFiltetableArgs<TFilters, TItem> {
+  initialFilters: TFilters,
+  loadItems: (_filters: CombinedFilters<TFilters>) => Promise<TItem[]>
 }
 
 const SYNC_STATES = {
@@ -18,22 +18,22 @@ const SYNC_STATES = {
   FAILED: 'failed',
 }
 
-const useFilterable = <Filters, Item>({ initialFilters, loadItems }: UseFiltetableArgs<Filters, Item>) => {
+const useFilterable = <TFilters, TItem>({ initialFilters, loadItems }: UseFiltetableArgs<TFilters, TItem>) => {
   const page = ref(1)
-  const items = reactive({ value: [] as Item[] }) as { value: Item[] }
+  const items = reactive({ value: [] as TItem[] }) as { value: TItem[] }
   const syncState = ref(SYNC_STATES.INITIAL)
   const filters = reactive({ value: initialFilters })
 
   const combinedFilters = computed(() => ({
     page: page.value,
-    ...filters.value as Filters,
+    ...filters.value as TFilters,
   }))
 
   const load = () => {
     syncState.value = SYNC_STATES.SYNCING
 
     return loadItems(combinedFilters.value)
-      .then((res: Item[]) => {
+      .then((res: TItem[]) => {
         items.value = res
         syncState.value = SYNC_STATES.SYNCED
       })

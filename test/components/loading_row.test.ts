@@ -1,3 +1,4 @@
+import { expect, test } from 'vitest'
 import { mount } from '@vue/test-utils'
 import LoadingRow from '@/ts/components/loading_row.vue'
 

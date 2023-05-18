@@ -4,6 +4,25 @@
 }
 
 .vst {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 1rem;
+  background-color: transparent;
+  border-collapse: separate;
+  border-spacing: 0;
+
+  th,
+  td {
+    border-top: 1px solid #eceeef;
+    padding: 0.9rem;
+    vertical-align: top;
+  }
+
+  thead th {
+    border-bottom: 2px solid #eceeef;
+    vertical-align: bottom;
+  }
+
   &-th {
     line-height: 20px;
   }
