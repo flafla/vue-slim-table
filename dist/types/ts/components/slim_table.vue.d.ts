@@ -1,58 +1,115 @@
-import type { PropType as __PropType } from 'vue';
-export type TableColumn = {
-    key: string;
-    title: string;
-    orderable?: boolean;
-};
-export type TableOrders = {
-    [key: string]: 'asc' | 'desc';
-};
-export type TableFetchParams = {
-    per_page: number;
-    page: number;
-    orders?: TableOrders;
-};
-export type TableRow = {
+import type { TableOrders, TableRow, TableProps } from '../../ts/types';
+declare const _default: <TRow extends TableRow>(__VLS_props: TableProps<TRow> & import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, __VLS_ctx?: Pick<{
+    props: TableProps<TRow>;
+    expose(exposed: {
+        refetch: () => void;
+        reload: () => void;
+        rows: {
+            value: TRow[];
+        };
+    }): void;
+    attrs: any;
+    slots: Partial<{
+        [key: `thead:${string}`]: (_props: {
+            column: import('../../ts/types').TableColumn;
+        }) => any;
+        [key: `cell:${string}`]: (_props: {
+            row: TRow;
+            index: number;
+            column: import('../../ts/types').TableColumn;
+        }) => any;
+        thead: (_props: {
+            columns: import('../../ts/types').TableColumn[];
+            orders: TableOrders;
+        }) => any;
+        'row:loading': () => any;
+        'row:empty': () => any;
+        row: (_props: {
+            row: TRow;
+            index: number;
+            columns: import('../../ts/types').TableColumn[];
+        }) => any;
+        pagination: (_props: {
+            page: number;
+            rows: TRow[];
+        }) => any;
+    }>;
+    emit: any;
+}, "attrs" | "emit" | "slots"> | undefined, __VLS_setup?: Promise<{
+    props: TableProps<TRow>;
+    expose(exposed: {
+        refetch: () => void;
+        reload: () => void;
+        rows: {
+            value: TRow[];
+        };
+    }): void;
+    attrs: any;
+    slots: Partial<{
+        [key: `thead:${string}`]: (_props: {
+            column: import('../../ts/types').TableColumn;
+        }) => any;
+        [key: `cell:${string}`]: (_props: {
+            row: TRow;
+            index: number;
+            column: import('../../ts/types').TableColumn;
+        }) => any;
+        thead: (_props: {
+            columns: import('../../ts/types').TableColumn[];
+            orders: TableOrders;
+        }) => any;
+        'row:loading': () => any;
+        'row:empty': () => any;
+        row: (_props: {
+            row: TRow;
+            index: number;
+            columns: import('../../ts/types').TableColumn[];
+        }) => any;
+        pagination: (_props: {
+            page: number;
+            rows: TRow[];
+        }) => any;
+    }>;
+    emit: any;
+}>) => import("vue").VNode<import("vue").RendererNode, import("vue").RendererElement, {
     [key: string]: any;
+}> & {
+    __ctx?: {
+        props: TableProps<TRow>;
+        expose(exposed: {
+            refetch: () => void;
+            reload: () => void;
+            rows: {
+                value: TRow[];
+            };
+        }): void;
+        attrs: any;
+        slots: Partial<{
+            [key: `thead:${string}`]: (_props: {
+                column: import('../../ts/types').TableColumn;
+            }) => any;
+            [key: `cell:${string}`]: (_props: {
+                row: TRow;
+                index: number;
+                column: import('../../ts/types').TableColumn;
+            }) => any;
+            thead: (_props: {
+                columns: import('../../ts/types').TableColumn[];
+                orders: TableOrders;
+            }) => any;
+            'row:loading': () => any;
+            'row:empty': () => any;
+            row: (_props: {
+                row: TRow;
+                index: number;
+                columns: import('../../ts/types').TableColumn[];
+            }) => any;
+            pagination: (_props: {
+                page: number;
+                rows: TRow[];
+            }) => any;
+        }>;
+        emit: any;
+    } | undefined;
 };
-export type TableFilters = {
-    per_page: number;
-    orders: TableOrders;
-};
-export type TableProps = {
-    columns: Array<TableColumn>;
-    source: ((_: TableFetchParams) => Promise<TableRow[]> | TableRow[]);
-    perPage?: number;
-};
-declare const _sfc_main: import("vue").DefineComponent<{
-    columns: {
-        type: __PropType<TableColumn[]>;
-        required: true;
-    };
-    source: {
-        type: __PropType<(_: TableFetchParams) => Promise<TableRow[]> | TableRow[]>;
-        required: true;
-    };
-    perPage: {
-        type: __PropType<number | undefined>;
-        required: false;
-        default: number;
-    };
-}, {}, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {}, string, import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{
-    columns: {
-        type: __PropType<TableColumn[]>;
-        required: true;
-    };
-    source: {
-        type: __PropType<(_: TableFetchParams) => Promise<TableRow[]> | TableRow[]>;
-        required: true;
-    };
-    perPage: {
-        type: __PropType<number | undefined>;
-        required: false;
-        default: number;
-    };
-}>>, {
-    perPage: number | undefined;
-}, {}>;
-export default _sfc_main;
+export default _default;

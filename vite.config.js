@@ -7,7 +7,7 @@ module.exports = defineConfig({
   plugins: [
     vue(),
     dts({
-      outputDir: 'dist/types',
+      outDir: 'dist/types',
       // logDiagnostics: true,
       // skipDiagnostics: false,
     }),
@@ -17,6 +17,10 @@ module.exports = defineConfig({
     alias: {
       '@': path.resolve(__dirname, 'src')
     }
+  },
+  test: {
+    globals: true,
+    environment: 'happy-dom'
   },
   build: {
     lib: {

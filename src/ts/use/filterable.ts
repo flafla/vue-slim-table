@@ -2,13 +2,13 @@ import {
   ref, computed, reactive, watch,
 } from 'vue'
 
-type CombinedFilters<TFilters> = TFilters & {
+type CombinedFilters<T> = T & {
   page: number
 }
 
-interface UseFiltetableArgs<TFilters, TItem> {
-  initialFilters: TFilters,
-  loadItems: (_filters: CombinedFilters<TFilters>) => Promise<TItem[]>
+type UseFiltetableArgs<T, S> = {
+  initialFilters: T,
+  loadItems: (_params: T & { page: number }) => Promise<S[]>
 }
 
 const SYNC_STATES = {
@@ -24,7 +24,7 @@ const useFilterable = <TFilters, TItem>({ initialFilters, loadItems }: UseFiltet
   const syncState = ref(SYNC_STATES.INITIAL)
   const filters = reactive({ value: initialFilters })
 
-  const combinedFilters = computed(() => ({
+  const combinedFilters = computed<CombinedFilters<TFilters>>(() => ({
     page: page.value,
     ...filters.value as TFilters,
   }))

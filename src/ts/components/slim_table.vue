@@ -11,7 +11,8 @@
             <div v-if="column.orderable">
               <slot
                 :name="`thead:${column.key}`"
-                :column="column">
+                :column="column"
+                :orders="orders">
                 {{ column.title }}
               </slot>
 
@@ -93,58 +94,24 @@
   </table>
 </template>
 
-<script setup lang="ts">
-
-import { shallowRef, ShallowRef } from 'vue'
+<script setup lang="ts" generic="TRow extends TableRow">
+import { shallowRef } from 'vue'
 import LoadingRow from './loading_row.vue'
 
 import useFilterable from '../use/filterable'
 
-// import type { TableOrders, TableFetchParams, TableRow, TableFilters, TableProps } from '../types'
+import type {
+  TableOrders, TableFetchParams, TableRow, TableFilters, TableProps, TableSlots,
+} from '@/ts/types'
 
-export type TableColumn = {
-  key: string,
-  title: string,
-  orderable?: boolean
-}
-
-export type TableOrders = {
-  [key: string]: 'asc' | 'desc'
-}
-
-export type TableFetchParams = {
-  per_page: number,
-  page: number,
-  orders: TableOrders
-}
-
-export type TableRow = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [key: string]: any
-}
-
-export type TableFilters = {
-  per_page: number,
-  orders: ShallowRef<TableOrders>
-}
-
-export type TableProps = {
-  columns: Array<TableColumn>
-  source: ((_: TableFetchParams) => Promise<TableRow[]> | TableRow[])
-  perPage?: number
-}
-
-const props = withDefaults(defineProps<TableProps>(), {
-  perPage: 25,
-})
-
-const orders: ShallowRef<TableOrders> = shallowRef({})
+const orders = shallowRef<TableOrders>({})
+const props = defineProps<TableProps<TRow>>()
 
 const loadItems = async (params: TableFetchParams) => {
-  let data: TableRow[] = []
+  let data: TRow[] = []
 
   try {
-    data = await props.source(params) as TableRow[]
+    data = await props.source(params)
   } catch {
     // TODO: show errors
   }
@@ -164,10 +131,12 @@ const onOrderClick = (key: string) => {
 
 const {
   page, isSyncing, isSynced, prevPage, nextPage, reload, refetch, items: rows,
-} = useFilterable<TableFilters, TableRow>({
-  initialFilters: { per_page: props.perPage, orders: orders },
+} = useFilterable<TableFilters, TRow>({
+  initialFilters: { per_page: props.perPage, orders },
   loadItems,
 })
+
+defineSlots<TableSlots<TRow>>()
 
 defineExpose({
   refetch,
