@@ -1,13 +1,14 @@
 <template>
   <table class="vst">
     <thead v-if="columns.length">
+      <slot name="thead:before" />
       <slot name="thead" :columns="columns" :orders="orders">
         <tr>
           <th
             v-for="column in columns"
             :key="column.key"
             :class="['vst-th', { 'vst-orderable': column.orderable }]"
-            v-on="column.orderable ? { click: () => onOrderClick(column.key) } : {}">
+            v-on="column.orderable ? { click: (event: Event) => onOrderClick(event, column.key) } : {}">
             <div v-if="column.orderable">
               <slot
                 :name="`thead:${column.key}`"
@@ -16,18 +17,20 @@
                 {{ column.title }}
               </slot>
 
-              <a href="#" :class="['vst-orderable-toggle', orders[column.key]]" />
+              <i :class="['vst-orderable-toggle', orders[column.key]]" />
             </div>
 
             <slot
               v-else
               :name="`thead:${column.key}`"
-              :column="column">
+              :column="column"
+              :orders="orders">
               {{ column.title }}
             </slot>
           </th>
         </tr>
       </slot>
+      <slot name="thead:after" />
     </thead>
     <tbody>
       <slot v-if="isSyncing" name="row:loading">
@@ -119,7 +122,9 @@ const loadItems = async (params: TableFetchParams) => {
   return data
 }
 
-const onOrderClick = (key: string) => {
+const onOrderClick = (event: Event, key: string) => {
+  event.preventDefault()
+
   if (orders.value[key] === 'asc') {
     orders.value = { [key]: 'desc' }
   } else if (orders.value[key] === 'desc') {

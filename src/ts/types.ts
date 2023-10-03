@@ -32,12 +32,14 @@ export type TableProps<T> = {
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export type TableSlots<T> = Partial<{
+  'thead:before': () => any
   thead: (_props: { columns: TableColumn[], orders: TableOrders }) => any
-  [key: `thead:${string}`]: (_props: { column: TableColumn }) => any
+  'thead:after': () => any
+  [key: `thead:${string}`]: (_props: { column: TableColumn, orders: TableOrders }) => any
   'row:loading': () => any
   'row:empty': () => any
   row: (_props: { row: T, index: number, columns: TableColumn[] }) => any
-  [key: `cell:${string}`]: (_props: { row: T, index: number, column: TableColumn }) => any
+  [key: `cell:${string}`]: (_props: { row: T, index: number, column: TableColumn, value: unknown }) => any
   pagination: (_props: { page: number, rows: T[] }) => any
 }>
 /* eslint-enable @typescript-eslint/no-explicit-any */

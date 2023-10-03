@@ -23,12 +23,15 @@ export type TableProps<T> = {
     source: ((_: TableFetchParams) => Promise<T[]> | T[]);
 };
 export type TableSlots<T> = Partial<{
+    'thead:before': () => any;
     thead: (_props: {
         columns: TableColumn[];
         orders: TableOrders;
     }) => any;
+    'thead:after': () => any;
     [key: `thead:${string}`]: (_props: {
         column: TableColumn;
+        orders: TableOrders;
     }) => any;
     'row:loading': () => any;
     'row:empty': () => any;
@@ -41,6 +44,7 @@ export type TableSlots<T> = Partial<{
         row: T;
         index: number;
         column: TableColumn;
+        value: unknown;
     }) => any;
     pagination: (_props: {
         page: number;

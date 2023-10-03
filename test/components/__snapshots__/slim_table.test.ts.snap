@@ -53,7 +53,7 @@ exports[`ordering > click arrow 1`] = `
   <thead>
     <tr>
       <th class=\\"vst-th vst-orderable\\">
-        <div>One<a href=\\"#\\" class=\\"vst-orderable-toggle asc\\"></a></div>
+        <div>One<i class=\\"vst-orderable-toggle asc\\"></i></div>
       </th>
       <th class=\\"vst-th\\">Two</th>
       <th class=\\"vst-th\\">Three</th>
@@ -104,7 +104,7 @@ exports[`ordering > click arrow 2`] = `
   <thead>
     <tr>
       <th class=\\"vst-th vst-orderable\\">
-        <div>One<a href=\\"#\\" class=\\"vst-orderable-toggle desc\\"></a></div>
+        <div>One<i class=\\"vst-orderable-toggle desc\\"></i></div>
       </th>
       <th class=\\"vst-th\\">Two</th>
       <th class=\\"vst-th\\">Three</th>
@@ -155,7 +155,7 @@ exports[`ordering > click arrow 3`] = `
   <thead>
     <tr>
       <th class=\\"vst-th vst-orderable\\">
-        <div>One<a href=\\"#\\" class=\\"vst-orderable-toggle\\"></a></div>
+        <div>One<i class=\\"vst-orderable-toggle\\"></i></div>
       </th>
       <th class=\\"vst-th\\">Two</th>
       <th class=\\"vst-th\\">Three</th>
@@ -206,7 +206,7 @@ exports[`ordering > renders arrow 1`] = `
   <thead>
     <tr>
       <th class=\\"vst-th vst-orderable\\">
-        <div>One<a href=\\"#\\" class=\\"vst-orderable-toggle\\"></a></div>
+        <div>One<i class=\\"vst-orderable-toggle\\"></i></div>
       </th>
       <th class=\\"vst-th\\">Two</th>
       <th class=\\"vst-th\\">Three</th>

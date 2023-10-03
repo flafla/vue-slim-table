@@ -16,12 +16,14 @@ const SYNC_STATES = {
   SYNCING: 'syncing',
   SYNCED: 'synced',
   FAILED: 'failed',
-}
+} as const
+
+type SynsState = (typeof SYNC_STATES)[keyof typeof SYNC_STATES]
 
 const useFilterable = <TFilters, TItem>({ initialFilters, loadItems }: UseFiltetableArgs<TFilters, TItem>) => {
   const page = ref(1)
-  const items = reactive({ value: [] as TItem[] }) as { value: TItem[] }
-  const syncState = ref(SYNC_STATES.INITIAL)
+  const items: { value: TItem[] } = reactive({ value: [] })
+  const syncState = ref<SynsState>(SYNC_STATES.INITIAL)
   const filters = reactive({ value: initialFilters })
 
   const combinedFilters = computed<CombinedFilters<TFilters>>(() => ({
@@ -29,18 +31,16 @@ const useFilterable = <TFilters, TItem>({ initialFilters, loadItems }: UseFiltet
     ...filters.value as TFilters,
   }))
 
-  const load = () => {
+  const load = async () => {
     syncState.value = SYNC_STATES.SYNCING
 
-    return loadItems(combinedFilters.value)
-      .then((res: TItem[]) => {
-        items.value = res
-        syncState.value = SYNC_STATES.SYNCED
-      })
-      .catch(() => {
-        items.value = []
-        syncState.value = SYNC_STATES.FAILED
-      })
+    try {
+      items.value = await loadItems(combinedFilters.value)
+      syncState.value = SYNC_STATES.SYNCED
+    } catch {
+      items.value = []
+      syncState.value = SYNC_STATES.FAILED
+    }
   }
   load()
 

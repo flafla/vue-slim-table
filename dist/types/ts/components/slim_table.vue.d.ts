@@ -12,16 +12,20 @@ declare const _default: <TRow extends TableRow>(__VLS_props: TableProps<TRow> & 
     slots: Partial<{
         [key: `thead:${string}`]: (_props: {
             column: import('../../ts/types').TableColumn;
+            orders: TableOrders;
         }) => any;
         [key: `cell:${string}`]: (_props: {
             row: TRow;
             index: number;
             column: import('../../ts/types').TableColumn;
+            value: unknown;
         }) => any;
+        'thead:before': () => any;
         thead: (_props: {
             columns: import('../../ts/types').TableColumn[];
             orders: TableOrders;
         }) => any;
+        'thead:after': () => any;
         'row:loading': () => any;
         'row:empty': () => any;
         row: (_props: {
@@ -48,16 +52,20 @@ declare const _default: <TRow extends TableRow>(__VLS_props: TableProps<TRow> & 
     slots: Partial<{
         [key: `thead:${string}`]: (_props: {
             column: import('../../ts/types').TableColumn;
+            orders: TableOrders;
         }) => any;
         [key: `cell:${string}`]: (_props: {
             row: TRow;
             index: number;
             column: import('../../ts/types').TableColumn;
+            value: unknown;
         }) => any;
+        'thead:before': () => any;
         thead: (_props: {
             columns: import('../../ts/types').TableColumn[];
             orders: TableOrders;
         }) => any;
+        'thead:after': () => any;
         'row:loading': () => any;
         'row:empty': () => any;
         row: (_props: {
@@ -87,16 +95,20 @@ declare const _default: <TRow extends TableRow>(__VLS_props: TableProps<TRow> & 
         slots: Partial<{
             [key: `thead:${string}`]: (_props: {
                 column: import('../../ts/types').TableColumn;
+                orders: TableOrders;
             }) => any;
             [key: `cell:${string}`]: (_props: {
                 row: TRow;
                 index: number;
                 column: import('../../ts/types').TableColumn;
+                value: unknown;
             }) => any;
+            'thead:before': () => any;
             thead: (_props: {
                 columns: import('../../ts/types').TableColumn[];
                 orders: TableOrders;
             }) => any;
+            'thead:after': () => any;
             'row:loading': () => any;
             'row:empty': () => any;
             row: (_props: {
