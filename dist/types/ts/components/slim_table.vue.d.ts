@@ -3,10 +3,8 @@ declare const _default: <TRow extends TableRow>(__VLS_props: TableProps<TRow> & 
     props: TableProps<TRow>;
     expose(exposed: {
         refetch: () => void;
-        reload: () => void;
-        rows: {
-            value: TRow[];
-        };
+        reload: () => Promise<void>;
+        rows: import("vue").Ref<TRow[]>;
     }): void;
     attrs: any;
     slots: Partial<{
@@ -43,10 +41,8 @@ declare const _default: <TRow extends TableRow>(__VLS_props: TableProps<TRow> & 
     props: TableProps<TRow>;
     expose(exposed: {
         refetch: () => void;
-        reload: () => void;
-        rows: {
-            value: TRow[];
-        };
+        reload: () => Promise<void>;
+        rows: import("vue").Ref<TRow[]>;
     }): void;
     attrs: any;
     slots: Partial<{
@@ -86,10 +82,8 @@ declare const _default: <TRow extends TableRow>(__VLS_props: TableProps<TRow> & 
         props: TableProps<TRow>;
         expose(exposed: {
             refetch: () => void;
-            reload: () => void;
-            rows: {
-                value: TRow[];
-            };
+            reload: () => Promise<void>;
+            rows: import("vue").Ref<TRow[]>;
         }): void;
         attrs: any;
         slots: Partial<{

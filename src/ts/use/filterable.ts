@@ -1,75 +1,71 @@
 import {
-  ref, computed, reactive, watch,
+  ref, computed, watch, Ref,
 } from 'vue'
 
-type CombinedFilters<T> = T & {
-  page: number
-}
-
 type UseFiltetableArgs<T, S> = {
-  initialFilters: T,
+  initialFilters: Ref<T>
   loadItems: (_params: T & { page: number }) => Promise<S[]>
 }
 
-const SYNC_STATES = {
-  INITIAL: 'initial',
-  SYNCING: 'syncing',
-  SYNCED: 'synced',
-  FAILED: 'failed',
+export const SYNC_STATES = {
+  INITIAL: 'INITIAL',
+  SYNCING: 'SYNCING',
+  SYNCED: 'SYNCED',
+  FAILED: 'FAILED',
 } as const
 
 type SynsState = (typeof SYNC_STATES)[keyof typeof SYNC_STATES]
 
-const useFilterable = <TFilters, TItem>({ initialFilters, loadItems }: UseFiltetableArgs<TFilters, TItem>) => {
+export default <TFilters, TItem>({
+  initialFilters,
+  loadItems,
+}: UseFiltetableArgs<TFilters, TItem>) => {
   const page = ref(1)
-  const items: { value: TItem[] } = reactive({ value: [] })
+  const items: Ref<TItem[]> = ref([])
   const syncState = ref<SynsState>(SYNC_STATES.INITIAL)
-  const filters = reactive({ value: initialFilters })
 
-  const combinedFilters = computed<CombinedFilters<TFilters>>(() => ({
-    page: page.value,
-    ...filters.value as TFilters,
-  }))
-
-  const load = async () => {
+  const reload = async () => {
     syncState.value = SYNC_STATES.SYNCING
 
     try {
-      items.value = await loadItems(combinedFilters.value)
+      items.value = await loadItems({
+        ...initialFilters.value,
+        page: page.value,
+      })
       syncState.value = SYNC_STATES.SYNCED
     } catch {
       items.value = []
       syncState.value = SYNC_STATES.FAILED
     }
   }
-  load()
 
-  watch(combinedFilters, load)
+  watch(initialFilters, reload)
+  watch(page, reload)
+  reload()
 
   return {
     page,
     items,
     syncState,
+    isSyncing: computed(() => syncState.value === SYNC_STATES.SYNCING),
+    isSynced: computed(() => syncState.value === SYNC_STATES.SYNCED),
+    isFailed: computed(() => syncState.value === SYNC_STATES.FAILED),
     nextPage: () => {
       page.value += 1
     },
     prevPage: () => {
       page.value -= 1
     },
-    isSyncing: computed(() => syncState.value === SYNC_STATES.SYNCING),
-    isSynced: computed(() => syncState.value === SYNC_STATES.SYNCED),
-    isFailed: computed(() => syncState.value === SYNC_STATES.FAILED),
-    reload: () => {
-      load()
+    setPage: (num: number) => {
+      page.value = num
     },
+    reload,
     refetch: () => {
       if (page.value === 1) {
-        load()
+        reload()
       } else {
         page.value = 1
       }
     },
   }
 }
-
-export default useFilterable

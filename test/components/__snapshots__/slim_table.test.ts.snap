@@ -89,7 +89,7 @@ exports[`ordering > click arrow 1`] = `
   <tfoot>
     <tr>
       <td colspan=\\"3\\">
-        <ul class=\\"vst-pagination mt-3\\">
+        <ul class=\\"vst-pagination\\">
           <li class=\\"vst-page-item disabled\\"><a class=\\"vst-page-link\\">←</a></li>
           <li class=\\"vst-page-item\\"><a class=\\"vst-page-link\\">→</a></li>
         </ul>
@@ -140,7 +140,7 @@ exports[`ordering > click arrow 2`] = `
   <tfoot>
     <tr>
       <td colspan=\\"3\\">
-        <ul class=\\"vst-pagination mt-3\\">
+        <ul class=\\"vst-pagination\\">
           <li class=\\"vst-page-item disabled\\"><a class=\\"vst-page-link\\">←</a></li>
           <li class=\\"vst-page-item\\"><a class=\\"vst-page-link\\">→</a></li>
         </ul>
@@ -191,7 +191,7 @@ exports[`ordering > click arrow 3`] = `
   <tfoot>
     <tr>
       <td colspan=\\"3\\">
-        <ul class=\\"vst-pagination mt-3\\">
+        <ul class=\\"vst-pagination\\">
           <li class=\\"vst-page-item disabled\\"><a class=\\"vst-page-link\\">←</a></li>
           <li class=\\"vst-page-item\\"><a class=\\"vst-page-link\\">→</a></li>
         </ul>
@@ -242,7 +242,7 @@ exports[`ordering > renders arrow 1`] = `
   <tfoot>
     <tr>
       <td colspan=\\"3\\">
-        <ul class=\\"vst-pagination mt-3\\">
+        <ul class=\\"vst-pagination\\">
           <li class=\\"vst-page-item disabled\\"><a class=\\"vst-page-link\\">←</a></li>
           <li class=\\"vst-page-item\\"><a class=\\"vst-page-link\\">→</a></li>
         </ul>
@@ -291,7 +291,7 @@ exports[`pagination > next page > click 1`] = `
   <tfoot>
     <tr>
       <td colspan=\\"3\\">
-        <ul class=\\"vst-pagination mt-3\\">
+        <ul class=\\"vst-pagination\\">
           <li class=\\"vst-page-item\\"><a class=\\"vst-page-link\\">←</a></li>
           <li class=\\"vst-page-item\\"><a class=\\"vst-page-link\\">→</a></li>
         </ul>
@@ -330,7 +330,7 @@ exports[`pagination > next page > click to last page 1`] = `
   <tfoot>
     <tr>
       <td colspan=\\"3\\">
-        <ul class=\\"vst-pagination mt-3\\">
+        <ul class=\\"vst-pagination\\">
           <li class=\\"vst-page-item\\"><a class=\\"vst-page-link\\">←</a></li>
           <li class=\\"vst-page-item disabled\\"><a class=\\"vst-page-link\\">→</a></li>
         </ul>
@@ -379,7 +379,7 @@ exports[`rendering data > render first page 1`] = `
   <tfoot>
     <tr>
       <td colspan=\\"3\\">
-        <ul class=\\"vst-pagination mt-3\\">
+        <ul class=\\"vst-pagination\\">
           <li class=\\"vst-page-item disabled\\"><a class=\\"vst-page-link\\">←</a></li>
           <li class=\\"vst-page-item\\"><a class=\\"vst-page-link\\">→</a></li>
         </ul>

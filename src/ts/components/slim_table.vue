@@ -34,13 +34,10 @@
     </thead>
     <tbody>
       <slot v-if="isSyncing" name="row:loading">
-        <LoadingRow
-          v-for="i in perPage"
-          :key="`loadingRow${i}`"
-          :columns-length="columns.length" />
+        <LoadingRow v-for="i in perPage" :key="`loadingRow${i}`" :columns-length="columns.length" />
       </slot>
 
-      <slot v-else-if="isSynced && rows.value.length === 0" name="row:empty">
+      <slot v-else-if="isSynced && rows.length === 0" name="row:empty">
         <tr>
           <td :colspan="columns.length">
             No records found
@@ -48,17 +45,15 @@
         </tr>
       </slot>
 
-      <template v-else-if="isSynced && rows.value.length">
+      <template v-else-if="isSynced && rows.length">
         <slot
-          v-for="(row, i) in rows.value"
+          v-for="(row, i) in rows"
           name="row"
           :row="row"
           :index="i"
           :columns="columns">
           <tr :key="row['id'] || i">
-            <td
-              v-for="column in columns"
-              :key="column.key">
+            <td v-for="column in columns" :key="column.key">
               <slot
                 :name="`cell:${column.key}`"
                 :row="row"
@@ -75,18 +70,13 @@
     <tfoot>
       <tr>
         <td :colspan="columns.length">
-          <slot name="pagination" :page="page" :rows="rows.value">
-            <ul
-              v-if="page > 1 || rows.value.length === perPage || isSyncing"
-              class="vst-pagination mt-3">
+          <slot name="pagination" :page="page" :rows="rows">
+            <ul v-if="page > 1 || rows.length === perPage || isSyncing" class="vst-pagination">
               <li :class="['vst-page-item', { disabled: page === 1 || isSyncing }]">
                 <a class="vst-page-link" @click.prevent="prevPage">←</a>
               </li>
 
-              <li
-                :class="['vst-page-item', {
-                  disabled: rows.value.length < perPage || isSyncing
-                }]">
+              <li :class="['vst-page-item', { disabled: rows.length < perPage || isSyncing }]">
                 <a class="vst-page-link" @click.prevent="nextPage">→</a>
               </li>
             </ul>
@@ -98,7 +88,7 @@
 </template>
 
 <script setup lang="ts" generic="TRow extends TableRow">
-import { shallowRef } from 'vue'
+import { ref, shallowRef } from 'vue'
 import LoadingRow from './loading_row.vue'
 
 import useFilterable from '../use/filterable'
@@ -108,7 +98,9 @@ import type {
 } from '@/ts/types'
 
 const orders = shallowRef<TableOrders>({})
-const props = defineProps<TableProps<TRow>>()
+const props = withDefaults(defineProps<TableProps<TRow>>(), {
+  perPage: 25,
+})
 
 const loadItems = async (params: TableFetchParams) => {
   let data: TRow[] = []
@@ -134,10 +126,15 @@ const onOrderClick = (event: Event, key: string) => {
   }
 }
 
+const initialFilters = ref<TableFilters>({
+  per_page: props.perPage,
+  orders,
+})
+
 const {
   page, isSyncing, isSynced, prevPage, nextPage, reload, refetch, items: rows,
 } = useFilterable<TableFilters, TRow>({
-  initialFilters: { per_page: props.perPage, orders },
+  initialFilters,
   loadItems,
 })
 

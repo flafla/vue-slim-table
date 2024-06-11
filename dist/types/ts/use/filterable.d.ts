@@ -1,28 +1,28 @@
+import { Ref } from 'vue';
 type UseFiltetableArgs<T, S> = {
-    initialFilters: T;
+    initialFilters: Ref<T>;
     loadItems: (_params: T & {
         page: number;
     }) => Promise<S[]>;
 };
-declare const SYNC_STATES: {
-    readonly INITIAL: "initial";
-    readonly SYNCING: "syncing";
-    readonly SYNCED: "synced";
-    readonly FAILED: "failed";
+export declare const SYNC_STATES: {
+    readonly INITIAL: "INITIAL";
+    readonly SYNCING: "SYNCING";
+    readonly SYNCED: "SYNCED";
+    readonly FAILED: "FAILED";
 };
 type SynsState = (typeof SYNC_STATES)[keyof typeof SYNC_STATES];
-declare const useFilterable: <TFilters, TItem>({ initialFilters, loadItems }: UseFiltetableArgs<TFilters, TItem>) => {
-    page: import("vue").Ref<number>;
-    items: {
-        value: TItem[];
-    };
-    syncState: import("vue").Ref<SynsState>;
-    nextPage: () => void;
-    prevPage: () => void;
+declare const _default: <TFilters, TItem>({ initialFilters, loadItems, }: UseFiltetableArgs<TFilters, TItem>) => {
+    page: Ref<number>;
+    items: Ref<TItem[]>;
+    syncState: Ref<SynsState>;
     isSyncing: import("vue").ComputedRef<boolean>;
     isSynced: import("vue").ComputedRef<boolean>;
     isFailed: import("vue").ComputedRef<boolean>;
-    reload: () => void;
+    nextPage: () => void;
+    prevPage: () => void;
+    setPage: (num: number) => void;
+    reload: () => Promise<void>;
     refetch: () => void;
 };
-export default useFilterable;
+export default _default;

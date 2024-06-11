@@ -1,5 +1,7 @@
 import { describe, beforeEach, expect, test, vi } from 'vitest'
 
+import { ref } from 'vue'
+
 import useFilterable from '@/ts/use/filterable'
 
 const columns = [
@@ -29,7 +31,7 @@ let filterable
 describe('useFilterable success', () => {
   beforeEach(() => {
     loadSpy = vi.spyOn(mocks, 'asyncSource')
-    filterable = useFilterable({ initialFilters: {}, loadItems: loadSpy })
+    filterable = useFilterable({ initialFilters: ref({}), loadItems: loadSpy })
   })
 
   test('default use', async () => {
@@ -91,14 +93,23 @@ describe('useFilterable success', () => {
   })
 })
 
+test('initial filters change', async () => {
+  const initialFilters = ref({ name: 'John Doe' })
+  loadSpy = vi.spyOn(mocks, 'asyncSource')
+  filterable = useFilterable({ initialFilters: initialFilters, loadItems: loadSpy })
+
+  initialFilters.value = { name: 'Jane Doe' }
+
+  expect(await loadSpy).toHaveBeenCalledTimes(2)
+})
 
 test('useFilterable failed', async () => {
-    const loadSpy = vi.spyOn(mocks, 'asyncFailedSource')
-    const filterable = useFilterable({ initialFilters: {}, loadItems: loadSpy })
-    await loadSpy
-    expect(filterable.page.value).toBe(1)
+  const loadSpy = vi.spyOn(mocks, 'asyncFailedSource')
+  const filterable = useFilterable({ initialFilters: ref({}), loadItems: loadSpy })
+  await loadSpy
+  expect(filterable.page.value).toBe(1)
 
-    process.nextTick(() => {
-      expect(filterable.isFailed.value).toBe(true)
-    })
+  process.nextTick(() => {
+    expect(filterable.isFailed.value).toBe(true)
+  })
 })

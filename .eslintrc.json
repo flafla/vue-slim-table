@@ -20,9 +20,6 @@
   "env": {
     "vue/setup-compiler-macros": true
   },
-  "globals": {
-    "fetch": true
-  },
   "rules": {
     "semi": ["error", "never"],
     "vue/multi-word-component-names": "off",
@@ -39,5 +36,5 @@
     "max-len": ["error", { "code": 120, "tabWidth": 2 }],
     "import/extensions": "off",
     "import/no-unresolved": "off"
-  },
+  }
 }

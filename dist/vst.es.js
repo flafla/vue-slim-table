@@ -1,158 +1,165 @@
-import { defineComponent as Y, openBlock as n, createElementBlock as r, createElementVNode as a, normalizeClass as S, ref as _, reactive as D, computed as f, watch as B, shallowRef as G, renderSlot as u, Fragment as $, renderList as N, mergeProps as M, toHandlers as V, createTextVNode as C, toDisplayString as I, createCommentVNode as w, unref as s, createBlock as R, withModifiers as L } from "vue";
+import { defineComponent as F, openBlock as n, createElementBlock as u, createElementVNode as a, normalizeClass as $, ref as I, watch as _, computed as b, shallowRef as B, renderSlot as d, Fragment as N, renderList as f, mergeProps as M, toHandlers as V, createTextVNode as E, toDisplayString as P, createCommentVNode as w, unref as t, createBlock as R, withModifiers as A } from "vue";
 const q = ["colspan"], z = /* @__PURE__ */ a("div", null, null, -1), H = [
   z
-], O = /* @__PURE__ */ Y({
+], O = /* @__PURE__ */ F({
   __name: "loading_row",
   props: {
     columnsLength: { type: Number, required: !0 }
   },
-  setup(h) {
-    const y = Math.floor(Math.random() * 10) + 1;
-    return (i, l) => (n(), r("tr", null, [
+  setup(v) {
+    const h = Math.floor(Math.random() * 10) + 1;
+    return (o, l) => (n(), u("tr", null, [
       a("td", {
-        colspan: h.columnsLength,
-        class: S(["vst-loading-row", `vst-loading-row-${y}`])
+        colspan: v.columnsLength,
+        class: $(["vst-loading-row", `vst-loading-row-${h}`])
       }, H, 10, q)
     ]));
   }
-}), p = {
-  INITIAL: "initial",
-  SYNCING: "syncing",
-  SYNCED: "synced",
-  FAILED: "failed"
-}, j = ({ initialFilters: h, loadItems: y }) => {
-  const i = _(1), l = D({ value: [] }), d = _(p.INITIAL), b = D({ value: h }), g = f(() => ({
-    page: i.value,
-    ...b.value
-  })), c = async () => {
-    d.value = p.SYNCING;
+}), g = {
+  INITIAL: "INITIAL",
+  SYNCING: "SYNCING",
+  SYNCED: "SYNCED",
+  FAILED: "FAILED"
+}, j = ({
+  initialFilters: v,
+  loadItems: h
+}) => {
+  const o = I(1), l = I([]), i = I(g.INITIAL), c = async () => {
+    i.value = g.SYNCING;
     try {
-      l.value = await y(g.value), d.value = p.SYNCED;
+      l.value = await h({
+        ...v.value,
+        page: o.value
+      }), i.value = g.SYNCED;
     } catch {
-      l.value = [], d.value = p.FAILED;
+      l.value = [], i.value = g.FAILED;
     }
   };
-  return c(), B(g, c), {
-    page: i,
+  return _(v, c), _(o, c), c(), {
+    page: o,
     items: l,
-    syncState: d,
+    syncState: i,
+    isSyncing: b(() => i.value === g.SYNCING),
+    isSynced: b(() => i.value === g.SYNCED),
+    isFailed: b(() => i.value === g.FAILED),
     nextPage: () => {
-      i.value += 1;
+      o.value += 1;
     },
     prevPage: () => {
-      i.value -= 1;
+      o.value -= 1;
     },
-    isSyncing: f(() => d.value === p.SYNCING),
-    isSynced: f(() => d.value === p.SYNCED),
-    isFailed: f(() => d.value === p.FAILED),
-    reload: () => {
-      c();
+    setPage: (S) => {
+      o.value = S;
     },
+    reload: c,
     refetch: () => {
-      i.value === 1 ? c() : i.value = 1;
+      o.value === 1 ? c() : o.value = 1;
     }
   };
 }, J = { class: "vst" }, K = { key: 0 }, Q = { key: 0 }, U = ["colspan"], W = ["colspan"], X = {
   key: 0,
-  class: "vst-pagination mt-3"
-}, x = /* @__PURE__ */ Y({
+  class: "vst-pagination"
+}, x = /* @__PURE__ */ F({
   __name: "slim_table",
   props: {
     columns: {},
-    perPage: {},
-    source: { type: Function }
+    perPage: { default: 25 },
+    source: {}
   },
-  setup(h, { expose: y }) {
-    const i = h, l = G({}), d = async (e) => {
-      let o = [];
+  setup(v, { expose: h }) {
+    const o = v, l = B({}), i = async (e) => {
+      let r = [];
       try {
-        o = await i.source(e);
+        r = await o.source(e);
       } catch {
       }
-      return o;
-    }, b = (e, o) => {
-      e.preventDefault(), l.value[o] === "asc" ? l.value = { [o]: "desc" } : l.value[o] === "desc" ? l.value = {} : l.value = { [o]: "asc" };
-    }, {
-      page: g,
-      isSyncing: c,
-      isSynced: P,
-      prevPage: E,
-      nextPage: F,
-      reload: A,
-      refetch: T,
-      items: v
+      return r;
+    }, c = (e, r) => {
+      e.preventDefault(), l.value[r] === "asc" ? l.value = { [r]: "desc" } : l.value[r] === "desc" ? l.value = {} : l.value = { [r]: "asc" };
+    }, S = I({
+      per_page: o.perPage,
+      orders: l
+    }), {
+      page: C,
+      isSyncing: m,
+      isSynced: D,
+      prevPage: L,
+      nextPage: Y,
+      reload: T,
+      refetch: G,
+      items: p
     } = j({
-      initialFilters: { per_page: i.perPage, orders: l },
-      loadItems: d
+      initialFilters: S,
+      loadItems: i
     });
-    return y({
-      refetch: T,
-      reload: A,
-      rows: v
-    }), (e, o) => (n(), r("table", J, [
-      e.columns.length ? (n(), r("thead", K, [
-        u(e.$slots, "thead:before"),
-        u(e.$slots, "thead", {
+    return h({
+      refetch: G,
+      reload: T,
+      rows: p
+    }), (e, r) => (n(), u("table", J, [
+      e.columns.length ? (n(), u("thead", K, [
+        d(e.$slots, "thead:before"),
+        d(e.$slots, "thead", {
           columns: e.columns,
           orders: l.value
         }, () => [
           a("tr", null, [
-            (n(!0), r($, null, N(e.columns, (t) => (n(), r("th", M({
-              key: t.key,
-              class: ["vst-th", { "vst-orderable": t.orderable }]
-            }, V(t.orderable ? { click: (m) => b(m, t.key) } : {}, !0)), [
-              t.orderable ? (n(), r("div", Q, [
-                u(e.$slots, `thead:${t.key}`, {
-                  column: t,
+            (n(!0), u(N, null, f(e.columns, (s) => (n(), u("th", M({
+              key: s.key,
+              class: ["vst-th", { "vst-orderable": s.orderable }]
+            }, V(s.orderable ? { click: (y) => c(y, s.key) } : {}, !0)), [
+              s.orderable ? (n(), u("div", Q, [
+                d(e.$slots, `thead:${s.key}`, {
+                  column: s,
                   orders: l.value
                 }, () => [
-                  C(I(t.title), 1)
+                  E(P(s.title), 1)
                 ]),
                 a("i", {
-                  class: S(["vst-orderable-toggle", l.value[t.key]])
+                  class: $(["vst-orderable-toggle", l.value[s.key]])
                 }, null, 2)
-              ])) : u(e.$slots, `thead:${t.key}`, {
+              ])) : d(e.$slots, `thead:${s.key}`, {
                 key: 1,
-                column: t,
+                column: s,
                 orders: l.value
               }, () => [
-                C(I(t.title), 1)
+                E(P(s.title), 1)
               ])
             ], 16))), 128))
           ])
         ]),
-        u(e.$slots, "thead:after")
+        d(e.$slots, "thead:after")
       ])) : w("", !0),
       a("tbody", null, [
-        s(c) ? u(e.$slots, "row:loading", { key: 0 }, () => [
-          (n(!0), r($, null, N(e.perPage, (t) => (n(), R(O, {
-            key: `loadingRow${t}`,
+        t(m) ? d(e.$slots, "row:loading", { key: 0 }, () => [
+          (n(!0), u(N, null, f(e.perPage, (s) => (n(), R(O, {
+            key: `loadingRow${s}`,
             "columns-length": e.columns.length
           }, null, 8, ["columns-length"]))), 128))
-        ]) : s(P) && s(v).value.length === 0 ? u(e.$slots, "row:empty", { key: 1 }, () => [
+        ]) : t(D) && t(p).length === 0 ? d(e.$slots, "row:empty", { key: 1 }, () => [
           a("tr", null, [
             a("td", {
               colspan: e.columns.length
             }, " No records found ", 8, U)
           ])
-        ]) : s(P) && s(v).value.length ? (n(!0), r($, { key: 2 }, N(s(v).value, (t, m) => u(e.$slots, "row", {
-          row: t,
-          index: m,
+        ]) : t(D) && t(p).length ? (n(!0), u(N, { key: 2 }, f(t(p), (s, y) => d(e.$slots, "row", {
+          row: s,
+          index: y,
           columns: e.columns
         }, () => [
-          (n(), r("tr", {
-            key: t.id || m
+          (n(), u("tr", {
+            key: s.id || y
           }, [
-            (n(!0), r($, null, N(e.columns, (k) => (n(), r("td", {
+            (n(!0), u(N, null, f(e.columns, (k) => (n(), u("td", {
               key: k.key
             }, [
-              u(e.$slots, `cell:${k.key}`, {
-                row: t,
-                value: t[k.key],
+              d(e.$slots, `cell:${k.key}`, {
+                row: s,
+                value: s[k.key],
                 column: k,
-                index: m
+                index: y
               }, () => [
-                C(I(t[k.key]), 1)
+                E(P(s[k.key]), 1)
               ])
             ]))), 128))
           ]))
@@ -163,33 +170,31 @@ const q = ["colspan"], z = /* @__PURE__ */ a("div", null, null, -1), H = [
           a("td", {
             colspan: e.columns.length
           }, [
-            u(e.$slots, "pagination", {
-              page: s(g),
-              rows: s(v).value
+            d(e.$slots, "pagination", {
+              page: t(C),
+              rows: t(p)
             }, () => [
-              s(g) > 1 || s(v).value.length === e.perPage || s(c) ? (n(), r("ul", X, [
+              t(C) > 1 || t(p).length === e.perPage || t(m) ? (n(), u("ul", X, [
                 a("li", {
-                  class: S(["vst-page-item", { disabled: s(g) === 1 || s(c) }])
+                  class: $(["vst-page-item", { disabled: t(C) === 1 || t(m) }])
                 }, [
                   a("a", {
                     class: "vst-page-link",
-                    onClick: o[0] || (o[0] = L(
+                    onClick: r[0] || (r[0] = A(
                       //@ts-ignore
-                      (...t) => s(E) && s(E)(...t),
+                      (...s) => t(L) && t(L)(...s),
                       ["prevent"]
                     ))
                   }, "←")
                 ], 2),
                 a("li", {
-                  class: S(["vst-page-item", {
-                    disabled: s(v).value.length < e.perPage || s(c)
-                  }])
+                  class: $(["vst-page-item", { disabled: t(p).length < e.perPage || t(m) }])
                 }, [
                   a("a", {
                     class: "vst-page-link",
-                    onClick: o[1] || (o[1] = L(
+                    onClick: r[1] || (r[1] = A(
                       //@ts-ignore
-                      (...t) => s(F) && s(F)(...t),
+                      (...s) => t(Y) && t(Y)(...s),
                       ["prevent"]
                     ))
                   }, "→")
