@@ -1,6 +1,6 @@
-import { Ref } from 'vue';
+import { Ref, ComputedRef } from 'vue';
 type UseFiltetableArgs<T, S> = {
-    initialFilters: Ref<T>;
+    initialFilters: ComputedRef<T>;
     loadItems: (_params: T & {
         page: number;
     }) => Promise<S[]>;
@@ -16,9 +16,9 @@ declare const _default: <TFilters, TItem>({ initialFilters, loadItems, }: UseFil
     page: Ref<number>;
     items: Ref<TItem[]>;
     syncState: Ref<SynsState>;
-    isSyncing: import("vue").ComputedRef<boolean>;
-    isSynced: import("vue").ComputedRef<boolean>;
-    isFailed: import("vue").ComputedRef<boolean>;
+    isSyncing: ComputedRef<boolean>;
+    isSynced: ComputedRef<boolean>;
+    isFailed: ComputedRef<boolean>;
     nextPage: () => void;
     prevPage: () => void;
     setPage: (num: number) => void;

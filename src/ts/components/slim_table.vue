@@ -88,7 +88,7 @@
 </template>
 
 <script setup lang="ts" generic="TRow extends TableRow">
-import { ref, shallowRef } from 'vue'
+import { computed, shallowRef } from 'vue'
 import LoadingRow from './loading_row.vue'
 
 import useFilterable from '../use/filterable'
@@ -126,10 +126,10 @@ const onOrderClick = (event: Event, key: string) => {
   }
 }
 
-const initialFilters = ref<TableFilters>({
+const initialFilters = computed<TableFilters>(() => ({
   per_page: props.perPage,
   orders,
-})
+}))
 
 const {
   page, isSyncing, isSynced, prevPage, nextPage, reload, refetch, items: rows,

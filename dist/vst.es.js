@@ -1,4 +1,4 @@
-import { defineComponent as F, openBlock as n, createElementBlock as u, createElementVNode as a, normalizeClass as $, ref as I, watch as _, computed as b, shallowRef as B, renderSlot as d, Fragment as N, renderList as f, mergeProps as M, toHandlers as V, createTextVNode as E, toDisplayString as P, createCommentVNode as w, unref as t, createBlock as R, withModifiers as A } from "vue";
+import { defineComponent as F, openBlock as n, createElementBlock as u, createElementVNode as a, normalizeClass as $, ref as b, watch as _, computed as I, shallowRef as B, renderSlot as d, Fragment as N, renderList as f, mergeProps as M, toHandlers as V, createTextVNode as E, toDisplayString as P, createCommentVNode as w, unref as t, createBlock as R, withModifiers as A } from "vue";
 const q = ["colspan"], z = /* @__PURE__ */ a("div", null, null, -1), H = [
   z
 ], O = /* @__PURE__ */ F({
@@ -24,7 +24,7 @@ const q = ["colspan"], z = /* @__PURE__ */ a("div", null, null, -1), H = [
   initialFilters: v,
   loadItems: h
 }) => {
-  const o = I(1), l = I([]), i = I(g.INITIAL), c = async () => {
+  const o = b(1), l = b([]), i = b(g.INITIAL), c = async () => {
     i.value = g.SYNCING;
     try {
       l.value = await h({
@@ -39,9 +39,9 @@ const q = ["colspan"], z = /* @__PURE__ */ a("div", null, null, -1), H = [
     page: o,
     items: l,
     syncState: i,
-    isSyncing: b(() => i.value === g.SYNCING),
-    isSynced: b(() => i.value === g.SYNCED),
-    isFailed: b(() => i.value === g.FAILED),
+    isSyncing: I(() => i.value === g.SYNCING),
+    isSynced: I(() => i.value === g.SYNCED),
+    isFailed: I(() => i.value === g.FAILED),
     nextPage: () => {
       o.value += 1;
     },
@@ -76,10 +76,10 @@ const q = ["colspan"], z = /* @__PURE__ */ a("div", null, null, -1), H = [
       return r;
     }, c = (e, r) => {
       e.preventDefault(), l.value[r] === "asc" ? l.value = { [r]: "desc" } : l.value[r] === "desc" ? l.value = {} : l.value = { [r]: "asc" };
-    }, S = I({
+    }, S = I(() => ({
       per_page: o.perPage,
       orders: l
-    }), {
+    })), {
       page: C,
       isSyncing: m,
       isSynced: D,

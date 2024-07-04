@@ -1,9 +1,9 @@
 import {
-  ref, computed, watch, Ref,
+  ref, computed, watch, Ref, ComputedRef,
 } from 'vue'
 
 type UseFiltetableArgs<T, S> = {
-  initialFilters: Ref<T>
+  initialFilters: ComputedRef<T>
   loadItems: (_params: T & { page: number }) => Promise<S[]>
 }
 
