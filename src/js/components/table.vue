@@ -60,14 +60,14 @@
     <tfoot>
       <tr>
         <td :colspan="columns.length">
-          <slot name="pagination" :page="page" :rows="rows">
-            <ul v-if="page > 1 || rows.length === perPage" class="vst-pagination mt-3">
-              <li :class="['vst-page-item', { disabled: page === 1 }]">
-                <a class="vst-page-link" @click.prevent="page -= 1">←</a>
+          <slot name="pagination" :page="internalPage" :rows="rows">
+            <ul v-if="internalPage > 1 || rows.length === perPage" class="vst-pagination mt-3">
+              <li :class="['vst-page-item', { disabled: internalPage === 1 }]">
+                <a class="vst-page-link" @click.prevent="internalPage -= 1">←</a>
               </li>
 
               <li :class="['vst-page-item', { disabled: rows.length < perPage }]">
-                <a class="vst-page-link" @click.prevent="page += 1">→</a>
+                <a class="vst-page-link" @click.prevent="internalPage += 1">→</a>
               </li>
             </ul>
           </slot>
@@ -78,7 +78,6 @@
 </template>
 
 <script>
-import qs from 'qs'
 import LoadingRow from './loading_row.vue'
 
 export default {
@@ -86,27 +85,31 @@ export default {
   props: {
     columns: { type: Array, required: true },
     source: { type: [String, Function], required: true },
+    page: { type: Number, default: 1 },
     perPage: { type: Number, default: 25 },
   },
   data() {
     return {
-      page: 1,
+      internalPage: this.page,
       rows: [],
       syncState: 'initial',
       orders: {},
     }
   },
   watch: {
-    page: 'fetchData',
+    internalPage: 'fetchData',
     orders: 'refetch',
     perPage: 'refetch',
+    page(newPage) {
+      this.internalPage = newPage
+    },
   },
   created() {
-    this.fetchData()
+    this.fetchData(this.internalPage)
   },
   methods: {
     reload() {
-      this.fetchData(this.page)
+      this.fetchData(this.internalPage)
     },
     async fetchData(page = 1) {
       const params = { per_page: this.perPage, page }
@@ -119,15 +122,7 @@ export default {
       this.syncState = 'syncing'
       this.rows = []
 
-      let data
-      if (typeof this.source === 'string') {
-        const response = await fetch(`${this.source}?${qs.stringify(params, { arrayFormat: 'brackets' })}`)
-        data = await response.json()
-      } else {
-        data = await this.source(params)
-      }
-
-      this.rows = data
+      this.rows = await this.source(params)
       this.syncState = 'fetched'
     },
     onOrderClick(key) {
@@ -140,10 +135,10 @@ export default {
       }
     },
     refetch() {
-      if (this.page === 1) {
+      if (this.internalPage === 1) {
         this.fetchData(1)
       } else {
-        this.page = 1
+        this.internalPage = 1
       }
     },
   },
