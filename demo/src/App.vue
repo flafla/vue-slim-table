@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import VueSlimTable from '../../src/ts/components/slim_table.vue'
+import VueSlimTable from '../../src/ts/components/VueSlimTable.vue'
 import { asyncSource } from './api/fake'
 
 const columns = [

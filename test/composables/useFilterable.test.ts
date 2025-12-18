@@ -2,7 +2,7 @@ import { describe, beforeEach, expect, test, vi } from 'vitest'
 
 import { ref } from 'vue'
 
-import useFilterable from '@/ts/use/filterable'
+import useFilterable from '@/ts/composables/useFilterable'
 
 const columns = [
   { key: 'one', title: 'One' },

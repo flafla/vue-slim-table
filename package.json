@@ -8,6 +8,7 @@
   "module": "./dist/vst.es.js",
   "exports": {
     ".": {
+      "types": "./dist/types/main.d.ts",
       "import": "./dist/vst.es.js",
       "require": "./dist/vst.umd.js"
     },

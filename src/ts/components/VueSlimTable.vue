@@ -89,9 +89,9 @@
 
 <script setup lang="ts" generic="TRow extends TableRow">
 import { computed, shallowRef } from 'vue'
-import LoadingRow from './loading_row.vue'
+import LoadingRow from './LoadingRow.vue'
 
-import useFilterable from '../use/filterable'
+import useFilterable from '../composables/useFilterable'
 
 import type {
   TableOrders, TableFetchParams, TableRow, TableFilters, TableProps, TableSlots,
@@ -128,7 +128,7 @@ const onOrderClick = (event: Event, key: string) => {
 
 const initialFilters = computed<TableFilters>(() => ({
   per_page: props.perPage,
-  orders,
+  orders: orders.value,
 }))
 
 const {

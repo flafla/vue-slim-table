@@ -1,7 +1,7 @@
 import { describe, expect, test, beforeAll } from 'vitest'
 import { nextTick, defineComponent } from 'vue'
 import { mount } from '@vue/test-utils'
-import Table from '@/ts/components/slim_table.vue'
+import VueSlimTable from '@/ts/components/VueSlimTable.vue'
 
 const perPage = 5
 const columns = [
@@ -23,7 +23,7 @@ const asyncSource = (params) => {
 
 describe('empty async data', () => {
   test('shows default no records text', async() => {
-    const wrapper = mount(Table, {
+    const wrapper = mount(VueSlimTable, {
       props: { columns, source: () => [], perPage }
     })
 
@@ -39,7 +39,7 @@ describe('empty async data', () => {
     const noDataComponent = defineComponent({
       template: `<tr><td colspan="5">${noData}</td></tr>`
     })
-    const wrapper = mount(Table, {
+    const wrapper = mount(VueSlimTable, {
       props: { columns, source: () => [], perPage },
       slots: { 'row:empty': noDataComponent }
     })
@@ -54,7 +54,7 @@ describe('empty async data', () => {
 
 describe('rendering data', () => {
   test('render first page', async () => {
-    const wrapper = mount(Table, {
+    const wrapper = mount(VueSlimTable, {
       props: { columns, source: asyncSource, perPage }
     })
 
@@ -71,7 +71,7 @@ describe('slots', () => {
   test('render thead', async () => {
     const text = 'rewited table head'
 
-    const wrapper = mount(Table, {
+    const wrapper = mount(VueSlimTable, {
       props: { columns, source: () => [], perPage },
       slots: {
         thead: `<template #thead="{ columns }"><tr><td :colspan="columns.length">${text}</td></tr></template>`
@@ -89,7 +89,7 @@ describe('slots', () => {
 describe('pagination', () => {
   describe('first page', () => {
     test('has more than one page', async () => {
-      const wrapper = mount(Table, {
+      const wrapper = mount(VueSlimTable, {
         props: { columns, source: asyncSource, perPage }
       })
 
@@ -109,7 +109,7 @@ describe('pagination', () => {
     })
 
     test('has only one page', async () => {
-      const wrapper = mount(Table, {
+      const wrapper = mount(VueSlimTable, {
         props: { columns, source: asyncSource, perPage: source.length + 1 }
       })
 
@@ -128,7 +128,7 @@ describe('pagination', () => {
 
   describe('next page', () => {
     test('click', async () => {
-      const wrapper = mount(Table, {
+      const wrapper = mount(VueSlimTable, {
         props: { columns, source: asyncSource, perPage }
       })
 
@@ -143,7 +143,7 @@ describe('pagination', () => {
     })
 
     test('click to last page', async () => {
-      const wrapper = mount(Table, {
+      const wrapper = mount(VueSlimTable, {
         props: { columns, source: asyncSource, perPage: 10 }
       })
 
@@ -168,7 +168,7 @@ describe('ordering', () => {
   })
 
   test('renders arrow', async () => {
-    const wrapper = mount(Table, {
+    const wrapper = mount(VueSlimTable, {
       props: { columns, source: asyncSource, perPage }
     })
 
@@ -180,7 +180,7 @@ describe('ordering', () => {
   })
 
   test('click arrow', async () => {
-    const wrapper = mount(Table, {
+    const wrapper = mount(VueSlimTable, {
       props: { columns, source: asyncSource, perPage }
     })
 
@@ -220,7 +220,7 @@ describe('ordering', () => {
   })
 
   test('click without arrow', async () => {
-    const wrapper = mount(Table, {
+    const wrapper = mount(VueSlimTable, {
       props: { columns, source: asyncSource, perPage }
     })
 

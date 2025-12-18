@@ -1,5 +1,3 @@
-import { ShallowRef } from 'vue'
-
 export type TableColumn = {
   key: string,
   title: string,
@@ -12,7 +10,7 @@ export type TableOrders = {
 
 export type TableFilters = {
   per_page: number,
-  orders: ShallowRef<TableOrders>
+  orders: TableOrders
 }
 
 export type TableFetchParams = {
