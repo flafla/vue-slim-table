@@ -30,7 +30,7 @@ let loadSpy
 let filterable
 describe('useFilterable success', () => {
   beforeEach(() => {
-    loadSpy = vi.spyOn(mocks, 'asyncSource')
+    loadSpy = vi.spyOn({ ...mocks }, 'asyncSource')
     filterable = useFilterable({ initialFilters: ref({}), loadItems: loadSpy })
   })
 
@@ -95,7 +95,7 @@ describe('useFilterable success', () => {
 
 test('initial filters change', async () => {
   const initialFilters = ref({ name: 'John Doe' })
-  loadSpy = vi.spyOn(mocks, 'asyncSource')
+  loadSpy = vi.spyOn({ ...mocks }, 'asyncSource')
   filterable = useFilterable({ initialFilters: initialFilters, loadItems: loadSpy })
 
   initialFilters.value = { name: 'Jane Doe' }
@@ -104,7 +104,7 @@ test('initial filters change', async () => {
 })
 
 test('useFilterable failed', async () => {
-  const loadSpy = vi.spyOn(mocks, 'asyncFailedSource')
+  const loadSpy = vi.spyOn({ ...mocks }, 'asyncFailedSource')
   const filterable = useFilterable({ initialFilters: ref({}), loadItems: loadSpy })
   await loadSpy
   expect(filterable.page.value).toBe(1)

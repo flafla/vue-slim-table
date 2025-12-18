@@ -1,22 +1,15 @@
-import vue from '@vitejs/plugin-vue'
-import path from 'path'
-import dts from 'vite-plugin-dts'
 import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import { resolve } from 'path'
 
-module.exports = defineConfig({
-  plugins: [
-    vue(),
-    dts({
-      outDir: 'dist/types',
-      // logDiagnostics: true,
-      // skipDiagnostics: false,
-    }),
-  ],
+export default defineConfig({
+  plugins: [vue()],
   resolve: {
     dedupe: ['vue'],
     alias: {
-      '@': path.resolve(__dirname, 'src')
-    }
+      '@': resolve(__dirname, 'src')
+    },
+    extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json']
   },
   test: {
     globals: true,
@@ -24,10 +17,10 @@ module.exports = defineConfig({
   },
   build: {
     lib: {
-      entry: path.resolve(__dirname, 'src/main.ts'),
+      entry: resolve(__dirname, 'src/index.ts'),
       name: 'VueSlimTable',
-      formats: ['es', 'umd'],
-      fileName: (format) => `vst.${format}.js`
+      fileName: (format) => `vst.${format}.js`,
+      formats: ['es', 'umd', 'cjs'],
     },
     rollupOptions: {
       external: ['vue'],

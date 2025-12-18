@@ -1,26 +1,28 @@
 {
   "name": "vue-slim-tables",
-  "version": "0.3.6",
+  "version": "0.3.7",
+  "type": "module",
+  "main": "./dist/vst.cjs.js",
+  "module": "./dist/vst.es.js",
+  "types": "./dist/index.d.ts",
   "files": [
     "dist"
   ],
-  "main": "./dist/vst.umd.js",
-  "module": "./dist/vst.es.js",
-  "exports": {
-    ".": {
-      "types": "./dist/types/main.d.ts",
-      "import": "./dist/vst.es.js",
-      "require": "./dist/vst.umd.js"
-    },
-    "./stylesheets": "dist/style.css",
-    "./src/main": "./src/main.ts",
-    "./filterable": "./src/ts/use/filterable"
-  },
   "scripts": {
-    "build": "vite build",
-    "lint": "eslint ./src/ts/ --ext 'ts,vue' --fix",
+    "build": "vite build && vue-tsc -p tsconfig.build.json",
+    "lint": "npx @biomejs/biome check ./src/ts/ --write",
     "test": "vitest",
     "coverage": "vitest run --coverage"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/vst.es.js",
+      "require": "./dist/vst.cjs.js"
+    },
+    "./stylesheets": "dist/style.css",
+    "./src/index": "./src/index.ts",
+    "./filterable": "./src/ts/use/filterable"
   },
   "keywords": [
     "vue",
@@ -34,27 +36,17 @@
   "author": "fLa <flatra66@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "@babel/types": "^7.20.7",
-    "@typescript-eslint/eslint-plugin": "^6.2.1",
-    "@typescript-eslint/parser": "^6.2.1",
-    "@vitejs/plugin-vue": "^4.2.3",
-    "@vitest/coverage-v8": "^0.34.1",
-    "@vue/test-utils": "^2.4.1",
-    "eslint": "^8.51.0",
-    "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.28.1",
-    "eslint-plugin-vue": "^9.17.0",
-    "happy-dom": "^10.8.0",
-    "sass": "^1.64.2",
-    "typescript": "^5.1.6",
-    "vite": "^4.4.8",
-    "vite-plugin-dts": "^3.5.1",
-    "vitest": "^0.34.1",
-    "vue-eslint-parser": "^9.3.1"
+    "@biomejs/biome": "2.3.10",
+    "@vitejs/plugin-vue": "^6.0.3",
+    "@vue/test-utils": "^2.4.6",
+    "happy-dom": "^20.0.11",
+    "sass": "^1.97.0",
+    "typescript": "^5.9.3",
+    "vite": "^7.3.0",
+    "vitest": "^4.0.16",
+    "vue-tsc": "^3.1.8"
   },
-  "dependencies": {
+  "peerDependencies": {
     "vue": "^3.3.0"
-  },
-  "types": "dist/types/main.d.ts",
-  "packageManager": "yarn@3.4.1"
+  }
 }

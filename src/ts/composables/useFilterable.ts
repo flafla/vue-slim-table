@@ -1,6 +1,4 @@
-import {
-  ref, computed, watch, Ref, ComputedRef,
-} from 'vue'
+import { type ComputedRef, computed, type Ref, ref, watch } from 'vue'
 
 type UseFiltetableArgs<T, S> = {
   initialFilters: ComputedRef<T>
@@ -16,10 +14,7 @@ export const SYNC_STATES = {
 
 type SynsState = (typeof SYNC_STATES)[keyof typeof SYNC_STATES]
 
-export default <TFilters, TItem>({
-  initialFilters,
-  loadItems,
-}: UseFiltetableArgs<TFilters, TItem>) => {
+export default <TFilters, TItem>({ initialFilters, loadItems }: UseFiltetableArgs<TFilters, TItem>) => {
   const page = ref(1)
   const items: Ref<TItem[]> = ref([])
   const syncState = ref<SynsState>(SYNC_STATES.INITIAL)

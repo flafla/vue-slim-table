@@ -1,22 +1,22 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`empty async data > shows default no records text 1`] = `
-"<table class=\\"vst\\">
+"<table class="vst">
   <thead>
     <tr>
-      <th class=\\"vst-th\\">One</th>
-      <th class=\\"vst-th\\">Two</th>
-      <th class=\\"vst-th\\">Three</th>
+      <th class="vst-th">One</th>
+      <th class="vst-th">Two</th>
+      <th class="vst-th">Three</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td colspan=\\"3\\"> No records found </td>
+      <td colspan="3"> No records found </td>
     </tr>
   </tbody>
   <tfoot>
     <tr>
-      <td colspan=\\"3\\">
+      <td colspan="3">
         <!--v-if-->
       </td>
     </tr>
@@ -25,22 +25,22 @@ exports[`empty async data > shows default no records text 1`] = `
 `;
 
 exports[`empty async data > shows replaced row:empty slot 1`] = `
-"<table class=\\"vst\\">
+"<table class="vst">
   <thead>
     <tr>
-      <th class=\\"vst-th\\">One</th>
-      <th class=\\"vst-th\\">Two</th>
-      <th class=\\"vst-th\\">Three</th>
+      <th class="vst-th">One</th>
+      <th class="vst-th">Two</th>
+      <th class="vst-th">Three</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td colspan=\\"5\\">no data found</td>
+      <td colspan="5">no data found</td>
     </tr>
   </tbody>
   <tfoot>
     <tr>
-      <td colspan=\\"3\\">
+      <td colspan="3">
         <!--v-if-->
       </td>
     </tr>
@@ -49,14 +49,14 @@ exports[`empty async data > shows replaced row:empty slot 1`] = `
 `;
 
 exports[`ordering > click arrow 1`] = `
-"<table class=\\"vst\\">
+"<table class="vst">
   <thead>
     <tr>
-      <th class=\\"vst-th vst-orderable\\">
-        <div>One<i class=\\"vst-orderable-toggle asc\\"></i></div>
+      <th class="vst-th vst-orderable">
+        <div>One<i class="vst-orderable-toggle asc"></i></div>
       </th>
-      <th class=\\"vst-th\\">Two</th>
-      <th class=\\"vst-th\\">Three</th>
+      <th class="vst-th">Two</th>
+      <th class="vst-th">Three</th>
     </tr>
   </thead>
   <tbody>
@@ -88,10 +88,10 @@ exports[`ordering > click arrow 1`] = `
   </tbody>
   <tfoot>
     <tr>
-      <td colspan=\\"3\\">
-        <ul class=\\"vst-pagination\\">
-          <li class=\\"vst-page-item disabled\\"><a class=\\"vst-page-link\\">←</a></li>
-          <li class=\\"vst-page-item\\"><a class=\\"vst-page-link\\">→</a></li>
+      <td colspan="3">
+        <ul class="vst-pagination">
+          <li class="vst-page-item disabled"><a class="vst-page-link">←</a></li>
+          <li class="vst-page-item"><a class="vst-page-link">→</a></li>
         </ul>
       </td>
     </tr>
@@ -100,14 +100,14 @@ exports[`ordering > click arrow 1`] = `
 `;
 
 exports[`ordering > click arrow 2`] = `
-"<table class=\\"vst\\">
+"<table class="vst">
   <thead>
     <tr>
-      <th class=\\"vst-th vst-orderable\\">
-        <div>One<i class=\\"vst-orderable-toggle desc\\"></i></div>
+      <th class="vst-th vst-orderable">
+        <div>One<i class="vst-orderable-toggle desc"></i></div>
       </th>
-      <th class=\\"vst-th\\">Two</th>
-      <th class=\\"vst-th\\">Three</th>
+      <th class="vst-th">Two</th>
+      <th class="vst-th">Three</th>
     </tr>
   </thead>
   <tbody>
@@ -139,10 +139,10 @@ exports[`ordering > click arrow 2`] = `
   </tbody>
   <tfoot>
     <tr>
-      <td colspan=\\"3\\">
-        <ul class=\\"vst-pagination\\">
-          <li class=\\"vst-page-item disabled\\"><a class=\\"vst-page-link\\">←</a></li>
-          <li class=\\"vst-page-item\\"><a class=\\"vst-page-link\\">→</a></li>
+      <td colspan="3">
+        <ul class="vst-pagination">
+          <li class="vst-page-item disabled"><a class="vst-page-link">←</a></li>
+          <li class="vst-page-item"><a class="vst-page-link">→</a></li>
         </ul>
       </td>
     </tr>
@@ -151,14 +151,14 @@ exports[`ordering > click arrow 2`] = `
 `;
 
 exports[`ordering > click arrow 3`] = `
-"<table class=\\"vst\\">
+"<table class="vst">
   <thead>
     <tr>
-      <th class=\\"vst-th vst-orderable\\">
-        <div>One<i class=\\"vst-orderable-toggle\\"></i></div>
+      <th class="vst-th vst-orderable">
+        <div>One<i class="vst-orderable-toggle"></i></div>
       </th>
-      <th class=\\"vst-th\\">Two</th>
-      <th class=\\"vst-th\\">Three</th>
+      <th class="vst-th">Two</th>
+      <th class="vst-th">Three</th>
     </tr>
   </thead>
   <tbody>
@@ -190,10 +190,10 @@ exports[`ordering > click arrow 3`] = `
   </tbody>
   <tfoot>
     <tr>
-      <td colspan=\\"3\\">
-        <ul class=\\"vst-pagination\\">
-          <li class=\\"vst-page-item disabled\\"><a class=\\"vst-page-link\\">←</a></li>
-          <li class=\\"vst-page-item\\"><a class=\\"vst-page-link\\">→</a></li>
+      <td colspan="3">
+        <ul class="vst-pagination">
+          <li class="vst-page-item disabled"><a class="vst-page-link">←</a></li>
+          <li class="vst-page-item"><a class="vst-page-link">→</a></li>
         </ul>
       </td>
     </tr>
@@ -202,14 +202,14 @@ exports[`ordering > click arrow 3`] = `
 `;
 
 exports[`ordering > renders arrow 1`] = `
-"<table class=\\"vst\\">
+"<table class="vst">
   <thead>
     <tr>
-      <th class=\\"vst-th vst-orderable\\">
-        <div>One<i class=\\"vst-orderable-toggle\\"></i></div>
+      <th class="vst-th vst-orderable">
+        <div>One<i class="vst-orderable-toggle"></i></div>
       </th>
-      <th class=\\"vst-th\\">Two</th>
-      <th class=\\"vst-th\\">Three</th>
+      <th class="vst-th">Two</th>
+      <th class="vst-th">Three</th>
     </tr>
   </thead>
   <tbody>
@@ -241,10 +241,10 @@ exports[`ordering > renders arrow 1`] = `
   </tbody>
   <tfoot>
     <tr>
-      <td colspan=\\"3\\">
-        <ul class=\\"vst-pagination\\">
-          <li class=\\"vst-page-item disabled\\"><a class=\\"vst-page-link\\">←</a></li>
-          <li class=\\"vst-page-item\\"><a class=\\"vst-page-link\\">→</a></li>
+      <td colspan="3">
+        <ul class="vst-pagination">
+          <li class="vst-page-item disabled"><a class="vst-page-link">←</a></li>
+          <li class="vst-page-item"><a class="vst-page-link">→</a></li>
         </ul>
       </td>
     </tr>
@@ -253,12 +253,12 @@ exports[`ordering > renders arrow 1`] = `
 `;
 
 exports[`pagination > next page > click 1`] = `
-"<table class=\\"vst\\">
+"<table class="vst">
   <thead>
     <tr>
-      <th class=\\"vst-th\\">One</th>
-      <th class=\\"vst-th\\">Two</th>
-      <th class=\\"vst-th\\">Three</th>
+      <th class="vst-th">One</th>
+      <th class="vst-th">Two</th>
+      <th class="vst-th">Three</th>
     </tr>
   </thead>
   <tbody>
@@ -290,10 +290,10 @@ exports[`pagination > next page > click 1`] = `
   </tbody>
   <tfoot>
     <tr>
-      <td colspan=\\"3\\">
-        <ul class=\\"vst-pagination\\">
-          <li class=\\"vst-page-item\\"><a class=\\"vst-page-link\\">←</a></li>
-          <li class=\\"vst-page-item\\"><a class=\\"vst-page-link\\">→</a></li>
+      <td colspan="3">
+        <ul class="vst-pagination">
+          <li class="vst-page-item"><a class="vst-page-link">←</a></li>
+          <li class="vst-page-item"><a class="vst-page-link">→</a></li>
         </ul>
       </td>
     </tr>
@@ -302,12 +302,12 @@ exports[`pagination > next page > click 1`] = `
 `;
 
 exports[`pagination > next page > click to last page 1`] = `
-"<table class=\\"vst\\">
+"<table class="vst">
   <thead>
     <tr>
-      <th class=\\"vst-th\\">One</th>
-      <th class=\\"vst-th\\">Two</th>
-      <th class=\\"vst-th\\">Three</th>
+      <th class="vst-th">One</th>
+      <th class="vst-th">Two</th>
+      <th class="vst-th">Three</th>
     </tr>
   </thead>
   <tbody>
@@ -329,10 +329,10 @@ exports[`pagination > next page > click to last page 1`] = `
   </tbody>
   <tfoot>
     <tr>
-      <td colspan=\\"3\\">
-        <ul class=\\"vst-pagination\\">
-          <li class=\\"vst-page-item\\"><a class=\\"vst-page-link\\">←</a></li>
-          <li class=\\"vst-page-item disabled\\"><a class=\\"vst-page-link\\">→</a></li>
+      <td colspan="3">
+        <ul class="vst-pagination">
+          <li class="vst-page-item"><a class="vst-page-link">←</a></li>
+          <li class="vst-page-item disabled"><a class="vst-page-link">→</a></li>
         </ul>
       </td>
     </tr>
@@ -341,12 +341,12 @@ exports[`pagination > next page > click to last page 1`] = `
 `;
 
 exports[`rendering data > render first page 1`] = `
-"<table class=\\"vst\\">
+"<table class="vst">
   <thead>
     <tr>
-      <th class=\\"vst-th\\">One</th>
-      <th class=\\"vst-th\\">Two</th>
-      <th class=\\"vst-th\\">Three</th>
+      <th class="vst-th">One</th>
+      <th class="vst-th">Two</th>
+      <th class="vst-th">Three</th>
     </tr>
   </thead>
   <tbody>
@@ -378,10 +378,10 @@ exports[`rendering data > render first page 1`] = `
   </tbody>
   <tfoot>
     <tr>
-      <td colspan=\\"3\\">
-        <ul class=\\"vst-pagination\\">
-          <li class=\\"vst-page-item disabled\\"><a class=\\"vst-page-link\\">←</a></li>
-          <li class=\\"vst-page-item\\"><a class=\\"vst-page-link\\">→</a></li>
+      <td colspan="3">
+        <ul class="vst-pagination">
+          <li class="vst-page-item disabled"><a class="vst-page-link">←</a></li>
+          <li class="vst-page-item"><a class="vst-page-link">→</a></li>
         </ul>
       </td>
     </tr>
@@ -390,20 +390,20 @@ exports[`rendering data > render first page 1`] = `
 `;
 
 exports[`slots > render thead 1`] = `
-"<table class=\\"vst\\">
+"<table class="vst">
   <thead>
     <tr>
-      <td colspan=\\"3\\">rewited table head</td>
+      <td colspan="3">rewited table head</td>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td colspan=\\"3\\"> No records found </td>
+      <td colspan="3"> No records found </td>
     </tr>
   </tbody>
   <tfoot>
     <tr>
-      <td colspan=\\"3\\">
+      <td colspan="3">
         <!--v-if-->
       </td>
     </tr>

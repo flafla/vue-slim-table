@@ -9,12 +9,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "vue": "^3.2.47"
+    "vue": "^3.3.0",
+    "vue-slim-tables": "^0.3.7"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^4.1.0",
-    "typescript": "^5.0.2",
-    "vite": "^4.3.2",
-    "vue-tsc": "^1.4.2"
+    "@vitejs/plugin-vue": "^6.0.3",
+    "typescript": "^5.9.3",
+    "vite": "^7.3.0",
+    "vue-tsc": "^3.1.8"
   }
 }

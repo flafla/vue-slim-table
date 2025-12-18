@@ -1,6 +1,8 @@
+import type { VNode } from 'vue'
+
 export type TableColumn = {
-  key: string,
-  title: string,
+  key: string
+  title: string
   orderable?: boolean
 }
 
@@ -9,7 +11,7 @@ export type TableOrders = {
 }
 
 export type TableFilters = {
-  per_page: number,
+  per_page: number
   orders: TableOrders
 }
 
@@ -18,26 +20,24 @@ export type TableFetchParams = {
 } & TableFilters
 
 export type TableRow = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [key: string]: any
+  id: string | number
+  [key: string]: unknown
 }
 
 export type TableProps<T> = {
   columns: Array<TableColumn>
   perPage: number
-  source: ((_: TableFetchParams) => Promise<T[]> | T[])
+  source: (_: TableFetchParams) => Promise<T[]> | T[]
 }
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
 export type TableSlots<T> = Partial<{
-  'thead:before': () => any
-  thead: (_props: { columns: TableColumn[], orders: TableOrders }) => any
-  'thead:after': () => any
-  [key: `thead:${string}`]: (_props: { column: TableColumn, orders: TableOrders }) => any
-  'row:loading': () => any
-  'row:empty': () => any
-  row: (_props: { row: T, index: number, columns: TableColumn[] }) => any
-  [key: `cell:${string}`]: (_props: { row: T, index: number, column: TableColumn, value: unknown }) => any
-  pagination: (_props: { page: number, rows: T[] }) => any
+  'thead:before': () => VNode[]
+  thead: (_props: { columns: TableColumn[]; orders: TableOrders }) => VNode[]
+  'thead:after': () => VNode[]
+  [key: `thead:${string}`]: (_props: { column: TableColumn; orders: TableOrders }) => VNode[]
+  'row:loading': () => VNode[]
+  'row:empty': () => VNode[]
+  row: (_props: { row: T; index: number; columns: TableColumn[] }) => VNode[]
+  [key: `cell:${string}`]: (_props: { row: T; index: number; column: TableColumn; value: unknown }) => VNode[]
+  pagination: (_props: { page: number; rows: T[] }) => VNode[]
 }>
-/* eslint-enable @typescript-eslint/no-explicit-any */

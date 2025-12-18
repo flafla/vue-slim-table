@@ -89,13 +89,9 @@
 
 <script setup lang="ts" generic="TRow extends TableRow">
 import { computed, shallowRef } from 'vue'
+import useFilterable from '@/ts/composables/useFilterable'
+import type { TableFetchParams, TableFilters, TableOrders, TableProps, TableRow, TableSlots } from '@/ts/types'
 import LoadingRow from './LoadingRow.vue'
-
-import useFilterable from '../composables/useFilterable'
-
-import type {
-  TableOrders, TableFetchParams, TableRow, TableFilters, TableProps, TableSlots,
-} from '@/ts/types'
 
 const orders = shallowRef<TableOrders>({})
 const props = withDefaults(defineProps<TableProps<TRow>>(), {
@@ -132,7 +128,14 @@ const initialFilters = computed<TableFilters>(() => ({
 }))
 
 const {
-  page, isSyncing, isSynced, prevPage, nextPage, reload, refetch, items: rows,
+  page,
+  isSyncing,
+  isSynced,
+  prevPage,
+  nextPage,
+  reload,
+  refetch,
+  items: rows,
 } = useFilterable<TableFilters, TRow>({
   initialFilters,
   loadItems,

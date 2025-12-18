@@ -188,8 +188,6 @@ describe('ordering', () => {
     await nextTick()
 
     const arrowTh = wrapper.get('.vst-orderable')
-    expect(arrowTh.element._listeners.click).not.toBe(undefined)
-
     const aTh = wrapper.get('.vst-orderable-toggle')
 
     expect(aTh.element.classList.contains('asc')).toBe(false)
@@ -224,7 +222,10 @@ describe('ordering', () => {
       props: { columns, source: asyncSource, perPage }
     })
 
+    const beforeState = wrapper.vm.orders
     const th = wrapper.get('.vst-th:not(.vst-orderable)')
-    expect(th.element._listeners.click).toBe(undefined)
+    await th.trigger('click')
+
+    expect(wrapper.vm.orders).toBe(beforeState)
   })
 })

@@ -1,5 +1,4 @@
-import { Ref, ComputedRef } from 'vue';
-
+import { type ComputedRef, type Ref } from 'vue';
 type UseFiltetableArgs<T, S> = {
     initialFilters: ComputedRef<T>;
     loadItems: (_params: T & {
@@ -13,10 +12,10 @@ export declare const SYNC_STATES: {
     readonly FAILED: "FAILED";
 };
 type SynsState = (typeof SYNC_STATES)[keyof typeof SYNC_STATES];
-declare const _default: <TFilters, TItem>({ initialFilters, loadItems, }: UseFiltetableArgs<TFilters, TItem>) => {
-    page: Ref<number, number>;
-    items: Ref<TItem[], TItem[]>;
-    syncState: Ref<SynsState, SynsState>;
+declare const _default: <TFilters, TItem>({ initialFilters, loadItems }: UseFiltetableArgs<TFilters, TItem>) => {
+    page: Ref<number>;
+    items: Ref<TItem[]>;
+    syncState: Ref<SynsState>;
     isSyncing: ComputedRef<boolean>;
     isSynced: ComputedRef<boolean>;
     isFailed: ComputedRef<boolean>;

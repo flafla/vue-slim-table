@@ -1,3 +1,4 @@
+import type { VNode } from 'vue';
 export type TableColumn = {
     key: string;
     title: string;
@@ -14,39 +15,40 @@ export type TableFetchParams = {
     page: number;
 } & TableFilters;
 export type TableRow = {
-    [key: string]: any;
+    id: string | number;
+    [key: string]: unknown;
 };
 export type TableProps<T> = {
     columns: Array<TableColumn>;
     perPage: number;
-    source: ((_: TableFetchParams) => Promise<T[]> | T[]);
+    source: (_: TableFetchParams) => Promise<T[]> | T[];
 };
 export type TableSlots<T> = Partial<{
-    'thead:before': () => any;
+    'thead:before': () => VNode[];
     thead: (_props: {
         columns: TableColumn[];
         orders: TableOrders;
-    }) => any;
-    'thead:after': () => any;
+    }) => VNode[];
+    'thead:after': () => VNode[];
     [key: `thead:${string}`]: (_props: {
         column: TableColumn;
         orders: TableOrders;
-    }) => any;
-    'row:loading': () => any;
-    'row:empty': () => any;
+    }) => VNode[];
+    'row:loading': () => VNode[];
+    'row:empty': () => VNode[];
     row: (_props: {
         row: T;
         index: number;
         columns: TableColumn[];
-    }) => any;
+    }) => VNode[];
     [key: `cell:${string}`]: (_props: {
         row: T;
         index: number;
         column: TableColumn;
         value: unknown;
-    }) => any;
+    }) => VNode[];
     pagination: (_props: {
         page: number;
         rows: T[];
-    }) => any;
+    }) => VNode[];
 }>;
