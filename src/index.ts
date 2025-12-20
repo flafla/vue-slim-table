@@ -1,7 +1,7 @@
 import './stylesheets/index.scss'
 
-import type { TableColumn, TableOrders, TableFetchParams, TableRow, TableFilters, TableProps } from './ts/types'
 import VueSlimTable from './ts/components/VueSlimTable.vue'
+import type { TableColumn, TableFetchParams, TableFilters, TableOrders, TableProps, TableRow } from './ts/types'
 
 export default VueSlimTable
-export { TableColumn, TableOrders, TableFetchParams, TableRow, TableFilters, TableProps }
+export type { TableColumn, TableOrders, TableFetchParams, TableRow, TableFilters, TableProps }

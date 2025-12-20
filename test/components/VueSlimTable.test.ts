@@ -58,7 +58,7 @@ describe('rendering data', () => {
       props: { columns, source: asyncSource, perPage }
     })
 
-    expect(wrapper.findAll('.vst-loading-row').length).toBe(perPage)
+    expect(wrapper.findAll('.vst-loading-row').length).toBe(perPage * columns.length)
 
     await nextTick()
     await nextTick()

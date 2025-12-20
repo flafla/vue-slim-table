@@ -1,9 +1,7 @@
 <template>
   <tr>
-    <td
-      :colspan="columnsLength"
-      :class="['vst-loading-row', `vst-loading-row-${randNum}`]">
-      <div />
+    <td v-for="index in columnsLength" :key="index" class="vst-loading-row">
+     <div />
     </td>
   </tr>
 </template>

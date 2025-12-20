@@ -5,6 +5,7 @@ import vue from '@vitejs/plugin-vue'
 export default defineConfig({
   plugins: [vue()],
   server: {
+    port: 3333,
     fs: {
       // Allow serving files from one level up to the project root
       allow: ['../..'],

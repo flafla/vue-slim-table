@@ -22,7 +22,10 @@ const columns = [
     </template>
     <!-- <template #row="{ row }">
       <tr>
-        <td colspan=4>{{ JSON.stringify(row) }}</td>
+        <td class="vst-loading-row" colspan="2">
+          <div />
+        </td>
+        <td colspan=2>{{ JSON.stringify(row) }}</td>
       </tr>
     </template> -->
 
@@ -37,5 +40,12 @@ const columns = [
 </template>
 
 <style lang="scss">
-  @import 'vue-slim-tables/stylesheets'
+  @import 'vue-slim-tables/stylesheets';
+  // @import '../../src/stylesheets/index.scss';
+
+  @media (prefers-color-scheme: dark) {
+    body {
+      background-color: oklch(0 0 0);
+    }
+  }
 </style>

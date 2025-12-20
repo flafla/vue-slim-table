@@ -1,6 +1,6 @@
 {
   "name": "vue-slim-tables",
-  "version": "0.3.10",
+  "version": "0.3.11",
   "type": "module",
   "main": "./dist/vst.cjs.js",
   "module": "./dist/vst.es.js",
@@ -10,7 +10,7 @@
   ],
   "scripts": {
     "build": "vite build && vue-tsc -p tsconfig.build.json",
-    "lint": "npx @biomejs/biome check ./src/ts/ --write",
+    "lint": "npx @biomejs/biome check ./src --write",
     "test": "vitest",
     "coverage": "vitest run --coverage"
   },
@@ -21,6 +21,7 @@
       "require": "./dist/vst.cjs.js"
     },
     "./stylesheets": "./dist/vue-slim-tables.css",
+    "./styles": "./dist/vue-slim-tables.css",
     "./src/index": "./src/index.ts",
     "./filterable": "./src/ts/use/filterable"
   },
