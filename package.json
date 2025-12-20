@@ -1,6 +1,6 @@
 {
   "name": "vue-slim-tables",
-  "version": "0.3.7",
+  "version": "0.3.8",
   "type": "module",
   "main": "./dist/vst.cjs.js",
   "module": "./dist/vst.es.js",
