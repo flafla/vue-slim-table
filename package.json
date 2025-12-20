@@ -1,6 +1,6 @@
 {
   "name": "vue-slim-tables",
-  "version": "0.3.8",
+  "version": "0.3.9",
   "type": "module",
   "main": "./dist/vst.cjs.js",
   "module": "./dist/vst.es.js",
@@ -20,7 +20,7 @@
       "import": "./dist/vst.es.js",
       "require": "./dist/vst.cjs.js"
     },
-    "./stylesheets": "dist/style.css",
+    "./stylesheets": "./dist/vue-slim-tables.css",
     "./src/index": "./src/index.ts",
     "./filterable": "./src/ts/use/filterable"
   },

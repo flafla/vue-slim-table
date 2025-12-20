@@ -37,5 +37,5 @@ const columns = [
 </template>
 
 <style lang="scss">
-  @import '../../src/stylesheets/index.scss'
+  @import 'vue-slim-tables/stylesheets'
 </style>
