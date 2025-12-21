@@ -1,7 +1,7 @@
 <template>
   <tr>
     <td v-for="index in columnsLength" :key="index" class="vst-loading-row">
-     <div />
+      <div />
     </td>
   </tr>
 </template>
@@ -10,6 +10,4 @@
 defineProps({
   columnsLength: { type: Number, required: true },
 })
-
-const randNum = Math.floor(Math.random() * 10) + 1
 </script>

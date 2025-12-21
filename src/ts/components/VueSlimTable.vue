@@ -90,7 +90,7 @@
 <script setup lang="ts" generic="TRow extends TableRow">
 import { computed, shallowRef } from 'vue'
 import useFilterable from '@/ts/composables/useFilterable'
-import type { TableFetchParams, TableFilters, TableOrders, TableProps, TableRow, TableSlots } from '@/ts/types'
+import type { TableFetchParams, TableFilters, TableOrders, TableProps, TableRow, TableSlots } from '../types'
 import LoadingRow from './LoadingRow.vue'
 
 const orders = shallowRef<TableOrders>({})
