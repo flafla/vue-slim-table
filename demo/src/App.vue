@@ -45,7 +45,9 @@ const columns = [
 
   @media (prefers-color-scheme: dark) {
     body {
-      background-color: oklch(0 0 0);
+      background-color: oklch(0.274 0.006 286.033);
+      // background-color: oklch(0.967 0.001 286.375);
+      // background-color: oklch(0.871 0.006 286.286);
     }
   }
 </style>

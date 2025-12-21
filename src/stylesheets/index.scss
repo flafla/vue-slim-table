@@ -1,6 +1,7 @@
-@keyframes vst-skeleton-gradient {
-  0%   { background-position: 100% 0; }
-  100% { background-position: 0 0; }
+@keyframes vst-pulse {
+  50% {
+    opacity: 0.5;
+  }
 }
 
 :root {
@@ -18,8 +19,7 @@
   --vst-zinc-950: oklch(0.141 0.005 285.823);
   --vst-black: oklch(0 0 0);
 
-  --vst-bg: var(--vst-white);
-  --vst-bg-muted: var(--vst-zinc-200);
+  --vst-bg-hover: var(--vst-zinc-200);
 
   --vst-text: var(--vst-zinc-950);
   --vst-border: var(--vst-zinc-200);
@@ -29,14 +29,12 @@
   --vst-actions-active: var(--vst-zinc-800);
   --vst-actions-hover: var(--vst-zinc-950);
 
-  --vst-skeleton-highlight: var(--vst-white);
-  --vst-skeleton-base: var(--vst-zinc-200);
+  --vst-skeleton-bg: var(--vst-zinc-300);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --vst-bg: var(--vst-black);
-    --vst-bg-muted: var(--vst-zinc-700);
+    --vst-bg-hover: var(--vst-zinc-700);
 
     --vst-text: var(--vst-zinc-200);
     --vst-border: var(--vst-zinc-700);
@@ -46,15 +44,13 @@
     --vst-actions-active: var(--vst-zinc-300);
     --vst-actions-hover: var(--vst-zinc-100);
 
-    --vst-skeleton-highlight: var(--vst-zinc-700);
-    --vst-skeleton-base: var(--vst-zinc-800);
+    --vst-skeleton-bg: var(--vst-zinc-700);
   }
 }
 
 .dark,
 [data-theme="dark"] {
-  --vst-bg: var(--vst-black);
-  --vst-bg-muted: var(--vst-zinc-700);
+  --vst-bg-hover: var(--vst-zinc-700);
 
   --vst-text: var(--vst-zinc-200);
   --vst-border: var(--vst-zinc-700);
@@ -64,14 +60,12 @@
   --vst-actions-active: var(--vst-zinc-300);
   --vst-actions-hover: var(--vst-zinc-100);
 
-  --vst-skeleton-highlight: var(--vst-zinc-700);
-  --vst-skeleton-base: var(--vst-zinc-800);
+  --vst-skeleton-bg: var(--vst-zinc-700);
 }
 
 .light,
 [data-theme="light"] {
-  --vst-bg: var(--vst-white);
-  --vst-bg-muted: var(--vst-zinc-200);
+  --vst-bg-hover: var(--vst-zinc-200);
 
   --vst-text: var(--vst-zinc-950);
   --vst-border: var(--vst-zinc-200);
@@ -81,8 +75,7 @@
   --vst-actions-active: var(--vst-zinc-800);
   --vst-actions-hover: var(--vst-zinc-950);
 
-  --vst-skeleton-highlight: var(--vst-white);
-  --vst-skeleton-base: var(--vst-zinc-200);
+  --vst-skeleton-bg: var(--vst-zinc-300);
 }
 
 .vst {
@@ -91,9 +84,7 @@
   margin-bottom: 1rem;
   border-collapse: collapse;
   border-spacing: 0;
-
   color: var(--vst-text);
-  background-color: var(--vst-bg);
 
   th,
   td {
@@ -149,9 +140,8 @@
     width: 100%;
     height: 1rem;
     border-radius: 0.25rem;
-    background: linear-gradient(to right, var(--vst-skeleton-base) 25%, var(--vst-skeleton-highlight) 37%, var(--vst-skeleton-base) 63%);
-    background-size: 400% 100%;
-    animation: vst-skeleton-gradient 1.4s ease infinite;
+    background-color: var(--vst-skeleton-bg);
+    animation: vst-pulse 2s ease-in-out infinite;
   }
 
   tr td.vst-loading-row {
@@ -175,14 +165,13 @@
       margin-right: -1px;
       line-height: 1.25;
       color: var(--vst-actions);
-      background-color: var(--vst-bg);
       border: 1px solid var(--vst-border);
 
       &:hover {
         z-index: 2;
         text-decoration: none;
         color: var(--vst-actions-hover);
-        background-color: var(--vst-bg-muted);
+        background-color: var(--vst-bg-hover);
         border-color: var(--vst-border);
       }
     }
@@ -192,7 +181,6 @@
     pointer-events: none;
     color: var(--vst-actions-disabled);
     cursor: auto;
-    background-color: var(--vst-bg);
   }
 
   &-page-item .vst-page-link {
